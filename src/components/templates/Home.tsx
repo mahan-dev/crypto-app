@@ -16,7 +16,7 @@ const Home = () => {
     dataFetcher();
   }, []);
 
-  return <>{data && data.data.length && <CoinsList data={data} />}</>;
+  return <>{data && data.data.length && <CoinsList data={data.data} />}</>;
 };
 
 export default Home;
