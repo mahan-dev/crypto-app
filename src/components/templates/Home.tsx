@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import CoinsList from "@/components/modules/CoinsList";
 import type { MarketType } from "@/types/marketTypes";
 
+import PaginationPage from "@/components/modules/Pagination";
+
 const Home = () => {
   const [data, setData] = useState<MarketType>();
   const [page, setPage] = useState(1);
@@ -16,7 +18,17 @@ const Home = () => {
     dataFetcher();
   }, []);
 
-  return <>{data && data.data.length && <CoinsList data={data.data} />}</>;
+  return (
+    <>
+      {data && data.data.length && (
+        <>
+          <CoinsList data={data.data} />
+
+          <PaginationPage page={page} />
+        </>
+      )}
+    </>
+  );
 };
 
 export default Home;

@@ -20,7 +20,6 @@ const CoinsList = ({ data }: CoinsProps) => {
     <>
       {data?.length && (
         <Table className="text-white mt-12 ">
-          {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
             <TableRow className="*:text-white">
               <TableHead className="w-2 text-center">#</TableHead>
@@ -28,23 +27,13 @@ const CoinsList = ({ data }: CoinsProps) => {
               <TableHead className="w-px text-right">Price</TableHead>
 
               <TableHead className="w-7  text-right">
-                <div className="w-12">1h %</div>
-              </TableHead>
-              <TableHead className="w-7  text-right">
                 <div className="w-12">24h %</div>
               </TableHead>
-              <TableHead className="w-7  text-right">
-                <div className="w-12">7d %</div>
-              </TableHead>
+
               <TableHead className="w-37 text-right">
                 <div>Market Cap</div>
               </TableHead>
-              <TableHead className="w-37 text-right">
-                <div>
-                  {`
-              Volume(24h)`}
-                </div>
-              </TableHead>
+           
               <TableHead className="text-right">
                 <div>Circulating Supply</div>
               </TableHead>
@@ -55,9 +44,16 @@ const CoinsList = ({ data }: CoinsProps) => {
           </TableHeader>
           <TableBody>
             {data.map((coin) => {
-              const { symbol, market_cap_rank, current_price } = coin;
+              const {
+                symbol,
+                market_cap_rank,
+                current_price,
+                circulating_supply,
+                market_cap,
+                market_cap_change_percentage_24h: percentage_24,
+              } = coin;
               return (
-                <TableRow className="*:text-right">
+                <TableRow className="*:text-right" key={coin.name}>
                   <TableCell className=" font-medium first-of-type:text-center">
                     {market_cap_rank}
                   </TableCell>
@@ -69,7 +65,7 @@ const CoinsList = ({ data }: CoinsProps) => {
                       width={25}
                       height={25}
                     />
-                    {symbol.split("_")}
+                    {symbol.split("_")[0]}
                   </TableCell>
                   <TableCell className="">
                     $
@@ -77,13 +73,23 @@ const CoinsList = ({ data }: CoinsProps) => {
                       ? current_price.toFixed(4)
                       : current_price}
                   </TableCell>
-                  <TableCell className="w-fit">0.00</TableCell>
-                  <TableCell>0.00</TableCell>
-                  <TableCell>0.00</TableCell>
-                  <TableCell>0.00</TableCell>
-                  <TableCell>0.00</TableCell>
-                  <TableCell>0.00</TableCell>
-                  <TableCell>$250.00</TableCell>
+
+                  <TableCell>{percentage_24.toFixed(2)}</TableCell>
+                  <TableCell>{market_cap.toLocaleString(undefined, {
+                      maximumFractionDigits: 0,
+                    })}</TableCell>
+                  
+
+                  <TableCell>
+                    {(circulating_supply / 1000000).toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                    <span className="ml-2">
+                      {symbol.split("_")[0].toLocaleUpperCase()}
+                    </span>
+                  </TableCell>
+                  <TableCell>Graph</TableCell>
                 </TableRow>
               );
             })}

@@ -1,5 +1,6 @@
 import { apiConfig } from "@/configs/apiConfigs";
 import type { MarketType } from "@/types/marketTypes";
+import { isAxiosError } from "axios";
 
 import { toast } from "sonner";
 
@@ -16,10 +17,11 @@ const getMarketList = async (
     );
     return response;
   } catch (error) {
-    
-    if (errorType.status === 429) {
-      toast.error("something went wrong");
-      console.log(error.errorMessage)
+    if (isAxiosError(error)) {
+      if (error.response?.status === 429) {
+        toast.error("something went wrong");
+        console.log(error.errorMessage);
+      }
     }
     return {
       status: 500,
