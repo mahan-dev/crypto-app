@@ -2,13 +2,19 @@ import type { MarketType } from "@/types/marketTypes";
 import {
   Table,
   TableBody,
-  // TableCaption,
   TableCell,
-  // TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "../../../@/components/ui/table";
+
+import chartUp from "@/assets/chart-up.svg";
+import chartDown from "@/assets/chart-down.svg";
+import {
+  marketCapFormatter,
+  priceFormatter,
+  symbolFormatter,
+} from "@/helper/priceFilter";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -21,7 +27,7 @@ const CoinsList = ({ data }: CoinsProps) => {
       {data?.length && (
         <Table className="text-white mt-12 ">
           <TableHeader>
-            <TableRow className="*:text-white">
+            <TableRow className="*:text-white hover:bg-transparent">
               <TableHead className="w-2 text-center">#</TableHead>
               <TableHead className="w-35 flex items-center">Name</TableHead>
               <TableHead className="w-px text-right">Price</TableHead>
@@ -33,7 +39,7 @@ const CoinsList = ({ data }: CoinsProps) => {
               <TableHead className="w-37 text-right">
                 <div>Market Cap</div>
               </TableHead>
-           
+
               <TableHead className="text-right">
                 <div>Circulating Supply</div>
               </TableHead>
@@ -53,19 +59,24 @@ const CoinsList = ({ data }: CoinsProps) => {
                 market_cap_change_percentage_24h: percentage_24,
               } = coin;
               return (
-                <TableRow className="*:text-right" key={coin.name}>
-                  <TableCell className=" font-medium first-of-type:text-center">
+                <TableRow
+                  className="*:text-right cursor-pointer"
+                  key={coin.name}
+                >
+                  <TableCell className=" first-of-type:text-center">
                     {market_cap_rank}
                   </TableCell>
-                  <TableCell className="font-medium flex gap-2 items-center">
-                    <img
-                      className="rounded-full"
-                      src={coin.image}
-                      alt={symbol}
-                      width={25}
-                      height={25}
-                    />
-                    {symbol.split("_")[0]}
+                  <TableCell className="align-middle">
+                    <div className="flex gap-2 items-center ">
+                      <img
+                        className="rounded-full"
+                        src={coin.image}
+                        alt={symbol}
+                        width={25}
+                        height={25}
+                      />
+                      {symbolFormatter(symbol)}
+                    </div>
                   </TableCell>
                   <TableCell className="">
                     $
@@ -74,22 +85,27 @@ const CoinsList = ({ data }: CoinsProps) => {
                       : current_price}
                   </TableCell>
 
-                  <TableCell>{percentage_24 ? percentage_24 : "null"}</TableCell>
-                  <TableCell>{market_cap.toLocaleString(undefined, {
-                      maximumFractionDigits: 0,
-                    })}</TableCell>
-                  
+                  <TableCell
+                    className={`${percentage_24 === null ? "" : percentage_24 > 0 ? "text-green-500" : "text-red-500"}`}
+                  >
+                    {percentage_24 ? percentage_24.toFixed(2) : "null"}
+                  </TableCell>
+                  <TableCell>{marketCapFormatter(market_cap)}</TableCell>
 
                   <TableCell>
-                    {(circulating_supply / 1000000).toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}
+                    {priceFormatter(circulating_supply)}
                     <span className="ml-2">
-                      {symbol.split("_")[0].toLocaleUpperCase()}
+                      {symbolFormatter(symbol) }
                     </span>
                   </TableCell>
-                  <TableCell>Graph</TableCell>
+                  <TableCell>
+                    <img
+                      className="ml-auto"
+                      src={percentage_24 > 0 ? chartUp : chartDown}
+                      alt={"chart svg"}
+                      width={100}
+                    />
+                  </TableCell>
                 </TableRow>
               );
             })}
