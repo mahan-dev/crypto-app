@@ -1,14 +1,17 @@
 import RouterPage from "@/components/router/RouterPage";
 import { BrowserRouter as Router } from "react-router-dom";
-import Layout from "./components/layout/Layout";
+
+import Provider from "@/components/providers/Provider";
+
+
 
 const App = () => {
   return (
-    <Layout>
+    <Provider>
       <Router>
         <RouterPage />
       </Router>
-    </Layout>
+    </Provider>
   );
 };
 
