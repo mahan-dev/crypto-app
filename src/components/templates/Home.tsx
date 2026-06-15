@@ -16,16 +16,20 @@ const Home = () => {
       setData(res);
     };
     dataFetcher();
-  }, []);
+  }, [page]);
 
   return (
     <>
-      {data && data.data.length && (
+      {data && data.data.length ? (
         <>
           <CoinsList data={data.data} />
 
-          <PaginationPage page={page} />
+          <PaginationPage page={page} setPage={setPage} />
         </>
+      ) : (
+        <h2 className="w-full flex justify-center mt-6">
+          Something wen't wrong
+        </h2>
       )}
     </>
   );

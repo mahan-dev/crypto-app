@@ -74,7 +74,7 @@ const CoinsList = ({ data }: CoinsProps) => {
                       : current_price}
                   </TableCell>
 
-                  <TableCell>{percentage_24.toFixed(2)}</TableCell>
+                  <TableCell>{percentage_24 ? percentage_24 : "null"}</TableCell>
                   <TableCell>{market_cap.toLocaleString(undefined, {
                       maximumFractionDigits: 0,
                     })}</TableCell>
