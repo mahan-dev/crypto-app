@@ -11,19 +11,36 @@ import {
 import chartUp from "@/assets/chart-up.svg";
 import chartDown from "@/assets/chart-down.svg";
 import {
+  convertedData,
   marketCapFormatter,
   priceFormatter,
   symbolFormatter,
-} from "@/helper/priceFilter";
+  type DataProps,
+} from "@/helper/coinsList/formattedData";
+import { useState } from "react";
+
+import { coinChart } from "@/services/coingecko";
 
 interface CoinsProps {
   data: MarketType["data"];
 }
+type Types = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data }: CoinsProps) => {
+  const [chart, setChart] = useState<null | DataProps["data"]>(null);
+  const [type, setType] = useState<Types>("prices");
   console.log(data);
+
+  const coinHandler = async (id: string) => {
+    const res = await coinChart(id);
+
+    setChart(res);
+    console.log(res);
+    console.log(chart);
+  };
 
   return (
     <>
+      {chart && console.log(convertedData(chart, type))}
       {data?.length && (
         <Table className="text-white mt-12 ">
           <TableHeader>
@@ -51,6 +68,7 @@ const CoinsList = ({ data }: CoinsProps) => {
           <TableBody>
             {data.map((coin) => {
               const {
+                id,
                 symbol,
                 market_cap_rank,
                 current_price,
@@ -62,6 +80,7 @@ const CoinsList = ({ data }: CoinsProps) => {
                 <TableRow
                   className="*:text-right cursor-pointer"
                   key={coin.name}
+                  onClick={() => coinHandler(id)}
                 >
                   <TableCell className=" first-of-type:text-center">
                     {market_cap_rank}
@@ -94,9 +113,7 @@ const CoinsList = ({ data }: CoinsProps) => {
 
                   <TableCell>
                     {priceFormatter(circulating_supply)}
-                    <span className="ml-2">
-                      {symbolFormatter(symbol) }
-                    </span>
+                    <span className="ml-2">{symbolFormatter(symbol)}</span>
                   </TableCell>
                   <TableCell>
                     <img

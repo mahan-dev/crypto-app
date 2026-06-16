@@ -1,6 +1,7 @@
 import { getMarketList } from "@/services/coingecko";
 import { useState } from "react";
 import CoinsList from "@/components/modules/CoinsList";
+import ChartAreaDefault from "@/components/modules/Chart";
 
 import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";

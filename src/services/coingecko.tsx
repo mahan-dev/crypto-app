@@ -1,4 +1,5 @@
 import { apiConfig } from "@/configs/apiConfigs";
+import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { MarketType } from "@/types/marketTypes";
 import { isAxiosError } from "axios";
 
@@ -29,4 +30,17 @@ const getMarketList = async (
     };
   }
 };
-export { getMarketList };
+
+const coinChart = async (coin: string): Promise<DataProps["data"] | null> => {
+  try {
+    const res: DataProps = await apiConfig(
+      `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=7`,
+    );
+    return res.data;
+  } catch (error) {
+    console.log("something wen't wrong", error);
+    return null;
+  }
+};
+
+export { getMarketList, coinChart };
