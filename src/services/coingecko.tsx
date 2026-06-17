@@ -9,6 +9,10 @@ import { toast } from "sonner";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
+const positionToast = {
+  position: "top-center",
+} as const;
+
 const getMarketList = async (
   currency: string,
   page: number,
@@ -43,6 +47,7 @@ const coinChart = async (
     return res.data;
   } catch (error) {
     console.log("something wen't wrong", error);
+    toast.error("something went wrong", positionToast);
 
     if (error.status === 429) {
       toast.error(error.errorMessage);

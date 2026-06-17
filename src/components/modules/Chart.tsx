@@ -16,8 +16,20 @@ import {
 } from "../../../@/components/ui/chart";
 
 import { CgCloseR } from "react-icons/cg";
-import type { Dispatch, SetStateAction } from "react";
-import type { DataResponse } from "@/helper/coinsList/formattedData";
+import {
+  useEffect,
+  useRef,
+  type Dispatch,
+  type MouseEvent,
+  type SetStateAction,
+} from "react";
+import {
+  convertedData,
+  type DataProps,
+  type DataResponse,
+} from "@/helper/coinsList/formattedData";
+import type { TypesCoin } from "./CoinsList";
+import { Button } from "../ui/button";
 export const description = "A simple area chart";
 
 const chartConfig = {
@@ -28,14 +40,38 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface CoinProps {
-  chart: null | DataResponse[];
-  setChart: Dispatch<SetStateAction<DataResponse[] | null>>;
+  chart: DataProps["data"];
+  setChart: Dispatch<SetStateAction<DataResponse[] | DataProps["data"] | null>>;
+  type: TypesCoin;
+  setType: Dispatch<SetStateAction<TypesCoin>>;
 }
 
-const CoinChart = ({ chart, setChart }: CoinProps) => {
-  console.log(chart);
+const chartLabel = [
+  { label: "Prices", value: "prices" },
+  { label: "Market Cap", value: "market_caps" },
+  { label: "Volume", value: "total_volumes" },
+] as const;
 
-  if (!chart) return;
+const CoinChart = ({ chart, setChart, type, setType }: CoinProps) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const click = (e: globalThis.MouseEvent) => {
+    const currentItem = cardRef.current;
+    if (currentItem && !currentItem.contains(e.target as Node)) {
+      setChart(null);
+    }
+  };
+
+  const finalData = convertedData(chart, type);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", click);
+    return () => document.removeEventListener("mousedown", click);
+  }, []);
+
+  const buttonHandler = (value: TypesCoin) => {
+    setType(value);
+  };
 
   return (
     <section className="fixed inset-0 flex flex-col  justify-center p-23 backdrop-blur-sm max-md:p-8">
@@ -49,7 +85,7 @@ const CoinChart = ({ chart, setChart }: CoinProps) => {
         <CgCloseR className="text-[1.3rem]" />
       </div>
 
-      <Card className="bg-[#252525] text-white">
+      <Card ref={cardRef} className="bg-[#252525] text-white">
         <CardHeader>
           <CardTitle className="tracking-wider">Chart - 7D</CardTitle>
           <CardDescription>
@@ -60,7 +96,7 @@ const CoinChart = ({ chart, setChart }: CoinProps) => {
           <ChartContainer config={chartConfig}>
             <AreaChart
               accessibilityLayer
-              data={chart}
+              data={finalData}
               margin={{
                 left: 12,
                 right: 12,
@@ -92,13 +128,22 @@ const CoinChart = ({ chart, setChart }: CoinProps) => {
             </AreaChart>
           </ChartContainer>
         </CardContent>
+        <div className="flex justify-center gap-4">
+          {chartLabel.map((item) => (
+            <Button
+              className="cursor-pointer"
+              key={item.label}
+              onClick={() => buttonHandler(item.value)}
+              id={item.value}
+              disabled={item.value === type}
+            >
+              {item.label}
+            </Button>
+          ))}
+        </div>
         <CardFooter className="bg-inherit">
           <div className="flex w-full items-start gap-2 text-sm">
             <div className="grid gap-2">
-              {/* <div className="flex items-center gap-2 leading-none font-medium">
-                Trending up by 5.2% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div> */}
               <div className=" flex items-center gap-2 leading-none ">
                 Coinzed
               </div>

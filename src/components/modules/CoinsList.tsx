@@ -15,6 +15,7 @@ import {
   PriceCommaFormatter,
   priceFormatter,
   symbolFormatter,
+  type DataProps,
   type DataResponse,
 } from "@/helper/coinsList/formattedData";
 import { useEffect, useState } from "react";
@@ -27,10 +28,10 @@ import PageLoader from "../loader/PageLoader";
 interface CoinsProps {
   data: MarketType["data"];
 }
-type Types = "prices" | "market_caps" | "total_volumes";
+export type TypesCoin = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data }: CoinsProps) => {
-  const [chart, setChart] = useState<DataResponse[] | null>(null);
-  const [type, setType] = useState<Types>("prices");
+  const [chart, setChart] = useState< DataProps["data"] | null>(null);
+  const [type, setType] = useState<TypesCoin>("prices");
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -38,20 +39,12 @@ const CoinsList = ({ data }: CoinsProps) => {
     setLoading(true);
     const data = await coinChart(id, setLoading);
     if (data) {
-      setChart(convertedData(data, type));
+      setChart(data);
     }
   };
 
   useEffect(() => {
-    if (chart) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    document.body.style.overflow = chart ? "hidden" : "auto";
   }, [chart]);
 
   return (
@@ -145,7 +138,7 @@ const CoinsList = ({ data }: CoinsProps) => {
         </Table>
       )}
       {loading && <PageLoader />}
-      {chart && <CoinChart chart={chart} setChart={setChart} />}
+      {chart && <CoinChart chart={chart} setChart={setChart} type={type} setType={setType} />}
     </>
   );
 };
