@@ -24,7 +24,7 @@ export interface DataProps {
 }
 
 export interface DataResponse {
-  timestamp: string;
+  date: string;
   prices: number;
 }
 
@@ -32,13 +32,10 @@ const convertedData = (
   data: DataProps["data"],
   type: "prices" | "market_caps" | "total_volumes",
 ): DataResponse[] => {
-  const res = data[type].map((item) => {
-    return {
-      timestamp: new Date(item[0]).toLocaleString(),
-      prices: item[1],
-    };
-  });
-  return res;
+  return data[type].map((item) => ({
+    date: new Date(item[0]).toLocaleString(),
+    prices: item[1],
+  }));
 };
 
 export { priceFormatter, PriceCommaFormatter, symbolFormatter, convertedData };

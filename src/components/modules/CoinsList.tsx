@@ -15,14 +15,14 @@ import {
   PriceCommaFormatter,
   priceFormatter,
   symbolFormatter,
-  type DataProps,
   type DataResponse,
 } from "@/helper/coinsList/formattedData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { coinChart } from "@/services/coingecko";
 
 import CoinChart from "@/components/modules/Chart";
+import PageLoader from "../loader/PageLoader";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -37,10 +37,22 @@ const CoinsList = ({ data }: CoinsProps) => {
   const coinHandler = async (id: string) => {
     setLoading(true);
     const data = await coinChart(id, setLoading);
-    console.log(data);
-    if (!data) return;
-    setChart(convertedData(data, type));
+    if (data) {
+      setChart(convertedData(data, type));
+    }
   };
+
+  useEffect(() => {
+    if (chart) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [chart]);
 
   return (
     <>
@@ -132,8 +144,8 @@ const CoinsList = ({ data }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
-      {loading && <section className="text-9xl">Loading</section>}
-      {chart && <CoinChart setChart={setChart} chart={chart} />}
+      {loading && <PageLoader />}
+      {chart && <CoinChart chart={chart} setChart={setChart} />}
     </>
   );
 };

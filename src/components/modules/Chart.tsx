@@ -1,5 +1,4 @@
-import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, XAxis } from "recharts";
 
 import {
   Card,
@@ -18,17 +17,8 @@ import {
 
 import { CgCloseR } from "react-icons/cg";
 import type { Dispatch, SetStateAction } from "react";
-import type { DataProps } from "@/helper/coinsList/formattedData";
+import type { DataResponse } from "@/helper/coinsList/formattedData";
 export const description = "A simple area chart";
-
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
 
 const chartConfig = {
   desktop: {
@@ -38,22 +28,30 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface CoinProps {
-  chart: null | DataProps["data"]["prices"];
-  setChart: Dispatch<SetStateAction<DataProps["data"] | null>>;
+  chart: null | DataResponse[];
+  setChart: Dispatch<SetStateAction<DataResponse[] | null>>;
 }
 
 const CoinChart = ({ chart, setChart }: CoinProps) => {
   console.log(chart);
 
+  if (!chart) return;
+
   return (
-    <section className="fixed inset-0 flex flex-col  justify-center px-23 backdrop-blur-sm">
-      <div className="mb-3" onClick={() => setChart(null)}>
+    <section className="fixed inset-0 flex flex-col  justify-center p-23 backdrop-blur-sm max-md:p-8">
+      <div
+        className="mb-3"
+        onClick={() => {
+          setChart(null);
+          document.body.style.overflow = "auto";
+        }}
+      >
         <CgCloseR className="text-[1.3rem]" />
       </div>
 
-      <Card className="">
+      <Card className="bg-[#252525] text-white">
         <CardHeader>
-          <CardTitle>Area Chart</CardTitle>
+          <CardTitle className="tracking-wider">Chart - 7D</CardTitle>
           <CardDescription>
             Showing total visitors for the last 6 months
           </CardDescription>
@@ -62,23 +60,27 @@ const CoinChart = ({ chart, setChart }: CoinProps) => {
           <ChartContainer config={chartConfig}>
             <AreaChart
               accessibilityLayer
-              data={chart ?? []}
+              data={chart}
               margin={{
                 left: 12,
                 right: 12,
               }}
             >
-              <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="timestamp"
+                dataKey="date"
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
+                tickFormatter={(value) => value.slice(0, 4)}
               />
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent indicator="line" />}
+                content={
+                  <ChartTooltipContent
+                    className="text-black"
+                    indicator="line"
+                  />
+                }
               />
               <Area
                 dataKey="prices"
@@ -90,15 +92,15 @@ const CoinChart = ({ chart, setChart }: CoinProps) => {
             </AreaChart>
           </ChartContainer>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="bg-inherit">
           <div className="flex w-full items-start gap-2 text-sm">
             <div className="grid gap-2">
-              <div className="flex items-center gap-2 leading-none font-medium">
+              {/* <div className="flex items-center gap-2 leading-none font-medium">
                 Trending up by 5.2% this month{" "}
                 <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                January - June 2024
+              </div> */}
+              <div className=" flex items-center gap-2 leading-none ">
+                Coinzed
               </div>
             </div>
           </div>
