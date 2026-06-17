@@ -16,6 +16,9 @@ import {
   type ChartConfig,
 } from "../../../@/components/ui/chart";
 
+import { CgCloseR } from "react-icons/cg";
+import type { Dispatch, SetStateAction } from "react";
+import type { DataProps } from "@/helper/coinsList/formattedData";
 export const description = "A simple area chart";
 
 const chartData = [
@@ -34,60 +37,74 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const ChartAreaDefault = () => {
+interface CoinProps {
+  chart: null | DataProps["data"]["prices"];
+  setChart: Dispatch<SetStateAction<DataProps["data"] | null>>;
+}
+
+const CoinChart = ({ chart, setChart }: CoinProps) => {
+  console.log(chart);
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Area Chart</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Area
-              dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
-              stroke="var(--color-desktop)"
-            />
-          </AreaChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
+    <section className="fixed inset-0 flex flex-col  justify-center px-23 backdrop-blur-sm">
+      <div className="mb-3" onClick={() => setChart(null)}>
+        <CgCloseR className="text-[1.3rem]" />
+      </div>
+
+      <Card className="">
+        <CardHeader>
+          <CardTitle>Area Chart</CardTitle>
+          <CardDescription>
+            Showing total visitors for the last 6 months
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ChartContainer config={chartConfig}>
+            <AreaChart
+              accessibilityLayer
+              data={chart ?? []}
+              margin={{
+                left: 12,
+                right: 12,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="timestamp"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="line" />}
+              />
+              <Area
+                dataKey="prices"
+                type="natural"
+                fill="var(--color-desktop)"
+                fillOpacity={0.4}
+                stroke="var(--color-desktop)"
+              />
+            </AreaChart>
+          </ChartContainer>
+        </CardContent>
+        <CardFooter>
+          <div className="flex w-full items-start gap-2 text-sm">
+            <div className="grid gap-2">
+              <div className="flex items-center gap-2 leading-none font-medium">
+                Trending up by 5.2% this month{" "}
+                <TrendingUp className="h-4 w-4" />
+              </div>
+              <div className="flex items-center gap-2 leading-none text-muted-foreground">
+                January - June 2024
+              </div>
             </div>
           </div>
-        </div>
-      </CardFooter>
-    </Card>
+        </CardFooter>
+      </Card>
+    </section>
   );
 };
-export default ChartAreaDefault;
+export default CoinChart;

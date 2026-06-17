@@ -12,35 +12,38 @@ import chartUp from "@/assets/chart-up.svg";
 import chartDown from "@/assets/chart-down.svg";
 import {
   convertedData,
-  marketCapFormatter,
+  PriceCommaFormatter,
   priceFormatter,
   symbolFormatter,
   type DataProps,
+  type DataResponse,
 } from "@/helper/coinsList/formattedData";
 import { useState } from "react";
 
 import { coinChart } from "@/services/coingecko";
+
+import CoinChart from "@/components/modules/Chart";
 
 interface CoinsProps {
   data: MarketType["data"];
 }
 type Types = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data }: CoinsProps) => {
-  const [chart, setChart] = useState<null | DataProps["data"]>(null);
+  const [chart, setChart] = useState<DataResponse[] | null>(null);
   const [type, setType] = useState<Types>("prices");
-  console.log(data);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const coinHandler = async (id: string) => {
-    const res = await coinChart(id);
-
-    setChart(res);
-    console.log(res);
-    console.log(chart);
+    setLoading(true);
+    const data = await coinChart(id, setLoading);
+    console.log(data);
+    if (!data) return;
+    setChart(convertedData(data, type));
   };
 
   return (
     <>
-      {chart && console.log(convertedData(chart, type))}
       {data?.length && (
         <Table className="text-white mt-12 ">
           <TableHeader>
@@ -97,11 +100,11 @@ const CoinsList = ({ data }: CoinsProps) => {
                       {symbolFormatter(symbol)}
                     </div>
                   </TableCell>
-                  <TableCell className="">
+                  <TableCell>
                     $
                     {current_price < 1
                       ? current_price.toFixed(4)
-                      : current_price}
+                      : PriceCommaFormatter(current_price)}
                   </TableCell>
 
                   <TableCell
@@ -109,7 +112,7 @@ const CoinsList = ({ data }: CoinsProps) => {
                   >
                     {percentage_24 ? percentage_24.toFixed(2) : "null"}
                   </TableCell>
-                  <TableCell>{marketCapFormatter(market_cap)}</TableCell>
+                  <TableCell>{PriceCommaFormatter(market_cap)}</TableCell>
 
                   <TableCell>
                     {priceFormatter(circulating_supply)}
@@ -129,6 +132,8 @@ const CoinsList = ({ data }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
+      {loading && <section className="text-9xl">Loading</section>}
+      {chart && <CoinChart setChart={setChart} chart={chart} />}
     </>
   );
 };

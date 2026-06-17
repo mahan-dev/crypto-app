@@ -5,7 +5,7 @@ const priceFormatter = (price: number): string => {
   });
 };
 
-const marketCapFormatter = (number: number) => {
+const PriceCommaFormatter = (number: number): string => {
   return number.toLocaleString(undefined, {
     maximumFractionDigits: 0,
   });
@@ -23,19 +23,22 @@ export interface DataProps {
   };
 }
 
-interface DataResponse {
-  date: string;
+export interface DataResponse {
+  timestamp: string;
   prices: number;
 }
 
 const convertedData = (
   data: DataProps["data"],
   type: "prices" | "market_caps" | "total_volumes",
-): DataResponse[] | void => {
-  return data[type].map((item) => ({
-    date: new Date(item[0]).toLocaleString(),
-    prices: item[1],
-  }));
+): DataResponse[] => {
+  const res = data[type].map((item) => {
+    return {
+      timestamp: new Date(item[0]).toLocaleString(),
+      prices: item[1],
+    };
+  });
+  return res;
 };
 
-export { priceFormatter, marketCapFormatter, symbolFormatter, convertedData };
+export { priceFormatter, PriceCommaFormatter, symbolFormatter, convertedData };

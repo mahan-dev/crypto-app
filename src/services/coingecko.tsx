@@ -2,6 +2,7 @@ import { apiConfig } from "@/configs/apiConfigs";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { MarketType } from "@/types/marketTypes";
 import { isAxiosError } from "axios";
+import type { Dispatch, SetStateAction } from "react";
 
 import { toast } from "sonner";
 
@@ -31,7 +32,10 @@ const getMarketList = async (
   }
 };
 
-const coinChart = async (coin: string): Promise<DataProps["data"] | null> => {
+const coinChart = async (
+  coin: string,
+  setLoading: Dispatch<SetStateAction<boolean>>,
+): Promise<DataProps["data"] | null> => {
   try {
     const res: DataProps = await apiConfig(
       `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=7`,
@@ -39,7 +43,13 @@ const coinChart = async (coin: string): Promise<DataProps["data"] | null> => {
     return res.data;
   } catch (error) {
     console.log("something wen't wrong", error);
+
+    if (error.status === 429) {
+      toast.error(error.errorMessage);
+    }
     return null;
+  } finally {
+    setLoading(false);
   }
 };
 
