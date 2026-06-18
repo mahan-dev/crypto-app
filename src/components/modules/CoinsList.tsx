@@ -40,14 +40,13 @@ const CoinsList = ({ data }: CoinsProps) => {
 
   const coinHandler = async (id: string) => {
     setLoading(true);
-    const tempCoin = id;
+
     const data = await coinChart(id, setLoading);
     if (data) {
-      // setChart(data);
       setCoin(id);
-      type CoinType = MarketType["data"][number]["id"];
-      if(dat) 
-      if (data === keyo) navigate(`/${tempCoin}`);
+      navigate(`${id}`, {
+        state: id,
+      });
     }
   };
 

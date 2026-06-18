@@ -7,7 +7,7 @@ const RouterPage = () => {
     <Routes>
       <Route element={<Home />} path="/" />
 
-      <Route element={<CoinDetail />} path=":coinId" />
+      <Route element={<CoinDetail />} path=":coinId"  />
       <Route
         path="*"
         element={
