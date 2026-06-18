@@ -11,12 +11,10 @@ import {
 import chartUp from "@/assets/chart-up.svg";
 import chartDown from "@/assets/chart-down.svg";
 import {
-  convertedData,
   PriceCommaFormatter,
   priceFormatter,
   symbolFormatter,
   type DataProps,
-  type DataResponse,
 } from "@/helper/coinsList/formattedData";
 import { useEffect, useState } from "react";
 
@@ -24,22 +22,32 @@ import { coinChart } from "@/services/coingecko";
 
 import CoinChart from "@/components/modules/Chart";
 import PageLoader from "../loader/PageLoader";
+import { useNavigate } from "react-router-dom";
 
 interface CoinsProps {
   data: MarketType["data"];
 }
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data }: CoinsProps) => {
-  const [chart, setChart] = useState< DataProps["data"] | null>(null);
+  console.log(data);
+  const [chart, setChart] = useState<DataProps["data"] | null>(null);
   const [type, setType] = useState<TypesCoin>("prices");
+  const [coin, setCoin] = useState("");
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const navigate = useNavigate();
+
   const coinHandler = async (id: string) => {
     setLoading(true);
+    const tempCoin = id;
     const data = await coinChart(id, setLoading);
     if (data) {
-      setChart(data);
+      // setChart(data);
+      setCoin(id);
+      type CoinType = MarketType["data"][number]["id"];
+      if(dat) 
+      if (data === keyo) navigate(`/${tempCoin}`);
     }
   };
 
@@ -49,7 +57,7 @@ const CoinsList = ({ data }: CoinsProps) => {
 
   return (
     <>
-      {data?.length && (
+      {data && data.length && (
         <Table className="text-white mt-12 ">
           <TableHeader>
             <TableRow className="*:text-white hover:bg-transparent">
@@ -138,7 +146,15 @@ const CoinsList = ({ data }: CoinsProps) => {
         </Table>
       )}
       {loading && <PageLoader />}
-      {chart && <CoinChart chart={chart} setChart={setChart} type={type} setType={setType} />}
+      {chart && (
+        <CoinChart
+          chart={chart}
+          setChart={setChart}
+          type={type}
+          setType={setType}
+          coin={coin}
+        />
+      )}
     </>
   );
 };

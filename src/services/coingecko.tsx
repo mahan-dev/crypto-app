@@ -1,7 +1,7 @@
 import { apiConfig } from "@/configs/apiConfigs";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { MarketType } from "@/types/marketTypes";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import type { Dispatch, SetStateAction } from "react";
 
 import { toast } from "sonner";
@@ -24,10 +24,7 @@ const getMarketList = async (
     return response;
   } catch (error) {
     if (isAxiosError(error)) {
-      if (error.response?.status === 429) {
-        toast.error("something went wrong");
-        console.log(error.errorMessage);
-      }
+      toast.error(error.message, positionToast);
     }
     return {
       status: 500,
@@ -46,11 +43,15 @@ const coinChart = async (
     );
     return res.data;
   } catch (error) {
-    console.log("something wen't wrong", error);
-    toast.error("something went wrong", positionToast);
+    if (axios.isAxiosError(error)) {
+      console.log("something wen't wrong", error);
 
-    if (error.status === 429) {
-      toast.error(error.errorMessage);
+      if (error.response?.status === 429)
+        toast.error(error.message, positionToast);
+
+      // if (error.status === 429) {
+      //   toast.error(error.errorMessage);
+      // }
     }
     return null;
   } finally {
