@@ -1,3 +1,5 @@
+import type { MarketType } from "@/types/marketTypes";
+
 const priceFormatter = (price: number): string => {
   return (price / 1000000).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -38,4 +40,14 @@ const convertedData = (
   }));
 };
 
-export { priceFormatter, PriceCommaFormatter, symbolFormatter, convertedData };
+const coinPairHandler = (coin: MarketType["data"][number]["id"]) => {
+  return coin === "usdt" ? `${coin}usd` : `${coin}usdt`;
+};
+
+export {
+  priceFormatter,
+  PriceCommaFormatter,
+  symbolFormatter,
+  convertedData,
+  coinPairHandler,
+};

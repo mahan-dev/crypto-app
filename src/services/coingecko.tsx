@@ -44,14 +44,10 @@ const coinChart = async (
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log("something wen't wrong", error);
+      toast.error("something went wrong", positionToast);
 
       if (error.response?.status === 429)
         toast.error(error.message, positionToast);
-
-      // if (error.status === 429) {
-      //   toast.error(error.errorMessage);
-      // }
     }
     return null;
   } finally {
@@ -59,4 +55,36 @@ const coinChart = async (
   }
 };
 
-export { getMarketList, coinChart };
+const coinWebsocket = async (
+  price: string,
+  setPrice: Dispatch<SetStateAction<number>>,
+) => {
+  const ws = new WebSocket(
+    `wss://fstream.binance.com/market/ws/${price}@aggTrade`,
+  );
+
+  ws.onopen = () => {
+    console.log("Connected to Binance Live Price WebSocket");
+  };
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    // 'p' is the actual last traded price of the coin
+    if (data.p) {
+      setPrice(data.p);
+    }
+  };
+
+  ws.onerror = (error) => {
+    console.log("WebSocket error:", error);
+  };
+
+  ws.onclose = () => {
+    console.log("Disconnected");
+  };
+
+  return ws;
+};
+
+export { getMarketList, coinChart, coinWebsocket };

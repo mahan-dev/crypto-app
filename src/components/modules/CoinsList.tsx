@@ -38,14 +38,17 @@ const CoinsList = ({ data }: CoinsProps) => {
 
   const navigate = useNavigate();
 
-  const coinHandler = async (id: string) => {
+  const coinHandler = async (
+    id: MarketType["data"][number]["id"],
+    symbol: MarketType["data"][number]["symbol"],
+  ) => {
     setLoading(true);
 
     const data = await coinChart(id, setLoading);
     if (data) {
       setCoin(id);
       navigate(`${id}`, {
-        state: id,
+        state: symbol,
       });
     }
   };
@@ -84,6 +87,7 @@ const CoinsList = ({ data }: CoinsProps) => {
             {data.map((coin) => {
               const {
                 id,
+                name,
                 symbol,
                 market_cap_rank,
                 current_price,
@@ -94,8 +98,8 @@ const CoinsList = ({ data }: CoinsProps) => {
               return (
                 <TableRow
                   className="*:text-right cursor-pointer"
-                  key={coin.name}
-                  onClick={() => coinHandler(id)}
+                  key={name}
+                  onClick={() => coinHandler(id, symbol)}
                 >
                   <TableCell className=" first-of-type:text-center">
                     {market_cap_rank}
