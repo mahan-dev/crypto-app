@@ -1,7 +1,6 @@
 import { getMarketList } from "@/services/coingecko";
 import { useState } from "react";
 import CoinsList from "@/components/modules/CoinsList";
-import ChartAreaDefault from "@/components/modules/Chart";
 
 import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
@@ -15,11 +14,16 @@ const Home = () => {
     queryFn: async () => await getMarketList(currency, page),
   });
 
+  console.log(data);
+
+  const filter = data?.data.find((item) => item.id === "bitcoin");
+  console.log(filter);
+
   return (
     <>
       {data && data.data.length ? (
         <>
-          <CoinsList data={data.data} />
+          <CoinsList data={data.data} page={page} currency={currency} />
 
           <PaginationPage page={page} setPage={setPage} />
         </>

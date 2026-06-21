@@ -55,7 +55,7 @@ const coinChart = async (
   }
 };
 
-const coinWebsocket = async (
+const coinWebsocket = (
   price: string,
   setPrice: Dispatch<SetStateAction<number>>,
 ) => {

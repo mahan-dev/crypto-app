@@ -26,9 +26,11 @@ import { useNavigate } from "react-router-dom";
 
 interface CoinsProps {
   data: MarketType["data"];
+  currency: string;
+  page: number;
 }
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
-const CoinsList = ({ data }: CoinsProps) => {
+const CoinsList = ({ data, currency, page }: CoinsProps) => {
   console.log(data);
   const [chart, setChart] = useState<DataProps["data"] | null>(null);
   const [type, setType] = useState<TypesCoin>("prices");
@@ -48,7 +50,7 @@ const CoinsList = ({ data }: CoinsProps) => {
     if (data) {
       setCoin(id);
       navigate(`${id}`, {
-        state: symbol,
+        state: { symbol, currency, page },
       });
     }
   };
