@@ -1,0 +1,32 @@
+@reference "tailwindcss";
+
+.container {
+    @apply flex mt-4 sticky top-5 gap-3
+}
+
+.container__left {
+    @apply sticky top-0 max-w-82.5 w-full p-3;
+}
+
+.left__header {
+    @apply flex mb-4 items-center gap-1.5;
+}
+
+.left__body {
+    @apply flex flex-col gap-2 mt-5;
+}
+
+.body__item {
+    @apply flex flex-col items-center gap-1 py-1 border border-[#5b5b5b] rounded-md;
+}
+
+.item__title {
+    @apply text-[0.8rem] text-gray-400;
+}
+
+.body__grouped {
+    @apply w-full flex gap-2;
+}
+.grouped__item {
+    @apply flex flex-col flex-1 items-center border border-[#5b5b5b] rounded-md p-1;
+}

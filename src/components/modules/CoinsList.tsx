@@ -14,11 +14,8 @@ import {
   PriceCommaFormatter,
   priceFormatter,
   symbolFormatter,
-  type DataProps,
 } from "@/helper/coinsList/formattedData";
-import { useState } from "react";
 
-import CoinChart from "@/components/modules/Chart";
 import { useNavigate } from "react-router-dom";
 
 interface CoinsProps {
@@ -139,16 +136,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
-      {/* {loading && <PageLoader />} */}
-      {chart && (
-        <CoinChart
-          chart={chart}
-          setChart={setChart}
-          type={type}
-          setType={setType}
-          coin={coin}
-        />
-      )}
+     
     </>
   );
 };

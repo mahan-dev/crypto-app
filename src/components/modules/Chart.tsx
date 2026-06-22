@@ -15,11 +15,8 @@ import {
   type ChartConfig,
 } from "../../../@/components/ui/chart";
 
-import { CgCloseR } from "react-icons/cg";
 import {
-  useEffect,
   useMemo,
-  useRef,
   type Dispatch,
   type SetStateAction,
 } from "react";
@@ -62,8 +59,6 @@ const CoinChart = ({ chart, type, setType, coin }: CoinProps) => {
   const buttonHandler = (value: TypesCoin) => {
     setType(value);
   };
-
-  // localStorage.getItem()
 
   return (
     <section className={styles.container}>

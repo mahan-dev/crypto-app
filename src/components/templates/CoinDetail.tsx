@@ -10,6 +10,12 @@ import CoinChart from "../modules/Chart";
 import { coinChart } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/components/modules/CoinsList";
+import {
+  formatPrice,
+  ValueChecker,
+} from "@/helper/coinDetails/coinValueChecker";
+
+import styles from "@/components/templates/styles/coinDetails/route.module.css";
 
 type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
@@ -36,8 +42,7 @@ const CoinDetail = () => {
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
 
   const chartFetcher = async () => {
-    const res = await coinChart(CachedTypeCoin["id"]);
-    setChart(res);
+    await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
   };
 
   useEffect(() => {
@@ -52,16 +57,16 @@ const CoinDetail = () => {
   }
 
   return (
-    <section className="flex mt-4 sticky top-5">
-      <div className=" sticky top-0 max-w-82.5 w-full p-3">
-        <p className="flex mb-4 items-center gap-1.5">
+    <section className={styles.container}>
+      <div className={styles.container__left}>
+        <div className={styles.left__header}>
           <span className="flex items-center  gap-2 tex-[1.2rem] tracking-wide  font-medium line">
             <img
-            className="rounded-full"
+              className="rounded-full"
               src={CachedTypeCoin["image"]}
               width={25}
               height={25}
-              alt=""
+              alt="coin_image"
             />
 
             {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
@@ -70,53 +75,60 @@ const CoinDetail = () => {
             {coinSymbol}
           </span>
           <span className="text-[0.8rem] bg-gray-600 py-0.5 px-2 tracking-wide rounded-lg">
-            {`#${CachedTypeCoin["market_cap_rank"] ?? "N/A"} `}
+            {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
           </span>
-        </p>
+        </div>
 
         <CoinPrice coin={coinSymbol} />
 
-        <div className=" flex  flex-col gap-2 mt-5">
-          <div className="flex flex-col items-center gap-1 py-1 border border-[#5b5b5b] rounded-md">
-            <span className="text-[0.9rem] text-gray-400">Market cap</span>
-            {CachedTypeCoin["market_cap"]}
-          </div>
+          <div className={styles.left__body}>
+            <div className={styles.body__item}>
+              <span className={styles.item__title}>Market cap</span>
+              {formatPrice(CachedTypeCoin["market_cap"])}
+            </div>
 
-          <div className="flex flex-col items-center border border-[#5b5b5b] rounded-md p-1">
-            <span>Volume (24h)</span>
-            {CachedTypeCoin["total_volume"]}
-          </div>
+            <div className={styles.body__grouped}>
+              <div className={styles.grouped__item}>
+                <span className={styles.item__title}>Volume (24h)</span>
+                {formatPrice(CachedTypeCoin["total_volume"])}
+              </div>
 
-          <div className="flex flex-col items-center border border-[#5b5b5b] rounded-md p-1">
-            <span>Vol/Mkt Cap (24h)</span>
-            {CachedTypeCoin["market_cap_change_percentage_24h"].toFixed(2)}
-          </div>
+              <div className={styles.grouped__item}>
+                <span className={styles.item__title}>Vol/Mkt Cap (24h)</span>
+                {CachedTypeCoin["market_cap_change_percentage_24h"].toFixed(2)}
+              </div>
+            </div>
 
-          <div className="flex flex-col py-1 text-center border border-[#5b5b5b] rounded-md">
-            <span>FDV</span>
-            {CachedTypeCoin["fully_diluted_valuation"]}
-          </div>
-          <div className="flex flex-1 flex-col text-center border border-[#5b5b5b] rounded-md py-1">
-            <span>Total supply</span>
-            {CachedTypeCoin["total_supply"]}
-          </div>
+            <div className="flex flex-col py-1 text-center border border-[#5b5b5b] rounded-md">
+              <span className={styles.item__title}>FDV</span>
+              {formatPrice(CachedTypeCoin["fully_diluted_valuation"])}
+            </div>
 
-          <div className="flex flex-1 flex-col text-center border border-[#5b5b5b] rounded-md py-1">
-            <span>Max supply</span>
+            <div className="flex gap-2">
+              <div className="flex flex-1 flex-col text-center border border-[#5b5b5b] rounded-md py-1">
+                <span className={styles.item__title}>Total supply</span>
+                {formatPrice(CachedTypeCoin["total_supply"])}
+              </div>
 
-            {CachedTypeCoin["max_supply"]}
-          </div>
+              <div className="flex flex-1 flex-col text-center border border-[#5b5b5b] rounded-md py-1">
+                <span className={styles.item__title}>Max supply</span>
 
-          <div className="flex flex-col text-center border border-[#5b5b5b] rounded-md py-1">
-            <span>Circulating supply</span>
-            {CachedTypeCoin["circulating_supply"]}
-          </div>
+                {formatPrice(CachedTypeCoin["max_supply"])}
+              </div>
+            </div>
 
-          <div className="flex flex-col text-center border border-[#5b5b5b] rounded-md py-1">
-            <span>Treasury Holdings</span>
-            {CachedTypeCoin["circulating_supply"]}
+            <div className="flex gap-2">
+              <div className="flex flex-col flex-1 text-center border border-[#5b5b5b] rounded-md py-1">
+                <span className={styles.item__title}>Circulating supply</span>
+                {formatPrice(CachedTypeCoin["circulating_supply"])}
+              </div>
+
+              <div className="flex flex-col flex-1 text-center border border-[#5b5b5b] rounded-md py-1">
+                <span className={styles.item__title}>Treasury Holdings</span>
+                {formatPrice(CachedTypeCoin["circulating_supply"])}
+              </div>
+            </div>
           </div>
-        </div>
 
         <div className="fle mt-5 ">
           <p className="">Price Performance</p>
