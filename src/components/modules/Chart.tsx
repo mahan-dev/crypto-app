@@ -32,8 +32,6 @@ import { Button } from "../ui/button";
 import styles from "@/components/modules/css/Chart.module.css";
 import type { MarketType } from "@/types/marketTypes";
 
-export const description = "A simple area chart";
-
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -55,17 +53,7 @@ const chartLabel = [
   { label: "Volume", value: "total_volumes" },
 ] as const;
 
-const CoinChart = ({ chart, setChart, type, setType, coin }: CoinProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const click = (e: globalThis.MouseEvent) => {
-    const currentItem = cardRef.current;
-    if (currentItem && !currentItem.contains(e.target as Node)) {
-      setChart(null);
-    }
-  };
-
-
+const CoinChart = ({ chart, type, setType, coin }: CoinProps) => {
   const finalData = useMemo(() => {
     if (!chart) return null;
     return convertedData(chart, type);
@@ -75,27 +63,14 @@ const CoinChart = ({ chart, setChart, type, setType, coin }: CoinProps) => {
     setType(value);
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", click);
-    return () => document.removeEventListener("mousedown", click);
-  }, []);
+  // localStorage.getItem()
 
   return (
     <section className={styles.container}>
-      <div
-        className="mb-3"
-        onClick={() => {
-          setChart(null);
-          document.body.style.overflow = "auto";
-        }}
-      >
-        <CgCloseR className="text-[1.3rem]" />
-      </div>
-
-      <Card ref={cardRef} className="bg-[#252525] text-white">
+      <Card className="bg-[#252525] text-white">
         <CardHeader>
           <CardTitle className="w-full tracking-wider">
-            Chart - 7D <span className="ml-auto">{coin}</span>{" "}
+            Chart - <span className="ml-auto">{coin}</span>{" "}
           </CardTitle>
           <CardDescription>
             Showing total visitors for the last 6 months

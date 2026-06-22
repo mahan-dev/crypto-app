@@ -16,12 +16,9 @@ import {
   symbolFormatter,
   type DataProps,
 } from "@/helper/coinsList/formattedData";
-import { useEffect, useState } from "react";
-
-import { coinChart } from "@/services/coingecko";
+import { useState } from "react";
 
 import CoinChart from "@/components/modules/Chart";
-import PageLoader from "../loader/PageLoader";
 import { useNavigate } from "react-router-dom";
 
 interface CoinsProps {
@@ -32,11 +29,7 @@ interface CoinsProps {
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
   console.log(data);
-  const [chart, setChart] = useState<DataProps["data"] | null>(null);
-  const [type, setType] = useState<TypesCoin>("prices");
-  const [coin, setCoin] = useState("");
-
-  const [loading, setLoading] = useState<boolean>(false);
+  
 
   const navigate = useNavigate();
 
@@ -44,20 +37,16 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
     id: MarketType["data"][number]["id"],
     symbol: MarketType["data"][number]["symbol"],
   ) => {
-    setLoading(true);
+    const finalD = data.find((item) => item.id === id);
 
-    const data = await coinChart(id, setLoading);
-    if (data) {
-      setCoin(id);
-      navigate(`${id}`, {
-        state: { symbol, currency, page },
-      });
+    if (finalD) {
+      localStorage.setItem("crypto - detail", JSON.stringify(finalD));
     }
-  };
 
-  useEffect(() => {
-    document.body.style.overflow = chart ? "hidden" : "auto";
-  }, [chart]);
+    navigate(`${id}`, {
+      state: { symbol, currency, page },
+    });
+  };
 
   return (
     <>
@@ -150,7 +139,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
-      {loading && <PageLoader />}
+      {/* {loading && <PageLoader />} */}
       {chart && (
         <CoinChart
           chart={chart}

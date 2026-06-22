@@ -33,10 +33,7 @@ const getMarketList = async (
   }
 };
 
-const coinChart = async (
-  coin: string,
-  setLoading: Dispatch<SetStateAction<boolean>>,
-): Promise<DataProps["data"] | null> => {
+const coinChart = async (coin: string): Promise<DataProps["data"] | null> => {
   try {
     const res: DataProps = await apiConfig(
       `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=7`,
@@ -50,8 +47,6 @@ const coinChart = async (
         toast.error(error.message, positionToast);
     }
     return null;
-  } finally {
-    setLoading(false);
   }
 };
 

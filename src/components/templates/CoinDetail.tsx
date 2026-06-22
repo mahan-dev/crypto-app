@@ -3,18 +3,24 @@ import type { MarketType } from "@/types/marketTypes";
 import { useLocation, Navigate } from "react-router-dom";
 
 import CoinPrice from "../elements/CoinPrice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
 import { useQueryClient } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
+import { coinChart } from "@/services/coingecko";
+import type { DataProps } from "@/helper/coinsList/formattedData";
+import type { TypesCoin } from "@/components/modules/CoinsList";
 
 type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
+  const [chart, setChart] = useState<DataProps["data"] | null>(null);
+  const [type, setType] = useState<TypesCoin>("prices");
+
   const location = useLocation();
   const coinName = location.pathname.split("/")[1];
 
   const { symbol, page, currency } = location.state;
-  const coin = symbol as Coin;
+  const coinSymbol = symbol as Coin;
 
   const queryClient = useQueryClient();
   const data: MarketType | undefined = queryClient.getQueryData([
@@ -25,35 +31,50 @@ const CoinDetail = () => {
 
   const filterData = data?.data.find((item) => item.symbol === symbol);
 
-  const { coin: cachedCoin, setCoin } = UseCoin();
+  const { coin: cachedCoin, setCoin: setCachedCoin } = UseCoin();
+
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
 
+  const chartFetcher = async () => {
+    const res = await coinChart(CachedTypeCoin["id"]);
+    setChart(res);
+  };
+
   useEffect(() => {
+    chartFetcher();
     if (!filterData) return;
-    localStorage.setItem("crypto - detail", JSON.stringify(filterData));
-    setCoin(filterData);
+
+    setCachedCoin(filterData);
   }, [filterData]);
 
-  if (coin === null) {
+  if (coinSymbol === null) {
     return <Navigate to={"/"} replace />;
   }
 
   return (
-    <section className="flex mt-2">
+    <section className="flex mt-4 sticky top-5">
       <div className=" sticky top-0 max-w-82.5 w-full p-3">
         <p className="flex mb-4 items-center gap-1.5">
           <span className="flex items-center  gap-2 tex-[1.2rem] tracking-wide  font-medium line">
-            <img src={CachedTypeCoin["image"]} width={25} height={25} alt="" />
+            <img
+            className="rounded-full"
+              src={CachedTypeCoin["image"]}
+              width={25}
+              height={25}
+              alt=""
+            />
 
             {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
           </span>
-          <span className=" text-[0.8rem] text-gray-400 uppercase">{coin}</span>
+          <span className=" text-[0.8rem] text-gray-400 uppercase">
+            {coinSymbol}
+          </span>
           <span className="text-[0.8rem] bg-gray-600 py-0.5 px-2 tracking-wide rounded-lg">
             {`#${CachedTypeCoin["market_cap_rank"] ?? "N/A"} `}
           </span>
         </p>
 
-        <CoinPrice coin={coin} />
+        <CoinPrice coin={coinSymbol} />
 
         <div className=" flex  flex-col gap-2 mt-5">
           <div className="flex flex-col items-center gap-1 py-1 border border-[#5b5b5b] rounded-md">
@@ -112,9 +133,15 @@ const CoinDetail = () => {
           </div>
         </div>
       </div>
-      {/* <div className="w-full">
-        <CoinChart />
-      </div> */}
+      <div className="w-full">
+        <CoinChart
+          coin={CachedTypeCoin["name"]}
+          chart={chart}
+          setChart={setChart}
+          type={type}
+          setType={setType}
+        />
+      </div>
     </section>
   );
 };
