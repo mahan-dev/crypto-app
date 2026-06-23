@@ -5,7 +5,7 @@
 }
 
 .container__left {
-    @apply sticky top-0 max-w-82.5 w-full p-3 shrink-0 max-xl:static  max-[1110px]:max-w-full;
+    @apply sticky top-0 max-w-82.5 w-full p-3 shrink-0 max-xl:static;
 }
 
 .left__header {

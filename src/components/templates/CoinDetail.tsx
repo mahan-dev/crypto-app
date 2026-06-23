@@ -59,93 +59,90 @@ const CoinDetail = () => {
   return (
     <section className={styles.container}>
       <div className={styles.container__left}>
-        <div className={styles.left__header}>
-          <span className="flex items-center  gap-2 tex-[1.2rem] tracking-wide  font-medium line">
-            <img
-              className="rounded-full"
-              src={CachedTypeCoin["image"]}
-              width={25}
-              height={25}
-              alt="coin_image"
-            />
+        <div className="max-[1110px]:hidden">
+          <div className={styles.left__header}>
+            <div className={styles.header__coin}>
+              <span className={styles.coin__image}>
+                <img
+                  className="rounded-full"
+                  src={CachedTypeCoin["image"]}
+                  width={25}
+                  height={25}
+                  alt="coin_image"
+                />
 
-            {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
-          </span>
-          <span className=" text-[0.8rem] text-gray-400 uppercase">
-            {coinSymbol}
-          </span>
-          <span className="text-[0.8rem] bg-gray-600 py-0.5 px-2 tracking-wide rounded-lg">
-            {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
-          </span>
-        </div>
-
-        <CoinPrice coin={coinSymbol} />
-
-          <div className={styles.left__body}>
-            <div className={styles.body__item}>
-              <span className={styles.item__title}>Market cap</span>
-              {formatPrice(CachedTypeCoin["market_cap"])}
-            </div>
-
-            <div className={styles.body__grouped}>
-              <div className={styles.grouped__item}>
-                <span className={styles.item__title}>Volume (24h)</span>
-                {formatPrice(CachedTypeCoin["total_volume"])}
-              </div>
-
-              <div className={styles.grouped__item}>
-                <span className={styles.item__title}>Vol/Mkt Cap (24h)</span>
-                {CachedTypeCoin["market_cap_change_percentage_24h"].toFixed(2)}
-              </div>
-            </div>
-
-            <div className="flex flex-col py-1 text-center border border-[#5b5b5b] rounded-md">
-              <span className={styles.item__title}>FDV</span>
-              {formatPrice(CachedTypeCoin["fully_diluted_valuation"])}
-            </div>
-
-            <div className="flex gap-2">
-              <div className="flex flex-1 flex-col text-center border border-[#5b5b5b] rounded-md py-1">
-                <span className={styles.item__title}>Total supply</span>
-                {formatPrice(CachedTypeCoin["total_supply"])}
-              </div>
-
-              <div className="flex flex-1 flex-col text-center border border-[#5b5b5b] rounded-md py-1">
-                <span className={styles.item__title}>Max supply</span>
-
-                {formatPrice(CachedTypeCoin["max_supply"])}
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="flex flex-col flex-1 text-center border border-[#5b5b5b] rounded-md py-1">
-                <span className={styles.item__title}>Circulating supply</span>
-                {formatPrice(CachedTypeCoin["circulating_supply"])}
-              </div>
-
-              <div className="flex flex-col flex-1 text-center border border-[#5b5b5b] rounded-md py-1">
-                <span className={styles.item__title}>Treasury Holdings</span>
-                {formatPrice(CachedTypeCoin["circulating_supply"])}
-              </div>
+                {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
+              </span>
+              <span className={styles.coin__symbol}>{coinSymbol}</span>
+              <span className={styles["coin__market-cap"]}>
+                {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
+              </span>
             </div>
           </div>
+          <CoinPrice coin={coinSymbol} />
+        </div>
+
+        <div className={styles.left__body}>
+          <div className={styles.body__item}>
+            <span className={styles.item__title}>Market cap</span>
+            {formatPrice(CachedTypeCoin["market_cap"])}
+          </div>
+
+          <div className={styles.body__grouped}>
+            <div className={styles.grouped__item}>
+              <span className={styles.item__title}>Volume (24h)</span>
+              {formatPrice(CachedTypeCoin["total_volume"])}
+            </div>
+
+            <div className={styles.grouped__item}>
+              <span className={styles.item__title}>Vol/Mkt Cap (24h)</span>
+              {CachedTypeCoin["market_cap_change_percentage_24h"].toFixed(2)}
+            </div>
+          </div>
+
+          <div className={styles.grouped__item}>
+            <span className={styles.item__title}>FDV</span>
+            {formatPrice(CachedTypeCoin["fully_diluted_valuation"])}
+          </div>
+
+          <div className={styles.body__grouped}>
+            <div className={styles.grouped__item}>
+              <span className={styles.item__title}>Total supply</span>
+              {formatPrice(CachedTypeCoin["total_supply"])}
+            </div>
+
+            <div className={styles.grouped__item}>
+              <span className={styles.item__title}>Max supply</span>
+
+              {formatPrice(CachedTypeCoin["max_supply"])}
+            </div>
+          </div>
+
+          <div className={styles.body__grouped}>
+            <div className={styles.grouped__item}>
+              <span className={styles.item__title}>Circulating supply</span>
+              {formatPrice(CachedTypeCoin["circulating_supply"])}
+            </div>
+
+            <div className={styles.grouped__item}>
+              <span className={styles.item__title}>Treasury Holdings</span>
+              {formatPrice(CachedTypeCoin["circulating_supply"])}
+            </div>
+          </div>
+        </div>
 
         <div className="fle mt-5 ">
-          <p className="">Price Performance</p>
-
-          <div className="flex justify-between">
-            <span>
-              Low:
-              {CachedTypeCoin["atl"]}
-            </span>
-            <span>
-              High:
-              {CachedTypeCoin["ath"]}
-            </span>
-          </div>
+          <p className=" w-full flex justify-between">
+            <span>All-time high: </span>
+            {CachedTypeCoin["ath"].toFixed(2)}
+          </p>
+          <p className=" w-full flex justify-between">
+            <span>All-time low:</span>
+            {CachedTypeCoin["atl"].toFixed(2)}
+          </p>
         </div>
       </div>
-      <div className="w-full">
+      <div className={styles.container__right}>
         <CoinChart
           coin={CachedTypeCoin["name"]}
           chart={chart}

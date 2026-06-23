@@ -15,11 +15,7 @@ import {
   type ChartConfig,
 } from "../../../@/components/ui/chart";
 
-import {
-  useMemo,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
+import { useEffect, useMemo, type Dispatch, type SetStateAction } from "react";
 import {
   convertedData,
   type DataProps,
@@ -28,6 +24,14 @@ import type { TypesCoin } from "./CoinsList";
 import { Button } from "../ui/button";
 import styles from "@/components/modules/css/Chart.module.css";
 import type { MarketType } from "@/types/marketTypes";
+import { useLocation } from "react-router-dom";
+import UseCoin from "@/hooks/useCoin";
+import { coinChart } from "@/services/coingecko";
+import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
+import CoinPrice from "../elements/CoinPrice";
+
+
+import styles2 from "@/components/modules/css/route.module.css"
 
 const chartConfig = {
   desktop: {
@@ -50,7 +54,9 @@ const chartLabel = [
   { label: "Volume", value: "total_volumes" },
 ] as const;
 
-const CoinChart = ({ chart, type, setType, coin }: CoinProps) => {
+type Coin = MarketType["data"][number]["symbol"];
+
+const CoinChart = ({ chart, type, setType, coin, setChart }: CoinProps) => {
   const finalData = useMemo(() => {
     if (!chart) return null;
     return convertedData(chart, type);
@@ -60,10 +66,48 @@ const CoinChart = ({ chart, type, setType, coin }: CoinProps) => {
     setType(value);
   };
 
+  const location = useLocation();
+  const coinName = location.pathname.split("/")[1];
+  const { coin: cachedCoin, setCoin: setCachedCoin } = UseCoin();
+  const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
+
+  const { symbol, page, currency } = location.state;
+  const coinSymbol = symbol as Coin;
+
+  const chartFetcher = async () => {
+    await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
+  };
+
+  useEffect(() => {
+    chartFetcher();
+  }, []);
+
   return (
     <section className={styles.container}>
       <Card className="bg-[#252525] text-white">
-        <CardHeader>
+        <div className="max-[1110px]:visible min-[1111px]:hidden px-7">
+          <div className={styles2.left__header}>
+            <div className={styles2.header__coin}>
+              <span className={styles2.coin__image}>
+                <img
+                  className="rounded-full"
+                  src={CachedTypeCoin["image"]}
+                  width={25}
+                  height={25}
+                  alt="coin_image"
+                />
+
+                {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
+              </span>
+              <span className={styles2.coin__symbol}>{coinSymbol}</span>
+              <span className={styles2["coin__market-cap"]}>
+                {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
+              </span>
+            </div>
+          </div>
+          <CoinPrice coin={coinSymbol} />
+        </div>
+        <CardHeader className="px-7">
           <CardTitle className="w-full tracking-wider">
             Chart - <span className="ml-auto">{coin}</span>{" "}
           </CardTitle>
