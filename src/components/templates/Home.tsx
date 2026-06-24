@@ -14,11 +14,7 @@ const Home = () => {
     queryFn: async () => await getMarketList(currency, page),
   });
 
-  console.log(data);
-
-  const filter = data?.data.find((item) => item.id === "bitcoin");
-  console.log(filter);
-
+  
   return (
     <>
       {data && data.data.length ? (

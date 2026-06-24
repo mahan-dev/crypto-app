@@ -17,24 +17,28 @@ interface TimeFrameProps {
 }
 
 const TimeFrameDropDown = ({ setDays }: TimeFrameProps) => {
-
-
+  const [position, setPosition] = React.useState("bottom");
 
   const changeHandler = (value: string) => {
     const formattedValue = +value as Days;
 
     setDays(formattedValue);
+    setPosition(value);
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button className="text-black cursor-pointer" variant="outline">
+          Open
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32">
-        <DropdownMenuGroup className="text-black">
-          <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+        <DropdownMenuGroup className="">
+          <DropdownMenuLabel>Chart frame</DropdownMenuLabel>
           <DropdownMenuRadioGroup
+            value={position}
+            className="*:cursor-pointer"
             onValueChange={changeHandler}
           >
             <DropdownMenuRadioItem value="365">1Y</DropdownMenuRadioItem>

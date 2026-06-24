@@ -25,8 +25,6 @@ interface CoinsProps {
 }
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
-  console.log(data);
-  
 
   const navigate = useNavigate();
 
@@ -38,11 +36,11 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
 
     if (finalD) {
       localStorage.setItem("crypto - detail", JSON.stringify(finalD));
-    }
 
-    navigate(`${id}`, {
-      state: { symbol, currency, page },
-    });
+      navigate(`${id}`, {
+        state: { symbol, currency, page },
+      });
+    }
   };
 
   return (
@@ -136,7 +134,6 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
-     
     </>
   );
 };

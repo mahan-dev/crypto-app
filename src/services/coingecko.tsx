@@ -63,7 +63,7 @@ const coinWebsocket = (
   );
 
   ws.onopen = () => {
-    toast.success("connected to socket", positionToast);
+    // toast.success("connected to socket", positionToast);
   };
 
   ws.onmessage = (event) => {

@@ -3,7 +3,7 @@ import type { MarketType } from "@/types/marketTypes";
 import { useLocation, Navigate } from "react-router-dom";
 
 import CoinPrice from "../elements/CoinPrice";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
 import { useQueryClient } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
@@ -16,20 +16,22 @@ import {
 } from "@/helper/coinDetails/coinValueChecker";
 
 import styles from "@/components/templates/styles/coinDetails/route.module.css";
+import CoinStatus from "../modules/CoinStatus";
 
 type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
   const [chart, setChart] = useState<DataProps["data"] | null>(null);
   const [type, setType] = useState<TypesCoin>("prices");
-  
-  const [show] = useState(() => document.body.offsetWidth > 1111)
-  
+
+  const [show] = useState(() => document.body.offsetWidth > 1111);
+ 
 
   const location = useLocation();
   const coinName = location.pathname.split("/")[1];
 
   const { symbol, page, currency } = location.state;
   const coinSymbol = symbol as Coin;
+  console.log(coinSymbol);
 
   const queryClient = useQueryClient();
   const data: MarketType | undefined = queryClient.getQueryData([
@@ -48,9 +50,6 @@ const CoinDetail = () => {
     await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
   };
 
-  
-
-
   useEffect(() => {
     chartFetcher();
     if (!filterData) return;
@@ -58,35 +57,16 @@ const CoinDetail = () => {
     setCachedCoin(filterData);
   }, [filterData]);
 
-  if (coinSymbol === null) {
+  if (!location.state) {
     return <Navigate to={"/"} replace />;
   }
 
   return (
     <section className={styles.container}>
       <div className={styles.container__left}>
-        <div className="max-[1110px]:hidden">
-          <div className={styles.left__header}>
-            <div className={styles.header__coin}>
-              <span className={styles.coin__image}>
-                <img
-                  className="rounded-full"
-                  src={CachedTypeCoin["image"]}
-                  width={25}
-                  height={25}
-                  alt="coin_image"
-                />
-
-                {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
-              </span>
-              <span className={styles.coin__symbol}>{coinSymbol}</span>
-              <span className={styles["coin__market-cap"]}>
-                {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
-              </span>
-            </div>
-          </div>
-          <CoinPrice coin={coinSymbol} boolean={show} />
-        </div>
+        {show && (
+          <CoinStatus coinSymbol={coinSymbol} coinName={coinName} show={show} />
+        )}
 
         <div className={styles.left__body}>
           <div className={styles.body__item}>

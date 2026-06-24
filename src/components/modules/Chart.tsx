@@ -36,8 +36,8 @@ import { coinChart } from "@/services/coingecko";
 import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
 import CoinPrice from "../elements/CoinPrice";
 
-import styles2 from "@/components/modules/css/route.module.css";
 import TimeFrameDropDown from "../elements/TimeFrameDropDown";
+import CoinStatus from "./CoinStatus";
 
 const chartConfig = {
   desktop: {
@@ -60,7 +60,7 @@ const chartLabel = [
   { label: "Volume", value: "total_volumes" },
 ] as const;
 
-type Coin = MarketType["data"][number]["symbol"];
+export type Coin = MarketType["data"][number]["symbol"];
 export type Days = 1 | 7 | 30 | 90 | 365;
 
 const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
@@ -78,7 +78,7 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
 
   const location = useLocation();
   const coinName = location.pathname.split("/")[1];
-  const { coin: cachedCoin, setCoin: setCachedCoin } = UseCoin();
+  const { coin: cachedCoin } = UseCoin();
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
 
   const { symbol } = location.state;
@@ -96,30 +96,17 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
     <section className={styles.container}>
       <Card className="bg-[#252525] text-white">
         <div className="flex justify-between pr-7">
-          <div className="max-[1110px]:visible min-[1111px]:hidden px-7">
-            <div className={styles2.left__header}>
-              <div className={styles2.header__coin}>
-                <span className={styles2.coin__image}>
-                  <img
-                    className="rounded-full"
-                    src={CachedTypeCoin["image"]}
-                    width={25}
-                    height={25}
-                    alt="coin_image"
-                  />
-
-                  {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
-                </span>
-                <span className={styles2.coin__symbol}>{coinSymbol}</span>
-                <span className={styles2["coin__market-cap"]}>
-                  {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
-                </span>
-              </div>
-            </div>
-            <CoinPrice coin={coinSymbol} boolean={show} />
+          <div className="max-[1110px]:visible min-[1111px]:hidden">
+            <CoinStatus
+              coinSymbol={coinSymbol}
+              coinName={coinName}
+              show={show}
+            />
           </div>
 
-          <TimeFrameDropDown setDays={setDays} />
+          <div className="ml-auto">
+            <TimeFrameDropDown setDays={setDays} />
+          </div>
         </div>
 
         <CardContent>
