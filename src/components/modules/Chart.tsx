@@ -15,7 +15,13 @@ import {
   type ChartConfig,
 } from "../../../@/components/ui/chart";
 
-import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import {
   convertedData,
   type DataProps,
@@ -31,6 +37,7 @@ import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
 import CoinPrice from "../elements/CoinPrice";
 
 import styles2 from "@/components/modules/css/route.module.css";
+import TimeFrameDropDown from "../elements/TimeFrameDropDown";
 
 const chartConfig = {
   desktop: {
@@ -54,16 +61,16 @@ const chartLabel = [
 ] as const;
 
 type Coin = MarketType["data"][number]["symbol"];
+export type Days = 1 | 7 | 30 | 90 | 365;
 
-const CoinChart = ({ chart, type, setType, coin, setChart }: CoinProps) => {
-
-  const [show] = useState(() => document.body.offsetWidth <= 1111)
+const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
+  const [show] = useState(() => document.body.offsetWidth <= 1111);
+  const [days, setDays] = useState<Days>(7);
 
   const finalData = useMemo(() => {
     if (!chart) return null;
     return convertedData(chart, type);
   }, [chart, type]);
-  
 
   const buttonHandler = (value: TypesCoin) => {
     setType(value);
@@ -74,54 +81,47 @@ const CoinChart = ({ chart, type, setType, coin, setChart }: CoinProps) => {
   const { coin: cachedCoin, setCoin: setCachedCoin } = UseCoin();
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
 
-  const { symbol} = location.state;
+  const { symbol } = location.state;
   const coinSymbol = symbol as Coin;
 
   const chartFetcher = async () => {
-    await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
+    await coinChart(CachedTypeCoin["id"], days).then((res) => setChart(res));
   };
 
   useEffect(() => {
-    if (document.body.offsetWidth <= 1110) {
-      console.log("hi");
-    }
-
     chartFetcher();
-  }, []);
+  }, [days]);
 
   return (
     <section className={styles.container}>
       <Card className="bg-[#252525] text-white">
-        <div className="max-[1110px]:visible min-[1111px]:hidden px-7">
-          <div className={styles2.left__header}>
-            <div className={styles2.header__coin}>
-              <span className={styles2.coin__image}>
-                <img
-                  className="rounded-full"
-                  src={CachedTypeCoin["image"]}
-                  width={25}
-                  height={25}
-                  alt="coin_image"
-                />
+        <div className="flex justify-between pr-7">
+          <div className="max-[1110px]:visible min-[1111px]:hidden px-7">
+            <div className={styles2.left__header}>
+              <div className={styles2.header__coin}>
+                <span className={styles2.coin__image}>
+                  <img
+                    className="rounded-full"
+                    src={CachedTypeCoin["image"]}
+                    width={25}
+                    height={25}
+                    alt="coin_image"
+                  />
 
-                {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
-              </span>
-              <span className={styles2.coin__symbol}>{coinSymbol}</span>
-              <span className={styles2["coin__market-cap"]}>
-                {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
-              </span>
+                  {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
+                </span>
+                <span className={styles2.coin__symbol}>{coinSymbol}</span>
+                <span className={styles2["coin__market-cap"]}>
+                  {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
+                </span>
+              </div>
             </div>
+            <CoinPrice coin={coinSymbol} boolean={show} />
           </div>
-          <CoinPrice coin={coinSymbol} boolean={show} />
+
+          <TimeFrameDropDown setDays={setDays} />
         </div>
-        <CardHeader className="px-7">
-          <CardTitle className="w-full tracking-wider">
-            Chart - <span className="ml-auto">{coin}</span>{" "}
-          </CardTitle>
-          <CardDescription>
-            Showing total visitors for the last 6 months
-          </CardDescription>
-        </CardHeader>
+
         <CardContent>
           <ChartContainer className="h-100 w-full" config={chartConfig}>
             <AreaChart

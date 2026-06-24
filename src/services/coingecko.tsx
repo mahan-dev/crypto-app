@@ -1,3 +1,4 @@
+import type { Days } from "@/components/modules/Chart";
 import { apiConfig } from "@/configs/apiConfigs";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { MarketType } from "@/types/marketTypes";
@@ -33,10 +34,13 @@ const getMarketList = async (
   }
 };
 
-const coinChart = async (coin: string): Promise<DataProps["data"] | null> => {
+const coinChart = async (
+  coin: string,
+  days: Days = 7, // 7 days
+): Promise<DataProps["data"] | null> => {
   try {
     const res: DataProps = await apiConfig(
-      `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=7`,
+      `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=${days}`,
     );
     return res.data;
   } catch (error) {
@@ -51,33 +55,31 @@ const coinChart = async (coin: string): Promise<DataProps["data"] | null> => {
 };
 
 const coinWebsocket = (
-  price: string,
+  coin: string,
   setPrice: Dispatch<SetStateAction<number>>,
 ) => {
-
   const ws = new WebSocket(
-    `wss://fstream.binance.com/market/ws/${price}@aggTrade`,
+    `wss://fstream.binance.com/market/ws/${coin}@aggTrade`,
   );
 
   ws.onopen = () => {
-    console.log("Connected to Binance Live Price WebSocket");
+    toast.success("connected to socket", positionToast);
   };
 
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
 
-    // 'p' is the actual last traded price of the coin
     if (data.p) {
       setPrice(data.p);
     }
   };
 
   ws.onerror = (error) => {
-    console.log("WebSocket error:", error);
+    console.log("websocket error", error);
   };
 
   ws.onclose = () => {
-    console.log("Disconnected");
+    toast.error("something went't wrong", positionToast);
   };
 
   return ws;

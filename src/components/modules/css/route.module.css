@@ -29,7 +29,7 @@
 }
 
 .coin__market-cap {
-    @apply text-[0.8rem] bg-gray-600 py-0.5 px-2 tracking-wide rounded-lg;
+    @apply text-[0.8rem] bg-[#424242] py-0.5 px-2 tracking-wide rounded-lg;
 }
 
 .left__body {

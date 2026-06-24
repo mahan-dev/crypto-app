@@ -3,11 +3,11 @@ import type { MarketType } from "@/types/marketTypes";
 import { useLocation, Navigate } from "react-router-dom";
 
 import CoinPrice from "../elements/CoinPrice";
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
 import { useQueryClient } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
-import { coinChart, coinWebsocket } from "@/services/coingecko";
+import { coinChart } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/components/modules/CoinsList";
 import {
