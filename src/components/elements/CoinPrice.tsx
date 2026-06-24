@@ -8,8 +8,9 @@ type Coin = MarketType["data"][number]["symbol"];
 
 interface CoinProps {
   coin: Coin;
+  boolean: boolean;
 }
-const CoinPrice = ({ coin }: CoinProps) => {
+const CoinPrice = ({ coin, boolean }: CoinProps) => {
   const [price, setPrice] = useState(0);
 
   const coinDetailsFetcher = () => {
@@ -20,6 +21,8 @@ const CoinPrice = ({ coin }: CoinProps) => {
     coinWebsocket(convertedCoin, setPrice);
   };
   useEffect(() => {
+    if (!boolean) return;
+
     coinDetailsFetcher();
   }, []);
 

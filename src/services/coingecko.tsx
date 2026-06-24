@@ -54,6 +54,7 @@ const coinWebsocket = (
   price: string,
   setPrice: Dispatch<SetStateAction<number>>,
 ) => {
+
   const ws = new WebSocket(
     `wss://fstream.binance.com/market/ws/${price}@aggTrade`,
   );

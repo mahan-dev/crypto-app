@@ -3,11 +3,11 @@ import type { MarketType } from "@/types/marketTypes";
 import { useLocation, Navigate } from "react-router-dom";
 
 import CoinPrice from "../elements/CoinPrice";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
 import { useQueryClient } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
-import { coinChart } from "@/services/coingecko";
+import { coinChart, coinWebsocket } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/components/modules/CoinsList";
 import {
@@ -21,6 +21,9 @@ type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
   const [chart, setChart] = useState<DataProps["data"] | null>(null);
   const [type, setType] = useState<TypesCoin>("prices");
+  
+  const [show] = useState(() => document.body.offsetWidth > 1111)
+  
 
   const location = useLocation();
   const coinName = location.pathname.split("/")[1];
@@ -44,6 +47,9 @@ const CoinDetail = () => {
   const chartFetcher = async () => {
     await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
   };
+
+  
+
 
   useEffect(() => {
     chartFetcher();
@@ -79,7 +85,7 @@ const CoinDetail = () => {
               </span>
             </div>
           </div>
-          <CoinPrice coin={coinSymbol} />
+          <CoinPrice coin={coinSymbol} boolean={show} />
         </div>
 
         <div className={styles.left__body}>

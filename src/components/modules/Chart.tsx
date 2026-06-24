@@ -15,7 +15,7 @@ import {
   type ChartConfig,
 } from "../../../@/components/ui/chart";
 
-import { useEffect, useMemo, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import {
   convertedData,
   type DataProps,
@@ -30,8 +30,7 @@ import { coinChart } from "@/services/coingecko";
 import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
 import CoinPrice from "../elements/CoinPrice";
 
-
-import styles2 from "@/components/modules/css/route.module.css"
+import styles2 from "@/components/modules/css/route.module.css";
 
 const chartConfig = {
   desktop: {
@@ -57,10 +56,14 @@ const chartLabel = [
 type Coin = MarketType["data"][number]["symbol"];
 
 const CoinChart = ({ chart, type, setType, coin, setChart }: CoinProps) => {
+
+  const [show] = useState(() => document.body.offsetWidth <= 1111)
+
   const finalData = useMemo(() => {
     if (!chart) return null;
     return convertedData(chart, type);
   }, [chart, type]);
+  
 
   const buttonHandler = (value: TypesCoin) => {
     setType(value);
@@ -71,7 +74,7 @@ const CoinChart = ({ chart, type, setType, coin, setChart }: CoinProps) => {
   const { coin: cachedCoin, setCoin: setCachedCoin } = UseCoin();
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
 
-  const { symbol, page, currency } = location.state;
+  const { symbol} = location.state;
   const coinSymbol = symbol as Coin;
 
   const chartFetcher = async () => {
@@ -79,6 +82,10 @@ const CoinChart = ({ chart, type, setType, coin, setChart }: CoinProps) => {
   };
 
   useEffect(() => {
+    if (document.body.offsetWidth <= 1110) {
+      console.log("hi");
+    }
+
     chartFetcher();
   }, []);
 
@@ -105,7 +112,7 @@ const CoinChart = ({ chart, type, setType, coin, setChart }: CoinProps) => {
               </span>
             </div>
           </div>
-          <CoinPrice coin={coinSymbol} />
+          <CoinPrice coin={coinSymbol} boolean={show} />
         </div>
         <CardHeader className="px-7">
           <CardTitle className="w-full tracking-wider">
