@@ -1,13 +1,6 @@
 import { Area, AreaChart, XAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../../@/components/ui/card";
+import { Card, CardContent, CardFooter } from "../../../@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
@@ -33,11 +26,9 @@ import type { MarketType } from "@/types/marketTypes";
 import { useLocation } from "react-router-dom";
 import UseCoin from "@/hooks/useCoin";
 import { coinChart } from "@/services/coingecko";
-import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
-import CoinPrice from "../elements/CoinPrice";
 
-import TimeFrameDropDown from "../elements/TimeFrameDropDown";
 import CoinStatus from "./CoinStatus";
+import ChartTabs from "../elements/ChartTabs";
 
 const chartConfig = {
   desktop: {
@@ -105,7 +96,7 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
           </div>
 
           <div className="ml-auto">
-            <TimeFrameDropDown setDays={setDays} />
+            <ChartTabs setDays={setDays} />
           </div>
         </div>
 

@@ -3,7 +3,7 @@ import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
 import type { Coin } from "./Chart";
 import UseCoin from "@/hooks/useCoin";
 import type { MarketType } from "@/types/marketTypes";
-import { useState } from "react";
+
 import CoinPrice from "@/components/elements/CoinPrice";
 
 interface CoinProps {
@@ -15,6 +15,7 @@ const CoinStatus = ({ coinSymbol, coinName, show }: CoinProps) => {
   const { coin: cachedCoin } = UseCoin();
 
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
+  console.log(CachedTypeCoin);
 
   return (
     <div className=" px-7">
@@ -37,7 +38,11 @@ const CoinStatus = ({ coinSymbol, coinName, show }: CoinProps) => {
           </span>
         </div>
       </div>
-      <CoinPrice coin={coinSymbol} boolean={show} />
+      {CachedTypeCoin["id"] === "tether" ? (
+        <span>${CachedTypeCoin["current_price"]}</span>
+      ) : (
+        <CoinPrice coin={coinSymbol} boolean={show} />
+      )}
     </div>
   );
 };

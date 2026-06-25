@@ -2,7 +2,6 @@ import type { MarketType } from "@/types/marketTypes";
 
 import { useLocation, Navigate } from "react-router-dom";
 
-import CoinPrice from "../elements/CoinPrice";
 import { useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,10 +9,7 @@ import CoinChart from "../modules/Chart";
 import { coinChart } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/components/modules/CoinsList";
-import {
-  formatPrice,
-  ValueChecker,
-} from "@/helper/coinDetails/coinValueChecker";
+import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 
 import styles from "@/components/templates/styles/coinDetails/route.module.css";
 import CoinStatus from "../modules/CoinStatus";
@@ -24,7 +20,6 @@ const CoinDetail = () => {
   const [type, setType] = useState<TypesCoin>("prices");
 
   const [show] = useState(() => document.body.offsetWidth > 1111);
- 
 
   const location = useLocation();
   const coinName = location.pathname.split("/")[1];
@@ -64,9 +59,15 @@ const CoinDetail = () => {
   return (
     <section className={styles.container}>
       <div className={styles.container__left}>
-        {show && (
-          <CoinStatus coinSymbol={coinSymbol} coinName={coinName} show={show} />
-        )}
+        <div className="max-[1110px]:hidden min-[1111px]:visible">
+          {show && (
+            <CoinStatus
+              coinSymbol={coinSymbol}
+              coinName={coinName}
+              show={show}
+            />
+          )}
+        </div>
 
         <div className={styles.left__body}>
           <div className={styles.body__item}>
