@@ -1,6 +1,7 @@
 import type { Days } from "@/components/modules/Chart";
 import { apiConfig } from "@/configs/apiConfigs";
 import type { DataProps } from "@/helper/coinsList/formattedData";
+import type { CoinSentiment } from "@/types/coinTypes";
 import type { MarketType } from "@/types/marketTypes";
 import axios, { isAxiosError } from "axios";
 import type { Dispatch, SetStateAction } from "react";
@@ -42,16 +43,25 @@ const coinChart = async (
     const res: DataProps = await apiConfig(
       `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=${days}`,
     );
+    console.log(res);
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       toast.error("something went wrong", positionToast);
 
       if (error.response?.status === 429)
-        toast.error(error.message, positionToast);
+        toast.error("too many requests", positionToast);
     }
     return null;
   }
+};
+
+type CoinType = MarketType["data"][number]["id"];
+const coinSentiment = async (coin: CoinType): Promise<CoinSentiment> => {
+  const { data } = await axios<CoinSentiment>(
+    `https://api.coingecko.com/api/v3/coins/${coin}`,
+  );
+  return data;
 };
 
 const coinWebsocket = (
@@ -85,4 +95,4 @@ const coinWebsocket = (
   return ws;
 };
 
-export { getMarketList, coinChart, coinWebsocket };
+export { getMarketList, coinChart, coinWebsocket, coinSentiment };

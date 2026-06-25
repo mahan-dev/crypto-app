@@ -60,7 +60,9 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
 
   const finalData = useMemo(() => {
     if (!chart) return null;
-    return convertedData(chart, type);
+    const items = convertedData(chart, type);
+    console.log(items);
+    return items;
   }, [chart, type]);
 
   const buttonHandler = (value: TypesCoin) => {

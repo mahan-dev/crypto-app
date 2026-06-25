@@ -6,18 +6,24 @@ import { useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
 import { useQueryClient } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
-import { coinChart } from "@/services/coingecko";
+import { coinChart, coinSentiment } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/components/modules/CoinsList";
 import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 
 import styles from "@/components/templates/styles/coinDetails/route.module.css";
 import CoinStatus from "../modules/CoinStatus";
+import WinLossBar from "../elements/SentimentGraph";
+import type { CoinSentiment } from "@/types/coinTypes";
+
+import { VscDashboard } from "react-icons/vsc";
 
 type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
   const [chart, setChart] = useState<DataProps["data"] | null>(null);
   const [type, setType] = useState<TypesCoin>("prices");
+  const [sentiment, setSentiment] = useState<CoinSentiment>();
+  console.log(sentiment);
 
   const [show] = useState(() => document.body.offsetWidth > 1111);
 
@@ -41,12 +47,13 @@ const CoinDetail = () => {
 
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
 
-  const chartFetcher = async () => {
+  const coinDetailFetcher = async () => {
     await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
+    await coinSentiment(CachedTypeCoin["id"]).then((res) => setSentiment(res));
   };
 
   useEffect(() => {
-    chartFetcher();
+    coinDetailFetcher();
     if (!filterData) return;
 
     setCachedCoin(filterData);
@@ -137,6 +144,19 @@ const CoinDetail = () => {
           type={type}
           setType={setType}
         />
+      </div>
+      <div>
+        {sentiment && (
+          <div className="flex flex-col w-82.5 p-3 gap-2">
+            <span className="flex items-center gap-1.5">
+              <VscDashboard className="text-[1.3rem]" /> Community sentiment
+            </span>
+            <WinLossBar
+              sentimentUp={sentiment.sentiment_votes_up_percentage}
+              sentimentDown={sentiment.sentiment_votes_down_percentage}
+            />
+          </div>
+        )}
       </div>
     </section>
   );
