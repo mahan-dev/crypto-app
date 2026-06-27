@@ -1,0 +1,5 @@
+@reference "tailwindcss";
+
+.card {
+    @apply w-full bg-[#252525] text-white ;
+}

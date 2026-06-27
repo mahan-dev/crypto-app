@@ -1,5 +1,6 @@
 import { TrendingUp, TrendingDown } from "lucide-react";
 
+import styles from "@/components/elements/styles/sentimentGraph/route.module.css";
 
 interface WinLossBarProps {
   sentimentUp: number;
@@ -7,31 +8,30 @@ interface WinLossBarProps {
 }
 
 const WinLossBar = ({ sentimentUp, sentimentDown }: WinLossBarProps) => {
-  // Ensure the percentage stays between 0 and 100
   const statusUp = sentimentUp;
   const statusDown = sentimentDown;
 
   return (
-    <div className="flex items-center gap-3 font-sans select-none text-sm font-semibold tracking-wide">
-      <div className="flex items-center gap-1.5 text-emerald-500">
+    <div className={styles.sentiment}>
+      <div className={styles.sentiment__trendingUp}>
         <TrendingUp className=" stroke-[2.5]" />
-        <span>{statusUp|| 20}%</span>
+        <span>{statusUp || "null"}%</span>
       </div>
 
-      <div className="relative flex h-5 w-64 overflow-hidden rounded-full bg-slate-900">
+      <div className={styles.sentiment__graph}>
         <div
-          style={{ width: `${statusUp|| 20}%` }}
-          className="h-full  bg-emerald-500 border-r-2 border-slate-950 transition-all duration-500"
+          style={{ width: `${statusUp || 20}%` }}
+          className={styles.graph__green}
         />
 
         <div
-          style={{ width: `${statusDown|| 20}%` }}
-          className="h-full bg-rose-500 transition-all duration-500"
+          style={{ width: `${statusDown || 20}%` }}
+          className={styles.graph__red}
         />
       </div>
 
-      <div className="flex items-center gap-1.5 text-rose-500">
-        <span>{statusDown|| 20}%</span>
+      <div className={styles.graph__red__down}>
+        <span>{statusDown || "null"}%</span>
 
         <TrendingDown className="stroke-[2.5]" />
       </div>

@@ -1,0 +1,33 @@
+
+@reference "tailwindcss";
+.sentiment {
+    @apply flex items-center gap-3 font-sans select-none text-sm font-semibold tracking-wide;
+}
+
+.sentiment__trendingUp {
+    @apply flex items-center gap-1.5 text-emerald-500;
+}
+
+.sentiment__graph {
+    @apply flex h-5 w-64 overflow-hidden rounded-full bg-slate-900;
+}
+
+.graph__green {
+    @apply h-full  bg-emerald-500 border-r-2 border-slate-950 transition-all duration-500
+}
+
+.graph__red {
+    @apply h-full bg-rose-500 transition-all duration-500;
+
+}
+
+.graph__red__down {
+    @apply flex items-center gap-1.5 text-rose-500;
+}
+
+@media only screen and (max-width: 1109px) {
+    .sentiment, .sentiment__graph{
+        @apply w-full;
+    }
+    
+}

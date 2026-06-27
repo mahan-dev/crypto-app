@@ -15,7 +15,6 @@ const coinDetailFetcher = async ({
   setChart,
   setSentiment,
 }: FetcherProps) => {
-    console.log("working")
   await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
   await coinSentiment(CachedTypeCoin["id"]).then((res) => setSentiment(res));
 };

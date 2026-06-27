@@ -21,7 +21,7 @@ import {
 } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "./CoinsList";
 import { Button } from "../ui/button";
-import styles from "@/components/modules/css/Chart.module.css";
+import styles from "@/components/modules/css/chart/route.module.css";
 import type { MarketType } from "@/types/marketTypes";
 import { useLocation } from "react-router-dom";
 import UseCoin from "@/hooks/useCoin";
@@ -29,6 +29,7 @@ import { coinChart } from "@/services/coingecko";
 
 import CoinStatus from "./CoinStatus";
 import ChartTabs from "../elements/ChartTabs";
+import { chartLabel } from "@/constants/chart/chart";
 
 const chartConfig = {
   desktop: {
@@ -45,11 +46,7 @@ interface CoinProps {
   coin: MarketType["data"][number]["name"];
 }
 
-const chartLabel = [
-  { label: "Prices", value: "prices" },
-  { label: "Market Cap", value: "market_caps" },
-  { label: "Volume", value: "total_volumes" },
-] as const;
+
 
 export type Coin = MarketType["data"][number]["symbol"];
 export type Days = 1 | 7 | 30 | 90 | 365;
@@ -87,7 +84,7 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
 
   return (
     <>
-      <Card className="bg-[#252525] text-white">
+      <Card className={styles.card}>
         <div className="flex justify-between pr-7 max-sm:mb-4 max-sm:flex-wrap max-sm:gap-2">
           <div className="max-[1110px]:visible min-[1111px]:hidden">
             <CoinStatus

@@ -4,6 +4,10 @@
     @apply flex flex-wrap mt-4 sticky top-5 gap-3 max-lg:px-3;
 }
 
+.container__loader {
+    @apply flex backdrop-blur-2xl justify-center items-center fixed z-50 inset-0 h-screen;
+}
+
 .container__left {
     @apply max-w-82.5 w-full p-3 shrink-0 max-xl:static  max-[1110px]:max-w-full;
 }
@@ -52,10 +56,28 @@
 }
 
 .container__main {
-    @apply min-w-[600px] w-full max-sm:min-w-auto;
+    @apply flex gap-3 min-w-[600px] w-full max-sm:min-w-auto ;
     flex: 1 1 0;
 }
 
+.sentiment {
+    @apply w-82.5;
+}
+
+.sentiment__container {
+    @apply w-full flex flex-col p-3 gap-2;
+}
+.container__title {
+    @apply flex items-center gap-1.5;
+}
+
+
+@media only screen and (max-width:1380px) {
+    .container__main{
+        @apply flex-wrap
+    }
+    
+}
 
 @media only screen and (max-width: 1109px) {
     .container {
@@ -63,6 +85,9 @@
     }
     .container__main {
         @apply -order-1
+    }
+    .sentiment {
+        @apply w-full;
     }
     
 }
