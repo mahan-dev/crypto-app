@@ -1,9 +1,10 @@
-import { getMarketList } from "@/services/coingecko";
+import { ferAndGreedApi, getMarketList } from "@/services/coingecko";
 import { useState } from "react";
 import CoinsList from "@/components/modules/CoinsList";
 
 import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
+import ReactGauge from "../modules/ReactGauge";
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -14,7 +15,6 @@ const Home = () => {
     queryFn: async () => await getMarketList(currency, page),
   });
 
-  
   return (
     <>
       {data && data.data.length ? (
@@ -22,6 +22,7 @@ const Home = () => {
           <CoinsList data={data.data} page={page} currency={currency} />
 
           <PaginationPage page={page} setPage={setPage} />
+          {/* <ReactGauge /> */}
         </>
       ) : (
         <h2 className="w-full flex justify-center mt-6">

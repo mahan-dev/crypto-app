@@ -97,4 +97,15 @@ const coinWebsocket = (
   return ws;
 };
 
-export { getMarketList, coinChart, coinWebsocket, coinSentiment };
+const ferAndGreedApi = async () => {
+  const { data } = await axios("https://api.alternative.me/fng/");
+  return data;
+};
+
+export {
+  getMarketList,
+  coinChart,
+  coinWebsocket,
+  coinSentiment,
+  ferAndGreedApi,
+};
