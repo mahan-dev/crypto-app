@@ -1,10 +1,10 @@
 import type { MarketType } from "@/types/marketTypes";
 
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation, Navigate, useNavigate } from "react-router-dom";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
 import UseCoin from "@/hooks/useCoin";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
 import { coinChart, coinSentiment } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
@@ -17,17 +17,18 @@ import WinLossBar from "../elements/SentimentGraph";
 import type { CoinSentiment } from "@/types/coinTypes";
 
 import { VscDashboard } from "react-icons/vsc";
+import Loader from "../loader/Loader";
 
 type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
   const [chart, setChart] = useState<DataProps["data"] | null>(null);
   const [type, setType] = useState<TypesCoin>("prices");
   const [sentiment, setSentiment] = useState<CoinSentiment>();
-  console.log(sentiment);
 
   const [show] = useState(() => document.body.offsetWidth > 1111);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const coinName = location.pathname.split("/")[1];
 
   const { symbol, page, currency } = location.state;
@@ -47,13 +48,23 @@ const CoinDetail = () => {
 
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
 
-  const coinDetailFetcher = async () => {
-    await coinChart(CachedTypeCoin["id"]).then((res) => setChart(res));
-    await coinSentiment(CachedTypeCoin["id"]).then((res) => setSentiment(res));
-  };
+  const {
+    isLoading,
+    isError,
+    data: fetchedDetails,
+  } = useQuery({
+    queryKey: ["coin-details", CachedTypeCoin?.id],
+    queryFn: async () => {
+      const [chartData, sentimentData] = await Promise.all([
+        coinChart(CachedTypeCoin["id"]).then((res) => setChart(res)),
+        coinSentiment(CachedTypeCoin["id"]).then((res) => setSentiment(res)),
+      ]);
+
+      return { chartData, sentimentData };
+    },
+  });
 
   useEffect(() => {
-    coinDetailFetcher();
     if (!filterData) return;
 
     setCachedCoin(filterData);
@@ -63,8 +74,17 @@ const CoinDetail = () => {
     return <Navigate to={"/"} replace />;
   }
 
+  if (isError) navigate("/notFound");
+
   return (
     <section className={styles.container}>
+      {isLoading && (
+        <div className="flex backdrop-blur-2xl justify-center items-center fixed z-50 inset-0 h-screen ">
+          <Loader />
+        </div>
+      )}
+
+   
       <div className={styles.container__left}>
         <div className="max-[1110px]:hidden min-[1111px]:visible">
           {show && (
@@ -90,7 +110,7 @@ const CoinDetail = () => {
 
             <div className={styles.grouped__item}>
               <span className={styles.item__title}>Vol/Mkt Cap (24h)</span>
-              {CachedTypeCoin["market_cap_change_percentage_24h"].toFixed(2)}
+              {formatPrice(CachedTypeCoin["market_cap_change_percentage_24h"])}%
             </div>
           </div>
 
@@ -136,7 +156,7 @@ const CoinDetail = () => {
           </p>
         </div>
       </div>
-      <div className={styles.container__right}>
+      <div className={styles.container__main}>
         <CoinChart
           coin={CachedTypeCoin["name"]}
           chart={chart}
@@ -145,9 +165,10 @@ const CoinDetail = () => {
           setType={setType}
         />
       </div>
-      <div>
+      
+      <div className="w-82.5 shrink-0">
         {sentiment && (
-          <div className="flex flex-col w-82.5 p-3 gap-2">
+          <div className="flex flex-col p-3 gap-2">
             <span className="flex items-center gap-1.5">
               <VscDashboard className="text-[1.3rem]" /> Community sentiment
             </span>

@@ -15,23 +15,23 @@ const WinLossBar = ({ sentimentUp, sentimentDown }: WinLossBarProps) => {
     <div className="flex items-center gap-3 font-sans select-none text-sm font-semibold tracking-wide">
       <div className="flex items-center gap-1.5 text-emerald-500">
         <TrendingUp className=" stroke-[2.5]" />
-        <span>{statusUp}%</span>
+        <span>{statusUp|| 20}%</span>
       </div>
 
       <div className="relative flex h-5 w-64 overflow-hidden rounded-full bg-slate-900">
         <div
-          style={{ width: `${statusUp}%` }}
+          style={{ width: `${statusUp|| 20}%` }}
           className="h-full  bg-emerald-500 border-r-2 border-slate-950 transition-all duration-500"
         />
 
         <div
-          style={{ width: `${statusDown}%` }}
+          style={{ width: `${statusDown|| 20}%` }}
           className="h-full bg-rose-500 transition-all duration-500"
         />
       </div>
 
       <div className="flex items-center gap-1.5 text-rose-500">
-        <span>{statusDown}%</span>
+        <span>{statusDown|| 20}%</span>
 
         <TrendingDown className="stroke-[2.5]" />
       </div>

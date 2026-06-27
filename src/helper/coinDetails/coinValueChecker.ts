@@ -10,10 +10,11 @@ const formatPrice = (value: number) => {
   const formattedPart = Math.trunc(value);
 
   if (formattedPart) {
-      if (value >= T) return `${(value / T).toFixed(2)} T`;
-      if (value >= B) return `${(value / B).toFixed(2)} B`;
+    if (value >= T) return `${(value / T).toFixed(2)} T`;
+    if (value >= B) return `${(value / B).toFixed(2)} B`;
     if (value >= M) return `${(value / M).toFixed(2)} M`;
   } else {
+    if (value > 0) return `${value.toFixed(2)}`;
     return "null";
   }
 };

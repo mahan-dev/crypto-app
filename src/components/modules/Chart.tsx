@@ -86,9 +86,9 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
   }, [days]);
 
   return (
-    <section className={styles.container}>
+    <>
       <Card className="bg-[#252525] text-white">
-        <div className="flex justify-between pr-7">
+        <div className="flex justify-between pr-7 max-sm:mb-4 max-sm:flex-wrap max-sm:gap-2">
           <div className="max-[1110px]:visible min-[1111px]:hidden">
             <CoinStatus
               coinSymbol={coinSymbol}
@@ -154,7 +154,7 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
         </div>
         <CardFooter className="bg-inherit">Coinzed</CardFooter>
       </Card>
-    </section>
+    </>
   );
 };
 export default CoinChart;

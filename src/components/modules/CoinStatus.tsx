@@ -15,7 +15,6 @@ const CoinStatus = ({ coinSymbol, coinName, show }: CoinProps) => {
   const { coin: cachedCoin } = UseCoin();
 
   const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
-  console.log(CachedTypeCoin);
 
   return (
     <div className=" px-7">

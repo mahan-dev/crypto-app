@@ -26,6 +26,9 @@ const getMarketList = async (
     return response;
   } catch (error) {
     if (isAxiosError(error)) {
+      if (error.response?.status === 429) {
+        toast.error("too many requests", positionToast);
+      }
       toast.error(error.message, positionToast);
     }
     return {
@@ -43,7 +46,6 @@ const coinChart = async (
     const res: DataProps = await apiConfig(
       `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=${days}`,
     );
-    console.log(res);
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

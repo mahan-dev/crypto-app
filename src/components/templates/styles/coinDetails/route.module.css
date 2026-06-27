@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .container {
-    @apply flex mt-4 sticky top-5 gap-3 max-lg:px-3;
+    @apply flex flex-wrap mt-4 sticky top-5 gap-3 max-lg:px-3;
 }
 
 .container__left {
@@ -51,16 +51,17 @@
     @apply flex flex-col flex-1 items-center border border-[#5b5b5b] rounded-md p-1;
 }
 
-.container__right {
-    @apply w-full;
+.container__main {
+    @apply min-w-[600px] w-full max-sm:min-w-auto;
+    flex: 1 1 0;
 }
 
 
-@media only screen and (max-width: 1110px) {
+@media only screen and (max-width: 1109px) {
     .container {
         @apply flex-wrap
     }
-    .container__right {
+    .container__main {
         @apply -order-1
     }
     
