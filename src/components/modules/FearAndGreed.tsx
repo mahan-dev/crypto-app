@@ -1,21 +1,20 @@
-import { ferAndGreedApi } from "@/services/coingecko";
+import { fearAndGreedApi } from "@/services/coingecko";
 import { useQuery } from "@tanstack/react-query";
 import { GaugeComponent } from "react-gauge-component";
+import styles from "@/components/modules/css/fearAndGreed/route.module.css";
 
-const ReactGauge = () => {
+const FearAndGreed = () => {
   const { data } = useQuery({
     queryKey: ["fearAndGreed"],
-    queryFn: async () => ferAndGreedApi(),
+    queryFn: async () => fearAndGreedApi(),
   });
-
-  console.log(data?.data[0].value);
 
   const status = data?.data[0].value_classification;
 
   return (
-    <section className="w-fit bg-red-500  rounded-lg px-4 py-2">
-      <span className="font-medium">Fear & Greed</span>
-      <div className="flex justify-center relative w-35 h-20">
+    <section className={styles.gauge}>
+      <h4 className={styles.gauge__title}>Fear & Greed</h4>
+      <div className={styles.gauge__content}>
         <GaugeComponent
           value={data?.data[0].value}
           type="semicircle"
@@ -39,8 +38,6 @@ const ReactGauge = () => {
           }}
           labels={{
             valueLabel: {
-              //  formatTextValue: (value) => `${value}\nFear & Greed`,
-              // formatTextValue: (e) => "".concat(e.toFixed(0)),
               style: {
                 fontSize: "50px",
                 display: "none",
@@ -52,7 +49,6 @@ const ReactGauge = () => {
               type: "outer",
               hideMinMax: true,
               defaultTickValueConfig: {
-                // formatTextValue: (e) => "".concat(e, "\xb0"),
                 style: { fontSize: "9px", fill: "#aaa" },
               },
               defaultTickLineConfig: { color: "#666", length: 4, width: 1 },
@@ -60,13 +56,13 @@ const ReactGauge = () => {
           }}
         />
 
-        <p className="flex flex-col items-center absolute text-[0.8rem] top-[38%] ">
-          <span className="text-[1.2rem] font-bold">{data?.data[0].value}</span>
-          <span className="text-[0.7rem]">{status}</span>
+        <p className={styles.content__display}>
+          <span className={styles.display__value}>{data?.data[0].value}</span>
+          <span className={styles.display__status}>{status}</span>
         </p>
       </div>
     </section>
   );
 };
 
-export default ReactGauge;
+export default FearAndGreed;

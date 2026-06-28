@@ -17,7 +17,13 @@ import {
 } from "@/helper/coinsList/formattedData";
 
 import { useNavigate } from "react-router-dom";
-import ReactGauge from "./ReactGauge";
+
+import FearAndGreed from "./FearAndGreed";
+import AltCoinSeason from "./AltCoinSeason";
+
+import styles from "@/components/modules/css/coinsList/route.module.css";
+import { AltcoinSeasonApi } from "@/services/coingecko";
+import { useQuery } from "@tanstack/react-query";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -42,11 +48,17 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
       });
     }
   };
+  const { data: indexData } = useQuery({
+    queryKey: ["altcoinIndex"],
+    queryFn: async () => await AltcoinSeasonApi(),
+  });
 
   return (
     <>
-      <div className="grid mt-6 ">
-        <ReactGauge />
+      <div className={styles.banner}>
+        <FearAndGreed />
+
+        <AltCoinSeason value={indexData} />
       </div>
       {data && data.length && (
         <Table className="text-white mt-12 ">

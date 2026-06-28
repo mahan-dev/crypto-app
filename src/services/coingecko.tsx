@@ -97,9 +97,22 @@ const coinWebsocket = (
   return ws;
 };
 
-const ferAndGreedApi = async () => {
+const fearAndGreedApi = async () => {
   const { data } = await axios("https://api.alternative.me/fng/");
   return data;
+};
+const AltcoinSeasonApi = async () => {
+  const URL =
+    "https://pro-api.coinmarketcap.com/public-api/v1/altcoin-season-index/latest";
+
+  try {
+    const { data } = await axios(URL);
+    console.log(data);
+
+    return data.data.altcoin_index;
+  } catch (err) {
+    console.error("Failed to fetch index:", err);
+  }
 };
 
 export {
@@ -107,5 +120,6 @@ export {
   coinChart,
   coinWebsocket,
   coinSentiment,
-  ferAndGreedApi,
+  fearAndGreedApi,
+  AltcoinSeasonApi,
 };

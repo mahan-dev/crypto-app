@@ -1,0 +1,25 @@
+@reference "tailwindcss";
+
+.gauge {
+    @apply flex flex-col items-center justify-center bg-[#1E1F24] border border-[#3b3b3b] rounded-lg px-4 py-2;
+}
+
+.gauge__title {
+    @apply font-medium self-start;
+}
+
+.gauge__content {
+    @apply flex justify-center relative w-35 h-20;
+}
+
+.content__display {
+    @apply flex flex-col items-center absolute text-[0.8rem] top-[38%];
+}
+
+.display__value {
+    @apply text-[1.2rem] font-bold;
+}
+
+.display__status {
+    @apply text-[0.7rem] text-gray-300;
+}

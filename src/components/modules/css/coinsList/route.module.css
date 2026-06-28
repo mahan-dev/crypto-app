@@ -1,0 +1,6 @@
+@reference "tailwindcss";
+
+.banner {
+    @apply grid gap-3 mt-6 overflow-x-auto;
+    grid-template-columns: repeat(2, 250px);
+}

@@ -4,7 +4,7 @@ import CoinsList from "@/components/modules/CoinsList";
 
 import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
-import ReactGauge from "../modules/ReactGauge";
+import ReactGauge from "../modules/FearAndGreed";
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -14,6 +14,8 @@ const Home = () => {
     queryKey: ["crypto", page, currency],
     queryFn: async () => await getMarketList(currency, page),
   });
+
+  
 
   return (
     <section>

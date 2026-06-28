@@ -1,4 +1,4 @@
-import styles from "@/components/modules/css/route.module.css";
+import styles from "@/components/modules/css/coinStatus/route.module.css";
 import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
 import type { Coin } from "./Chart";
 import UseCoin from "@/hooks/useCoin";
