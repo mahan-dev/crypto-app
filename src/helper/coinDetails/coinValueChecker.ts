@@ -15,10 +15,8 @@ const formatPrice = (value: number) => {
     if (value >= B) return `${(value / B).toFixed(2)} B`;
     if (value >= M) return `${(value / M).toFixed(2)} M`;
     if (value >= K) return `${(value / K).toFixed(2)} K`;
-  } else {
-    if (value > 0) return `${value.toFixed(2)}`;
-    return "null";
-  }
+  } else if (value > 0) return `${value.toFixed(2)}`;
+  else return "null";
 };
 
 export { formatPrice, ValueChecker };

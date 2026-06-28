@@ -17,6 +17,7 @@ import {
 } from "@/helper/coinsList/formattedData";
 
 import { useNavigate } from "react-router-dom";
+import ReactGauge from "./ReactGauge";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -25,7 +26,6 @@ interface CoinsProps {
 }
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
-
   const navigate = useNavigate();
 
   const coinHandler = async (
@@ -45,6 +45,9 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
 
   return (
     <>
+      <div className="grid mt-6 ">
+        <ReactGauge />
+      </div>
       {data && data.length && (
         <Table className="text-white mt-12 ">
           <TableHeader>

@@ -1,4 +1,4 @@
-import { ferAndGreedApi, getMarketList } from "@/services/coingecko";
+import { getMarketList } from "@/services/coingecko";
 import { useState } from "react";
 import CoinsList from "@/components/modules/CoinsList";
 
@@ -16,20 +16,19 @@ const Home = () => {
   });
 
   return (
-    <>
+    <section>
       {data && data.data.length ? (
         <>
           <CoinsList data={data.data} page={page} currency={currency} />
 
           <PaginationPage page={page} setPage={setPage} />
-          {/* <ReactGauge /> */}
         </>
       ) : (
         <h2 className="w-full flex justify-center mt-6">
           Something wen't wrong
         </h2>
       )}
-    </>
+    </section>
   );
 };
 
