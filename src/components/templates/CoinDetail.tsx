@@ -1,6 +1,6 @@
 import type { MarketType } from "@/types/marketTypes";
 
-import { useLocation, Navigate, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, redirect } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
@@ -61,11 +61,12 @@ const CoinDetail = () => {
     setCachedCoin(filterData);
   }, [filterData]);
 
-  if (!location.state) {
-    return <Navigate to={"/"} replace />;
-  }
+  // if (!location.state) {
+  //   //  return <Navigate to={"/"} replace />;
+  //   throw redirect("/");
+  // }
 
-  if (isError) navigate("/notFound");
+  if (isError) redirect("/");
 
   return (
     <section className={styles.container}>

@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 
 import styles from "@/components/templates/styles/coinDetails/route.module.css";
 import CoinStatus from "./CoinStatus";
