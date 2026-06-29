@@ -22,8 +22,6 @@ import FearAndGreed from "./FearAndGreed";
 import AltCoinSeason from "./AltCoinSeason";
 
 import styles from "@/components/modules/css/coinsList/route.module.css";
-import { AltcoinSeasonApi } from "@/services/coingecko";
-import { useQuery } from "@tanstack/react-query";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -48,17 +46,13 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
       });
     }
   };
-  const { data: indexData } = useQuery({
-    queryKey: ["altcoinIndex"],
-    queryFn: async () => await AltcoinSeasonApi(),
-  });
-
+ 
   return (
     <>
       <div className={styles.banner}>
         <FearAndGreed />
 
-        <AltCoinSeason value={indexData} />
+        <AltCoinSeason />
       </div>
       {data && data.length && (
         <Table className="text-white mt-12 ">
