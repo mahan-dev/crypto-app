@@ -1,4 +1,4 @@
-const T = 100000000000;
+const T = 1000000000000;
 const B = 1000000000;
 const M = 1000000;
 const K = 10000;
@@ -10,6 +10,7 @@ const ValueChecker = (value: number) => {
 const formatPrice = (value: number) => {
   const formattedPart = Math.trunc(value);
 
+  console.log(formattedPart)
   if (formattedPart) {
     if (value >= T) return `${(value / T).toFixed(2)} T`;
     if (value >= B) return `${(value / B).toFixed(2)} B`;

@@ -107,7 +107,7 @@ const fearAndGreedApi = async () => {
 };
 const altcoinSeasonApi = async () => {
   const URL =
-    "https://pro-api.coinmarketcap.com/public-api/v1/altcoin-season-ind1231231ex/latest";
+    "https://pro-api.coinmarketcap.com/public-api/v1/altcoin-season-index/latest";
 
   const { data } = await axios(URL);
 
@@ -118,10 +118,17 @@ const cmc20TokenIndexApi = async (): Promise<DataProps["data"] | null> => {
   const URL =
     "/coins/coinmarketcap-20-index-dtf/market_chart?vs_currency=usd&days=360";
 
-  const {data} = await apiConfig(URL);
+  const { data } = await apiConfig(URL);
   const result = data as DataProps["data"];
 
   return result;
+};
+
+const marketCapApi = async () => {
+  const { data } = await apiConfig("/global");
+
+  const res = data.data.total_market_cap.usd;
+  return res;
 };
 
 export {
@@ -132,4 +139,5 @@ export {
   fearAndGreedApi,
   altcoinSeasonApi,
   cmc20TokenIndexApi,
+  marketCapApi,
 };

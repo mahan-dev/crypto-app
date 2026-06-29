@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .gauge {
-    @apply flex flex-col items-center justify-center bg-[#1E1F24] border border-[#3b3b3b] rounded-lg px-4 py-2;
+    @apply p-4 flex flex-col items-center justify-between bg-[#1E1F24] border border-[#3b3b3b] rounded-lg ;
 }
 
 .gauge__title {

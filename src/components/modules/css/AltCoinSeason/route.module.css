@@ -2,7 +2,7 @@
 
 
 .container {
-    @apply flex flex-col items-center justify-center bg-[#1E1F24] p-4 border border-[#3b3b3b] rounded-xl;
+    @apply flex flex-col items-center justify-between bg-[#1E1F24] p-4 border border-[#3b3b3b] rounded-xl;
 }
 
 .container__display {

@@ -24,6 +24,7 @@ const Cmc20Chart = () => {
     queryKey: ["cmc20Token"],
     queryFn: async () => await cmc20TokenIndexApi(),
   });
+  const splittedData = data ? data.prices.at(-1)?.[1].toFixed(2) : null;
 
   const finalData = useMemo(() => {
     if (!data) return;
@@ -41,7 +42,10 @@ const Cmc20Chart = () => {
       {isError && <h2>Failed ... 😞</h2>}
       {data && (
         <>
-          <CardHeader>CMC20</CardHeader>
+          <CardHeader>
+            <span>CMC20</span>
+            {`$${splittedData}`}
+          </CardHeader>
           <CardContent className="h-1">
             <ChartContainer className=" w-full " config={chartConfig}>
               <AreaChart
