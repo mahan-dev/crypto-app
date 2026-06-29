@@ -44,9 +44,8 @@ interface CoinProps {
   type: TypesCoin;
   setType: Dispatch<SetStateAction<TypesCoin>>;
   coin: MarketType["data"][number]["name"];
+  cmcPage?: boolean;
 }
-
-
 
 export type Coin = MarketType["data"][number]["symbol"];
 export type Days = 1 | 7 | 30 | 90 | 365;

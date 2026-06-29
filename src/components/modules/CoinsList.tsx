@@ -23,6 +23,8 @@ import AltCoinSeason from "./AltCoinSeason";
 
 import styles from "@/components/modules/css/coinsList/route.module.css";
 
+import Cmc20Chart from "./Cmc20Chart";
+
 interface CoinsProps {
   data: MarketType["data"];
   currency: string;
@@ -46,103 +48,107 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
       });
     }
   };
- 
+
   return (
     <>
       <div className={styles.banner}>
         <FearAndGreed />
 
         <AltCoinSeason />
+
+        <Cmc20Chart />
       </div>
-      {data && data.length && (
-        <Table className="text-white mt-12 ">
-          <TableHeader>
-            <TableRow className="*:text-white hover:bg-transparent">
-              <TableHead className="w-2 text-center">#</TableHead>
-              <TableHead className="w-35 flex items-center">Name</TableHead>
-              <TableHead className="w-px text-right">Price</TableHead>
+  
+        {data && data.length && (
+          <Table className="text-white mt-12 ">
+            <TableHeader>
+              <TableRow className="*:text-white hover:bg-transparent">
+                <TableHead className="w-2 text-center">#</TableHead>
+                <TableHead className="w-35 flex items-center">Name</TableHead>
+                <TableHead className="w-px text-right">Price</TableHead>
 
-              <TableHead className="w-7  text-right">
-                <div className="w-12">24h %</div>
-              </TableHead>
+                <TableHead className="w-7  text-right">
+                  <div className="w-12">24h %</div>
+                </TableHead>
 
-              <TableHead className="w-37 text-right">
-                <div>Market Cap</div>
-              </TableHead>
+                <TableHead className="w-37 text-right">
+                  <div>Market Cap</div>
+                </TableHead>
 
-              <TableHead className="text-right">
-                <div>Circulating Supply</div>
-              </TableHead>
-              <TableHead className="text-right">
-                <div>Last 7 Days</div>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((coin) => {
-              const {
-                id,
-                name,
-                symbol,
-                market_cap_rank,
-                current_price,
-                circulating_supply,
-                market_cap,
-                market_cap_change_percentage_24h: percentage_24,
-              } = coin;
-              return (
-                <TableRow
-                  className="*:text-right cursor-pointer"
-                  key={name}
-                  onClick={() => coinHandler(id, symbol)}
-                >
-                  <TableCell className=" first-of-type:text-center">
-                    {market_cap_rank}
-                  </TableCell>
-                  <TableCell className="align-middle">
-                    <div className="flex gap-2 items-center ">
-                      <img
-                        className="rounded-full"
-                        src={coin.image}
-                        alt={symbol}
-                        width={25}
-                        height={25}
-                      />
-                      {symbolFormatter(symbol)}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    $
-                    {current_price < 1
-                      ? current_price.toFixed(4)
-                      : PriceCommaFormatter(current_price)}
-                  </TableCell>
-
-                  <TableCell
-                    className={`${percentage_24 === null ? "" : percentage_24 > 0 ? "text-green-500" : "text-red-500"}`}
+                <TableHead className="text-right">
+                  <div>Circulating Supply</div>
+                </TableHead>
+                <TableHead className="text-right">
+                  <div>Last 7 Days</div>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.map((coin) => {
+                const {
+                  id,
+                  name,
+                  symbol,
+                  market_cap_rank,
+                  current_price,
+                  circulating_supply,
+                  market_cap,
+                  market_cap_change_percentage_24h: percentage_24,
+                } = coin;
+                return (
+                  <TableRow
+                    className="*:text-right cursor-pointer"
+                    key={name}
+                    onClick={() => coinHandler(id, symbol)}
                   >
-                    {percentage_24 ? percentage_24.toFixed(2) : "null"}
-                  </TableCell>
-                  <TableCell>{PriceCommaFormatter(market_cap)}</TableCell>
+                    <TableCell className=" first-of-type:text-center">
+                      {market_cap_rank}
+                    </TableCell>
+                    <TableCell className="align-middle">
+                      <div className="flex gap-2 items-center ">
+                        <img
+                          className="rounded-full w-6.25 h-6.25"
+                          src={coin.image}
+                          alt={symbol}
+                          width={25}
+                          height={25}
+                        />
+                        {symbolFormatter(symbol)}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      $
+                      {current_price < 1
+                        ? current_price.toFixed(4)
+                        : PriceCommaFormatter(current_price)}
+                    </TableCell>
 
-                  <TableCell>
-                    {priceFormatter(circulating_supply)}
-                    <span className="ml-2">{symbolFormatter(symbol)}</span>
-                  </TableCell>
-                  <TableCell>
-                    <img
-                      className="ml-auto"
-                      src={percentage_24 > 0 ? chartUp : chartDown}
-                      alt={"chart svg"}
-                      width={100}
-                    />
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      )}
+                    <TableCell
+                      className={`${percentage_24 === null ? "" : percentage_24 > 0 ? "text-green-500" : "text-red-500"}`}
+                    >
+                      {percentage_24 ? percentage_24.toFixed(2) : "null"}
+                    </TableCell>
+                    <TableCell>{PriceCommaFormatter(market_cap)}</TableCell>
+
+                    <TableCell>
+                      {priceFormatter(circulating_supply)}
+                      <span className="ml-2">{symbolFormatter(symbol)}</span>
+                    </TableCell>
+                    <TableCell>
+                      <img
+                        className="ml-auto"
+                        src={percentage_24 > 0 ? chartUp : chartDown}
+                        alt={"chart svg"}
+                        width={100}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
+      
     </>
   );
 };

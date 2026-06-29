@@ -5,12 +5,10 @@ import { altcoinSeasonApi } from "@/services/coingecko";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../loader/Loader";
 
-interface AltCoinSeason {
-  value: number;
-}
 
-const AltCoinSeason = ({ value }: AltCoinSeason) => {
-  console.log(value);
+
+const AltCoinSeason = () => {
+
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["altcoinIndex"],

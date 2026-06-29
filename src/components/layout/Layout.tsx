@@ -6,7 +6,7 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <section className="w-full mx-auto px-4">
       <Header />
-      <section className="min-h-screen">{children}</section>
+      <section className="min-h-screen py-6">{children}</section>
       <Footer />
     </section>
   );

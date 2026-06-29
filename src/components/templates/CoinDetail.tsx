@@ -25,7 +25,6 @@ const CoinDetail = () => {
   const [sentiment, setSentiment] = useState<CoinSentiment | "">("");
 
   const location = useLocation();
-  const navigate = useNavigate();
   const coinName = location.pathname.split("/")[1];
 
   const { symbol, page, currency } = location.state;

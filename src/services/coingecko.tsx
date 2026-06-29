@@ -1,6 +1,10 @@
 import type { Days } from "@/components/modules/Chart";
 import { apiConfig } from "@/configs/apiConfigs";
-import type { DataProps } from "@/helper/coinsList/formattedData";
+import {
+  convertedData,
+  type DataProps,
+  type DataResponse,
+} from "@/helper/coinsList/formattedData";
 import type { CoinSentiment } from "@/types/coinTypes";
 import type { MarketType } from "@/types/marketTypes";
 import axios, { isAxiosError } from "axios";
@@ -60,7 +64,7 @@ const coinChart = async (
 
 type CoinType = MarketType["data"][number]["id"];
 const coinSentiment = async (coin: CoinType): Promise<CoinSentiment> => {
-  const { data } = await axios<CoinSentiment>(
+  const { data } = await apiConfig<CoinSentiment>(
     `https://api.coingecko.com/api/v3/coins/${coin}`,
   );
   return data;
@@ -110,6 +114,16 @@ const altcoinSeasonApi = async () => {
   return data.data.altcoin_index;
 };
 
+const cmc20TokenIndexApi = async (): Promise<DataProps["data"] | null> => {
+  const URL =
+    "/coins/coinmarketcap-20-index-dtf/market_chart?vs_currency=usd&days=360";
+
+  const {data} = await apiConfig(URL);
+  const result = data as DataProps["data"];
+
+  return result;
+};
+
 export {
   getMarketList,
   coinChart,
@@ -117,4 +131,5 @@ export {
   coinSentiment,
   fearAndGreedApi,
   altcoinSeasonApi,
+  cmc20TokenIndexApi,
 };
