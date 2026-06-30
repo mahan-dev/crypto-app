@@ -28,7 +28,7 @@ const Cmc20Chart = ({ title }: CmcProps) => {
     queryKey: ["cmc20Token"],
     queryFn: async () => await cmc20TokenIndexApi(),
   });
-  const splittedData = data ? data.prices.at(-1)?.[1].toFixed(2) : null;
+  const splittedData = data?.prices.at(-1)?.[1].toFixed(2) ?? null;
 
   const finalData = useMemo(() => {
     if (!data) return;

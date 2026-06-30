@@ -31,20 +31,13 @@ export interface DataResponse {
 }
 
 const convertedData = (
-  data: DataProps["data"] | [number, number],
+  data: DataProps["data"],
   type: "prices" | "market_caps" | "total_volumes",
-  cmc?: boolean,
-): DataResponse[] | number[] => {
-  if (Array.isArray(data) && cmc) {
-    return [+data[1].toFixed(2)];
-  }
-  if (!Array.isArray(data)) {
-    return data[type].map((item) => ({
-      date: new Date(item[0]).toLocaleString(),
-      prices: item[1],
-    }));
-  }
-  return [];
+): DataResponse[] => {
+  return data[type].map((item) => ({
+    date: new Date(item[0]).toLocaleString(),
+    prices: item[1],
+  }));
 };
 
 const coinPairHandler = (coin: MarketType["data"][number]["id"]) => {
