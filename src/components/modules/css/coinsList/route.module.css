@@ -2,6 +2,22 @@
 
 .banner {
     @apply grid gap-3 overflow-x-auto;
-    grid-template-columns: repeat(3, 250px);
-    grid-template-rows: 140px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+}
+
+
+@media only screen and (max-width: 1090px) {
+    .banner {
+        grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+        @apply overflow-x-auto
+    }
+    
+}
+
+@media only screen and (max-width: 768px) {
+    .banner {
+        grid-template-columns: repeat(4, 165px);
+        @apply overflow-x-auto;
+    }
+    
 }

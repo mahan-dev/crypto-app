@@ -19,7 +19,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const Cmc20Chart = () => {
+interface CmcProps {
+  title?: string;
+}
+
+const Cmc20Chart = ({ title }: CmcProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["cmc20Token"],
     queryFn: async () => await cmc20TokenIndexApi(),
@@ -39,11 +43,11 @@ const Cmc20Chart = () => {
           <Loader />
         </div>
       )}
-      {isError && <h2>Failed ... 😞</h2>}
+      {isError && <h2 className="m-auto">Failed ... 😞</h2>}
       {data && (
         <>
           <CardHeader>
-            <span>CMC20</span>
+            <span>{title ? title : "CMC20"}</span>
             {`$${splittedData}`}
           </CardHeader>
           <CardContent className="h-1">

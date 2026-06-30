@@ -58,7 +58,6 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
         <AltCoinSeason />
 
         <Cmc20Chart />
-        <MarketCap />
       </div>
 
       {data && data.length && (

@@ -1,9 +1,7 @@
 import type { Days } from "@/components/modules/Chart";
 import { apiConfig } from "@/configs/apiConfigs";
 import {
-  convertedData,
   type DataProps,
-  type DataResponse,
 } from "@/helper/coinsList/formattedData";
 import type { CoinSentiment } from "@/types/coinTypes";
 import type { MarketType } from "@/types/marketTypes";
@@ -126,9 +124,18 @@ const cmc20TokenIndexApi = async (): Promise<DataProps["data"] | null> => {
 
 const marketCapApi = async () => {
   const { data } = await apiConfig("/global");
+  console.log(data)
 
   const res = data.data.total_market_cap.usd;
   return res;
+};
+
+const marketCapChartApi = async () => {
+  const data = await axios(
+    "https://api.coinlore.net/api/global/",
+  );
+  console.log(data);
+  return data;
 };
 
 export {
@@ -140,4 +147,5 @@ export {
   altcoinSeasonApi,
   cmc20TokenIndexApi,
   marketCapApi,
+  marketCapChartApi,
 };

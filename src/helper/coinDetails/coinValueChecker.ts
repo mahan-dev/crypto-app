@@ -10,7 +10,6 @@ const ValueChecker = (value: number) => {
 const formatPrice = (value: number) => {
   const formattedPart = Math.trunc(value);
 
-  console.log(formattedPart)
   if (formattedPart) {
     if (value >= T) return `${(value / T).toFixed(2)} T`;
     if (value >= B) return `${(value / B).toFixed(2)} B`;
