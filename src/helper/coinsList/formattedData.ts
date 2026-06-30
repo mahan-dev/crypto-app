@@ -1,4 +1,6 @@
+import type { PriceStatus } from "@/components/modules/CoinsList";
 import type { MarketType } from "@/types/marketTypes";
+import type { Dispatch, SetStateAction } from "react";
 export interface DataProps {
   data: {
     market_caps: [number, number][];
@@ -43,10 +45,13 @@ const coinPairHandler = (coin: MarketType["data"][number]["id"]) => {
   return coin === "usdt" ? `${coin}usd` : `${coin}usdt`;
 };
 
-const coinPriceSorting = (data: MarketType["data"], priceStatus: string) => {
-  const sorted = [...data];
 
-  console.log(priceStatus);
+
+const coinPriceSorting = (
+  data: MarketType["data"],
+  priceStatus: PriceStatus,
+) => {
+  const sorted = [...data];
 
   if (priceStatus === "down") {
     return sorted.sort((a, b) => b.current_price - a.current_price);

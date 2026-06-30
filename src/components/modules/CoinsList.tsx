@@ -28,7 +28,7 @@ import AltCoinSeason from "./AltCoinSeason";
 import styles from "@/components/modules/css/coinsList/route.module.css";
 
 import Cmc20Chart from "./Cmc20Chart";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -36,10 +36,12 @@ interface CoinsProps {
   setCurrency: Dispatch<SetStateAction<string>>;
   page: number;
 }
+
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
+export type PriceStatus = "default" | "down" | "up";
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
-  const [priceStatus, setPriceStatus] = useState("default");
-  const [sortedData, setSortedData] = useState<MarketType["data"]>([]);
+  const [priceStatus, setPriceStatus] = useState<PriceStatus>("default");
+
   const navigate = useNavigate();
 
   const coinHandler = async (
@@ -57,23 +59,21 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
     }
   };
 
-  const priceClickHandler = () => {
-    setPriceStatus((prev) => {
-      if (prev === "default") return "down";
-      if (prev === "down") return "up";
-      return "default";
-    });
+  const sortedCoins = useMemo(() => {
+    return coinPriceSorting(data, priceStatus);
+  }, [data, priceStatus]);
 
-    const nextStatus =
-      priceStatus === "default"
-        ? "down"
-        : priceStatus === "down"
-          ? "up"
-          : "default";
+  const priceClickHandler = () => {
     if (!data.length) return;
-    const get = coinPriceSorting(data, nextStatus);
-    setSortedData(get);
+    setPriceStatus((prev) => {
+      const next =
+        prev === "default" ? "down" : prev === "down" ? "up" : "default";
+
+      return next;
+    });
   };
+
+  const coinToRender = sortedCoins.length ? sortedCoins : data;
 
   return (
     <>
@@ -122,7 +122,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {(sortedData.length ? sortedData : data).map((coin) => {
+            {coinToRender.map((coin) => {
               const {
                 id,
                 name,
