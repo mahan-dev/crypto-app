@@ -18,7 +18,7 @@ const Home = () => {
     <section>
       {data && data.data.length ? (
         <>
-          <CoinsList data={data.data} page={page} currency={currency} />
+          <CoinsList data={data.data} page={page} currency={currency} setCurrency={setCurrency}/>
 
           <PaginationPage page={page} setPage={setPage} />
         </>

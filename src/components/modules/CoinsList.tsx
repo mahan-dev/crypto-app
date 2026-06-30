@@ -24,10 +24,12 @@ import AltCoinSeason from "./AltCoinSeason";
 import styles from "@/components/modules/css/coinsList/route.module.css";
 
 import Cmc20Chart from "./Cmc20Chart";
+import type { Dispatch, SetStateAction } from "react";
 
 interface CoinsProps {
   data: MarketType["data"];
   currency: string;
+  setCurrency: Dispatch<SetStateAction<string>>
   page: number;
 }
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
