@@ -8,9 +8,13 @@ import {
   TableRow,
 } from "../../../@/components/ui/table";
 
+import { TiArrowSortedUp } from "react-icons/ti";
+import { TiArrowSortedDown } from "react-icons/ti";
+
 import chartUp from "@/assets/chart-up.svg";
 import chartDown from "@/assets/chart-down.svg";
 import {
+  coinPriceSorting,
   PriceCommaFormatter,
   priceFormatter,
   symbolFormatter,
@@ -24,23 +28,25 @@ import AltCoinSeason from "./AltCoinSeason";
 import styles from "@/components/modules/css/coinsList/route.module.css";
 
 import Cmc20Chart from "./Cmc20Chart";
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 interface CoinsProps {
   data: MarketType["data"];
   currency: string;
-  setCurrency: Dispatch<SetStateAction<string>>
+  setCurrency: Dispatch<SetStateAction<string>>;
   page: number;
 }
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
+  const [priceStatus, setPriceStatus] = useState("default");
+  const [sortedData, setSortedData] = useState<MarketType["data"]>([]);
   const navigate = useNavigate();
 
   const coinHandler = async (
     id: MarketType["data"][number]["id"],
     symbol: MarketType["data"][number]["symbol"],
   ) => {
-    const finalD = data.find((item) => item.id === id);
+    const finalD = data?.find((item) => item.id === id);
 
     if (finalD) {
       localStorage.setItem("crypto - detail", JSON.stringify(finalD));
@@ -49,6 +55,24 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
         state: { symbol, currency, page },
       });
     }
+  };
+
+  const priceClickHandler = () => {
+    setPriceStatus((prev) => {
+      if (prev === "default") return "down";
+      if (prev === "down") return "up";
+      return "default";
+    });
+
+    const nextStatus =
+      priceStatus === "default"
+        ? "down"
+        : priceStatus === "down"
+          ? "up"
+          : "default";
+    if (!data.length) return;
+    const get = coinPriceSorting(data, nextStatus);
+    setSortedData(get);
   };
 
   return (
@@ -67,7 +91,19 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
             <TableRow className="*:text-white hover:bg-transparent">
               <TableHead className="w-2 text-center">#</TableHead>
               <TableHead className="w-35 flex items-center">Name</TableHead>
-              <TableHead className="w-px text-right">Price</TableHead>
+              <TableHead className="w-px text-right">
+                <div className="flex items-center gap-2">
+                  Price
+                  <div className="flex flex-col" onClick={priceClickHandler}>
+                    <TiArrowSortedUp
+                      className={`${priceStatus === "up" ? "opacity-100" : "opacity-25"}`}
+                    />
+                    <TiArrowSortedDown
+                      className={`${priceStatus === "down" ? "opacity-100" : "opacity-25"}`}
+                    />
+                  </div>
+                </div>
+              </TableHead>
 
               <TableHead className="w-7  text-right">
                 <div className="w-12">24h %</div>
@@ -86,7 +122,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((coin) => {
+            {(sortedData.length ? sortedData : data).map((coin) => {
               const {
                 id,
                 name,

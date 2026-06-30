@@ -51,9 +51,10 @@ const Cmc20Chart = ({ title }: CmcProps) => {
             {`$${splittedData}`}
           </CardHeader>
           <CardContent className="h-1">
-            <ChartContainer className=" w-full " config={chartConfig}>
+            <ChartContainer className=" w-full h-16 " config={chartConfig}>
               <AreaChart
                 accessibilityLayer
+                
                 data={finalData ?? []}
                 margin={{
                   left: 12,

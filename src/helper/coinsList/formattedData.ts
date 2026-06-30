@@ -1,4 +1,16 @@
 import type { MarketType } from "@/types/marketTypes";
+export interface DataProps {
+  data: {
+    market_caps: [number, number][];
+    prices: [number, number][];
+    total_volumes: [number, number][];
+  };
+}
+
+export interface DataResponse {
+  date: string;
+  prices: number;
+}
 
 const priceFormatter = (price: number): string => {
   return (price / 1000000).toLocaleString(undefined, {
@@ -17,19 +29,6 @@ const symbolFormatter = (symbol: string) => {
   return symbol.split("_")[0].toUpperCase();
 };
 
-export interface DataProps {
-  data: {
-    market_caps: [number, number][];
-    prices: [number, number][];
-    total_volumes: [number, number][];
-  };
-}
-
-export interface DataResponse {
-  date: string;
-  prices: number;
-}
-
 const convertedData = (
   data: DataProps["data"],
   type: "prices" | "market_caps" | "total_volumes",
@@ -44,10 +43,23 @@ const coinPairHandler = (coin: MarketType["data"][number]["id"]) => {
   return coin === "usdt" ? `${coin}usd` : `${coin}usdt`;
 };
 
+const coinPriceSorting = (data: MarketType["data"], priceStatus: string) => {
+  const sorted = [...data];
+
+  console.log(priceStatus);
+
+  if (priceStatus === "down") {
+    return sorted.sort((a, b) => b.current_price - a.current_price);
+  } else if (priceStatus === "up") {
+    return sorted.sort((a, b) => a.current_price - b.current_price);
+  } else return sorted;
+};
+
 export {
   priceFormatter,
   PriceCommaFormatter,
   symbolFormatter,
   convertedData,
   coinPairHandler,
+  coinPriceSorting,
 };

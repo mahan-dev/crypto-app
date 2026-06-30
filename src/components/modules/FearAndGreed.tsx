@@ -14,7 +14,7 @@ const FearAndGreed = () => {
 
   return (
     <section className={styles.gauge}>
-      {isLoading && <Loader />}
+      {isLoading && <div className="my-auto"><Loader /></div> }
       {isError && <h2 className="m-auto">Failed ... 😞</h2>}
 
       {data && (

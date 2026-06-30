@@ -13,7 +13,7 @@ const AltCoinSeason = () => {
 
   return (
     <div className={styles.container}>
-      {isLoading && <Loader />}
+      {isLoading && <div className="my-auto"><Loader /></div>}
       {isError && <h2 className="m-auto">Failed ... 😞</h2>}
 
       {data && !isError && (
