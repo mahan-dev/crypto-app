@@ -24,7 +24,6 @@ import AltCoinSeason from "./AltCoinSeason";
 import styles from "@/components/modules/css/coinsList/route.module.css";
 
 import Cmc20Chart from "./Cmc20Chart";
-import MarketCap from "./MarketCap";
 
 interface CoinsProps {
   data: MarketType["data"];

@@ -1,6 +1,6 @@
 import type { MarketType } from "@/types/marketTypes";
 
-import { useLocation, useNavigate, redirect } from "react-router-dom";
+import { useLocation, redirect } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import UseCoin from "@/hooks/useCoin";
