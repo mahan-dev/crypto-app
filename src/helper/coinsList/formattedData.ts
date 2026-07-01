@@ -1,4 +1,4 @@
-import type { SortOrder } from "@/components/modules/CoinsList";
+import type { SortField, SortOrder } from "@/components/modules/CoinsList";
 import type { MarketType } from "@/types/marketTypes";
 
 export interface DataProps {
@@ -48,17 +48,35 @@ const coinPairHandler = (coin: MarketType["data"][number]["id"]) => {
 const coinPriceSorting = (
   data: MarketType["data"],
   priceStatus: SortOrder,
+  sortField: SortField,
 ) => {
   const sorted = [...data];
 
-  if (priceStatus === "down") {
-    return sorted.sort((a, b) => b.current_price - a.current_price);
-  } else if (priceStatus === "up") {
-    return sorted.sort((a, b) => a.current_price - b.current_price);
-  } else return sorted;
+  if (sortField === "price") {
+    if (priceStatus === "down") {
+      return sorted.sort((a, b) => b.current_price - a.current_price);
+    } else if (priceStatus === "up") {
+      return sorted.sort((a, b) => a.current_price - b.current_price);
+    } else return sorted;
+  }
+  if (sortField === "24h") {
+    if (priceStatus === "down") {
+      return sorted.sort(
+        (a, b) =>
+          b.market_cap_change_percentage_24h -
+          a.market_cap_change_percentage_24h,
+      );
+    } else if (priceStatus === "up") {
+      return sorted.sort(
+        (a, b) =>
+          a.market_cap_change_percentage_24h -
+          b.market_cap_change_percentage_24h,
+      );
+    } else return sorted;
+  }
+
+  return sorted;
 };
-
-
 
 export {
   priceFormatter,

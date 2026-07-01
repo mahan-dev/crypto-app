@@ -47,11 +47,12 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
   const sortedCoins = useMemo(() => {
-    return coinPriceSorting(data, sortOrder);
-  }, [data, sortOrder]);
+    return coinPriceSorting(data, sortOrder, sortField);
+  }, [data, sortOrder, sortField]);
 
-  const priceClickHandler = (field: SortField) => {
+  const statusHandler = (field: SortField) => {
     if (!data.length) return;
+
     setSortField(field);
 
     setSortOrder((prev) => {
@@ -89,7 +90,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
               <TableHead className="w-px text-right">
                 <div className="flex items-center gap-2">
                   Price
-                  <div onClick={() => priceClickHandler("price")}>
+                  <div onClick={() => statusHandler("price")}>
                     <TiArrowSortedUp
                       className={`${
                         sortField === "price" && sortOrder === "up"
@@ -111,7 +112,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
               <TableHead className="w-7  text-right">
                 <div className="w-12 flex items-center gap-2">
                   24h %
-                  <div onClick={() => priceClickHandler("24h")}>
+                  <div onClick={() => statusHandler("24h")}>
                     <TiArrowSortedUp
                       className={`${
                         sortField === "24h" && sortOrder === "up"
