@@ -1,9 +1,12 @@
+import Search from "../elements/Search";
+import styles from "@/components/layout/styles/header/route.module.css";
+
 const Header = () => {
   return (
-    <header className="flex justify-between mt-2 bg-[#333333cf] rounded-md p-2">
+    <header className={styles.header}>
       <h1>Coinzed</h1>
 
-      <div>search</div>
+      <Search />
     </header>
   );
 };

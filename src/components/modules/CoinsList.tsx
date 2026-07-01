@@ -16,7 +16,6 @@ import chartDown from "@/assets/chart-down.svg";
 import {
   coinPriceSorting,
   PriceCommaFormatter,
-  priceFormatter,
   symbolFormatter,
 } from "@/helper/coinsList/formattedData";
 
@@ -31,6 +30,7 @@ import Cmc20Chart from "./Cmc20Chart";
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { coinHandler } from "@/helper/coinsList/coinHandler";
 import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
+import type { SortField, SortOrder } from "@/types/coinsList/coinListTypes";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -38,10 +38,6 @@ interface CoinsProps {
   setCurrency: Dispatch<SetStateAction<string>>;
   page: number;
 }
-
-export type TypesCoin = "prices" | "market_caps" | "total_volumes";
-export type SortOrder = "default" | "down" | "up";
-export type SortField = "price" | "24h" | "market_cap" | "circulating_supply" | "default";
 
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
   const [sortField, setSortField] = useState<SortField>("default");
@@ -112,7 +108,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
                   24h %
                   <div onClick={() => statusHandler("24h")}>
                     <TiArrowSortedUp
-                     className={classNameHandler("up", "24h")}
+                      className={classNameHandler("up", "24h")}
                     />
                     <TiArrowSortedDown
                       className={classNameHandler("down", "24h")}
@@ -136,16 +132,16 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
               </TableHead>
 
               <TableHead className="text-right">
-                <div className="flex gap-2 items-center justify-end">Circulating Supply
+                <div className="flex gap-2 items-center justify-end">
+                  Circulating Supply
                   <div onClick={() => statusHandler("circulating_supply")}>
-                     <TiArrowSortedUp
+                    <TiArrowSortedUp
                       className={classNameHandler("up", "circulating_supply")}
                     />
                     <TiArrowSortedDown
                       className={classNameHandler("down", "circulating_supply")}
                     />
                   </div>
-
                 </div>
               </TableHead>
               <TableHead className="text-right">
