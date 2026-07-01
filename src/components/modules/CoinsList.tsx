@@ -38,9 +38,12 @@ interface CoinsProps {
 }
 
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
-export type PriceStatus = "default" | "down" | "up";
+export type SortOrder = "default" | "down" | "up";
+export type SortField = "price" | "24h";
+
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
-  const [priceStatus, setPriceStatus] = useState<PriceStatus>("default");
+  const [sortField, setSortField] = useState<SortField>("price");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
   const navigate = useNavigate();
 
@@ -60,16 +63,15 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
   };
 
   const sortedCoins = useMemo(() => {
-    return coinPriceSorting(data, priceStatus);
-  }, [data, priceStatus]);
+    return coinPriceSorting(data, sortOrder);
+  }, [data, sortOrder]);
 
-  const priceClickHandler = () => {
+  const priceClickHandler = (field: SortField) => {
     if (!data.length) return;
-    setPriceStatus((prev) => {
-      const next =
-        prev === "default" ? "down" : prev === "down" ? "up" : "default";
+    setSortField(field);
 
-      return next;
+    setSortOrder((prev) => {
+      return prev === "default" ? "down" : prev === "down" ? "up" : "default";
     });
   };
 
@@ -94,19 +96,45 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
               <TableHead className="w-px text-right">
                 <div className="flex items-center gap-2">
                   Price
-                  <div className="flex flex-col" onClick={priceClickHandler}>
+                  <div onClick={() => priceClickHandler("price")}>
                     <TiArrowSortedUp
-                      className={`${priceStatus === "up" ? "opacity-100" : "opacity-25"}`}
+                      className={`${
+                        sortField === "price" && sortOrder === "up"
+                          ? "opacity-100"
+                          : "opacity-25"
+                      }`}
                     />
                     <TiArrowSortedDown
-                      className={`${priceStatus === "down" ? "opacity-100" : "opacity-25"}`}
+                      className={`${
+                        sortField === "price" && sortOrder === "down"
+                          ? "opacity-100"
+                          : "opacity-25"
+                      }`}
                     />
                   </div>
                 </div>
               </TableHead>
 
               <TableHead className="w-7  text-right">
-                <div className="w-12">24h %</div>
+                <div className="w-12 flex items-center gap-2">
+                  24h %
+                  <div onClick={() => priceClickHandler("24h")}>
+                    <TiArrowSortedUp
+                      className={`${
+                        sortField === "24h" && sortOrder === "up"
+                          ? "opacity-100"
+                          : "opacity-25"
+                      }`}
+                    />
+                    <TiArrowSortedDown
+                      className={`${
+                        sortField === "24h" && sortOrder === "down"
+                          ? "opacity-100"
+                          : "opacity-25"
+                      }`}
+                    />
+                  </div>
+                </div>
               </TableHead>
 
               <TableHead className="w-37 text-right">

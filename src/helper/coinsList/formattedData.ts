@@ -1,6 +1,6 @@
-import type { PriceStatus } from "@/components/modules/CoinsList";
+import type { SortOrder } from "@/components/modules/CoinsList";
 import type { MarketType } from "@/types/marketTypes";
-import type { Dispatch, SetStateAction } from "react";
+
 export interface DataProps {
   data: {
     market_caps: [number, number][];
@@ -45,11 +45,9 @@ const coinPairHandler = (coin: MarketType["data"][number]["id"]) => {
   return coin === "usdt" ? `${coin}usd` : `${coin}usdt`;
 };
 
-
-
 const coinPriceSorting = (
   data: MarketType["data"],
-  priceStatus: PriceStatus,
+  priceStatus: SortOrder,
 ) => {
   const sorted = [...data];
 
@@ -59,6 +57,8 @@ const coinPriceSorting = (
     return sorted.sort((a, b) => a.current_price - b.current_price);
   } else return sorted;
 };
+
+
 
 export {
   priceFormatter,
