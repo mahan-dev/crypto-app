@@ -29,6 +29,7 @@ import styles from "@/components/modules/css/coinsList/route.module.css";
 
 import Cmc20Chart from "./Cmc20Chart";
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
+import { coinHandler } from "@/helper/coinsList/coinHandler";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -45,23 +46,6 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
   const [sortField, setSortField] = useState<SortField>("price");
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
-  const navigate = useNavigate();
-
-  const coinHandler = async (
-    id: MarketType["data"][number]["id"],
-    symbol: MarketType["data"][number]["symbol"],
-  ) => {
-    const finalD = data?.find((item) => item.id === id);
-
-    if (finalD) {
-      localStorage.setItem("crypto - detail", JSON.stringify(finalD));
-
-      navigate(`${id}`, {
-        state: { symbol, currency, page },
-      });
-    }
-  };
-
   const sortedCoins = useMemo(() => {
     return coinPriceSorting(data, sortOrder);
   }, [data, sortOrder]);
@@ -76,6 +60,15 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
   };
 
   const coinToRender = sortedCoins.length ? sortedCoins : data;
+
+  const navigate = useNavigate();
+
+  const coinClickHandler = async (
+    id: MarketType["data"][number]["id"],
+    symbol: MarketType["data"][number]["symbol"],
+  ) => {
+    await coinHandler(data, id, navigate, symbol, currency, page);
+  };
 
   return (
     <>
@@ -165,7 +158,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
                 <TableRow
                   className="*:text-right cursor-pointer"
                   key={name}
-                  onClick={() => coinHandler(id, symbol)}
+                  onClick={() => coinClickHandler(id, symbol)}
                 >
                   <TableCell className=" first-of-type:text-center">
                     {market_cap_rank}
