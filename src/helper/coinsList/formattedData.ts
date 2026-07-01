@@ -75,6 +75,22 @@ const coinPriceSorting = (
     } else return sorted;
   }
 
+  if (sortField === "market_cap") {
+    if (priceStatus === "down") {
+      return sorted.sort((a, b) => b.market_cap - a.market_cap);
+    } else if (priceStatus === "up") {
+      return sorted.sort((a, b) => a.market_cap - b.market_cap);
+    } else return sorted;
+  }
+
+  if (sortField === "circulating_supply") {
+    if (priceStatus === "down") {
+      return sorted.sort((a, b) => b.circulating_supply - a.circulating_supply);
+    } else if (priceStatus === "up") {
+      return sorted.sort((a, b) => a.circulating_supply - b.circulating_supply);
+    } else return sorted;
+  }
+
   return sorted;
 };
 

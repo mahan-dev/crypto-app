@@ -30,6 +30,7 @@ import styles from "@/components/modules/css/coinsList/route.module.css";
 import Cmc20Chart from "./Cmc20Chart";
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { coinHandler } from "@/helper/coinsList/coinHandler";
+import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 
 interface CoinsProps {
   data: MarketType["data"];
@@ -40,10 +41,10 @@ interface CoinsProps {
 
 export type TypesCoin = "prices" | "market_caps" | "total_volumes";
 export type SortOrder = "default" | "down" | "up";
-export type SortField = "price" | "24h";
+export type SortField = "price" | "24h" | "market_cap" | "circulating_supply" | "default";
 
 const CoinsList = ({ data, currency, page }: CoinsProps) => {
-  const [sortField, setSortField] = useState<SortField>("price");
+  const [sortField, setSortField] = useState<SortField>("default");
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
   const sortedCoins = useMemo(() => {
@@ -71,6 +72,11 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
     await coinHandler(data, id, navigate, symbol, currency, page);
   };
 
+  const classNameHandler = (status: SortOrder, field: SortField) => {
+    if (sortField !== field) return "opacity-25";
+    return sortOrder === status ? "opacity-100" : "opacity-25";
+  };
+
   return (
     <>
       <div className={styles.banner}>
@@ -92,51 +98,55 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
                   Price
                   <div onClick={() => statusHandler("price")}>
                     <TiArrowSortedUp
-                      className={`${
-                        sortField === "price" && sortOrder === "up"
-                          ? "opacity-100"
-                          : "opacity-25"
-                      }`}
+                      className={classNameHandler("up", "price")}
                     />
                     <TiArrowSortedDown
-                      className={`${
-                        sortField === "price" && sortOrder === "down"
-                          ? "opacity-100"
-                          : "opacity-25"
-                      }`}
+                      className={classNameHandler("down", "price")}
                     />
                   </div>
                 </div>
               </TableHead>
 
               <TableHead className="w-7  text-right">
-                <div className="w-12 flex items-center gap-2">
+                <div className=" flex items-center gap-2">
                   24h %
                   <div onClick={() => statusHandler("24h")}>
                     <TiArrowSortedUp
-                      className={`${
-                        sortField === "24h" && sortOrder === "up"
-                          ? "opacity-100"
-                          : "opacity-25"
-                      }`}
+                     className={classNameHandler("up", "24h")}
                     />
                     <TiArrowSortedDown
-                      className={`${
-                        sortField === "24h" && sortOrder === "down"
-                          ? "opacity-100"
-                          : "opacity-25"
-                      }`}
+                      className={classNameHandler("down", "24h")}
                     />
                   </div>
                 </div>
               </TableHead>
 
               <TableHead className="w-37 text-right">
-                <div>Market Cap</div>
+                <div className="flex justify-end items-center gap-2">
+                  Market Cap
+                  <div onClick={() => statusHandler("market_cap")}>
+                    <TiArrowSortedUp
+                      className={classNameHandler("up", "market_cap")}
+                    />
+                    <TiArrowSortedDown
+                      className={classNameHandler("down", "market_cap")}
+                    />
+                  </div>
+                </div>
               </TableHead>
 
               <TableHead className="text-right">
-                <div>Circulating Supply</div>
+                <div className="flex gap-2 items-center justify-end">Circulating Supply
+                  <div onClick={() => statusHandler("circulating_supply")}>
+                     <TiArrowSortedUp
+                      className={classNameHandler("up", "circulating_supply")}
+                    />
+                    <TiArrowSortedDown
+                      className={classNameHandler("down", "circulating_supply")}
+                    />
+                  </div>
+
+                </div>
               </TableHead>
               <TableHead className="text-right">
                 <div>Last 7 Days</div>
@@ -191,7 +201,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
                   <TableCell>{PriceCommaFormatter(market_cap)}</TableCell>
 
                   <TableCell>
-                    {priceFormatter(circulating_supply)}
+                    {formatPrice(circulating_supply)}
                     <span className="ml-2">{symbolFormatter(symbol)}</span>
                   </TableCell>
                   <TableCell>
