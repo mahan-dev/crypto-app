@@ -1,0 +1,13 @@
+@reference "tailwindcss";
+
+.searchBox {
+    @apply flex text-xl h-100 w-140 p-5 bg-[#222222] rounded-md max-md:mx-3 ;
+}
+
+.searchBox___searchInput {
+    @apply w-full text-[0.9rem] mr-6 border-0 outline-none;
+}
+
+.searchBox__container {
+    @apply w-full h-fit flex items-start gap-2;
+}
