@@ -8,18 +8,19 @@ import { useEffect, useState } from "react";
 
 const SearchDropDown = styled.div<{ $isOpen: boolean }>`
   opacity: ${(props) => (props.$isOpen ? 1 : 0)};
-  transform: translateY(${(props) => (props.$isOpen ? "0" : "-100%")});
-  transition: opacity 0.4s ease;
-  backdrop-filter: blur(0.6px);
-  display: flex;
-  margin-top: ${(props) => (props.$isOpen ? "4.6rem" : "-100%")};
 
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+  backdrop-filter: ${(props) => (props.$isOpen ? "blur(0.6px)" : "none")};
+  display: flex;
   justify-content: center;
   height: 100vh;
   position: fixed;
   inset: 0;
   z-index: 10;
   overflow: hidden;
+  pointer-events: ${(props) => (props.$isOpen ? "auto" : "none")};
 `;
 
 const Search = () => {
@@ -29,12 +30,12 @@ const Search = () => {
     setIsOpen(!isOpen);
   };
 
-  const overFlowHandler = () => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
-  };
+  // const overFlowHandler = () => {
+  //   document.body.style.overflow = isOpen ? "hidden" : "auto";
+  // };
 
   useEffect(() => {
-    overFlowHandler();
+    // overFlowHandler();
   }, [isOpen]);
 
   return (
@@ -44,7 +45,7 @@ const Search = () => {
         <span className="text-[0.8rem]">Search</span>
       </Button>
       <SearchDropDown $isOpen={isOpen}>
-        <SearchBox setIsOpen={setIsOpen} />
+        <SearchBox isOpen={isOpen} setIsOpen={setIsOpen} />
       </SearchDropDown>
     </>
   );
