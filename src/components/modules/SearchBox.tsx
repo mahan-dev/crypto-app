@@ -1,4 +1,4 @@
-import React, { type Dispatch, type SetStateAction } from "react";
+import  { type Dispatch, type SetStateAction } from "react";
 import { FiSearch } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import styles from "@/components/modules/css/searchBox/route.module.css";

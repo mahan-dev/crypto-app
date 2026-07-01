@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
 import { coinChart, coinSentiment } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
-import type { TypesCoin } from "@/components/modules/CoinsList";
+import type { TypesCoin } from "@/types/coinsList/coinListTypes";
 
 import styles from "@/components/templates/styles/coinDetails/route.module.css";
 

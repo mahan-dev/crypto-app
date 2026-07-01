@@ -1,4 +1,4 @@
-import type { SortField, SortOrder } from "@/components/modules/CoinsList";
+import type { SortOrder, SortField } from "@/types/coinsList/coinListTypes";
 import type { MarketType } from "@/types/marketTypes";
 
 export interface DataProps {

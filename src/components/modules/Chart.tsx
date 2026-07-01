@@ -19,7 +19,7 @@ import {
   convertedData,
   type DataProps,
 } from "@/helper/coinsList/formattedData";
-import type { TypesCoin } from "./CoinsList";
+
 import { Button } from "../ui/button";
 import styles from "@/components/modules/css/chart/route.module.css";
 import type { MarketType } from "@/types/marketTypes";
@@ -30,6 +30,7 @@ import { coinChart } from "@/services/coingecko";
 import CoinStatus from "./CoinStatus";
 import ChartTabs from "../elements/ChartTabs";
 import { chartLabel } from "@/constants/chart/chart";
+import type { TypesCoin } from "@/types/coinsList/coinListTypes";
 
 const chartConfig = {
   desktop: {
