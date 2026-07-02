@@ -30,12 +30,12 @@ const Search = () => {
     setIsOpen(!isOpen);
   };
 
-  // const overFlowHandler = () => {
-  //   document.body.style.overflow = isOpen ? "hidden" : "auto";
-  // };
+  const overFlowHandler = () => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+  };
 
   useEffect(() => {
-    // overFlowHandler();
+    overFlowHandler();
   }, [isOpen]);
 
   return (

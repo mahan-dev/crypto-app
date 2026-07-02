@@ -134,11 +134,22 @@ const marketCapChartApi = async () => {
   return data;
 };
 
-const searchCoinApi = async (coin: string) => {
-  const { data } = await apiConfig(`/search?query=${coin}`);
-  console.log("🍦 ~ coingecko.tsx:139 -> data: ", data);
+export interface SearchCoinProps {
+  coins: {
+    api_symbol: string;
+    id: string;
+    large: string;
+    name: string;
+    symbol: string;
+    thumb: string;
+  }[];
+}
 
-  return data;
+const searchCoinApi = async (coin: string): Promise<SearchCoinProps> => {
+  const { data } = await apiConfig(`/search?query=${coin}`);
+  const dataType: SearchCoinProps = data;
+
+  return dataType;
 };
 
 export {

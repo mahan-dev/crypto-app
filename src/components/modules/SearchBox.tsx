@@ -13,6 +13,7 @@ import styled from "styled-components";
 import useClickOutSide from "@/hooks/UseClickOutSide";
 import { searchCoinApi } from "@/services/coingecko";
 import { useQuery } from "@tanstack/react-query";
+import CoinResults from "./CoinResults";
 
 interface SearchBoxProps {
   isOpen: boolean;
@@ -38,11 +39,11 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
     queryFn: async () => await searchCoinApi(debouncedSearch),
   });
 
-  useClickOutSide({ isOpen, searchRef, setIsOpen });
+  useClickOutSide({ isOpen, searchRef, setIsOpen, setSearch });
 
   const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setSearch(value)
+    setSearch(value);
 
     if (value.trim() === "") return;
   };
@@ -65,8 +66,8 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
           <input
             type={"text"}
             className={styles.searchBox___searchInput}
-            onChange={changeHandler} 
-            value={search}
+            onChange={changeHandler}
+            value={!isOpen ? "" : search}
             placeholder="Search coin, pair, contract address, exchange, or post"
           />
 
@@ -75,6 +76,8 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
             onClick={() => setIsOpen(false)}
           />
         </div>
+
+        {data && <CoinResults data={data} />}
       </section>
     </SearchDropDown>
   );

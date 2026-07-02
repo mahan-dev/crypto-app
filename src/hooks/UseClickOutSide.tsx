@@ -9,15 +9,24 @@ interface UseClickProps {
   isOpen: boolean;
   searchRef: RefObject<HTMLDivElement | null>;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setSearch: Dispatch<SetStateAction<string>>;
 }
 
-const useClickOutSide = ({ isOpen, searchRef, setIsOpen }: UseClickProps) => {
+const useClickOutSide = ({
+  isOpen,
+  searchRef,
+  setIsOpen,
+  setSearch,
+}: UseClickProps) => {
+
+  
   useEffect(() => {
     if (!isOpen) return;
     const clickOutsideHandler = (event: MouseEvent) => {
       const target = event.target as Node;
       if (target && searchRef.current && !searchRef.current.contains(target)) {
         setIsOpen(false);
+        setSearch("");
       }
     };
 
@@ -25,7 +34,7 @@ const useClickOutSide = ({ isOpen, searchRef, setIsOpen }: UseClickProps) => {
     return () => {
       document.removeEventListener("mousedown", clickOutsideHandler);
     };
-  }, [isOpen, setIsOpen, searchRef]);
+  }, [isOpen, setIsOpen, searchRef, setSearch]);
 };
 
 export default useClickOutSide;
