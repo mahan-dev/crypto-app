@@ -16,14 +16,8 @@ const useClickOutSide = ({ isOpen, searchRef, setIsOpen }: UseClickProps) => {
     if (!isOpen) return;
     const clickOutsideHandler = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (
-        isOpen &&
-        target &&
-        searchRef.current &&
-        !searchRef.current.contains(target)
-      ) {
+      if (target && searchRef.current && !searchRef.current.contains(target)) {
         setIsOpen(false);
-        console.log("hi");
       }
     };
 
