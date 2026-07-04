@@ -26,20 +26,9 @@ const CoinDetail = () => {
 
   const { coinId } = useParams();
 
-  const {
-    data: allCoins,
-
-    error,
-    isSuccess,
-  } = useQuery({
+  const { data: allCoins } = useQuery({
     queryKey: ["allCoins"],
     queryFn: async () => await allMarketLists(),
-  });
-
-  console.log({
-    isSuccess,
-    error,
-    allCoins,
   });
 
   const filterData = allCoins?.data.find(

@@ -1,0 +1,10 @@
+@reference "tailwindcss";
+
+.result__list {
+    @apply flex gap-1.5 px-2 py-1.5 items-center transition-all duration-200 hover:bg-[#4d4d4d] rounded-md;
+}
+
+
+.result__button {
+    @apply w-full text-center mt-2 mx-auto border border-white rounded-md px-2 hover:opacity-40 transition-all duration-200 cursor-pointer;
+}

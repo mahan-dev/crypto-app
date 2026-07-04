@@ -14,6 +14,7 @@ import useClickOutSide from "@/hooks/UseClickOutSide";
 import { searchCoinApi } from "@/services/coingecko";
 import { useQuery } from "@tanstack/react-query";
 import CoinResults from "./CoinResults";
+import Loader from "../loader/Loader";
 
 interface SearchBoxProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
 
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
 
-  const { data, isError } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ["searchCoin", debouncedSearch],
     queryFn: async () => await searchCoinApi(debouncedSearch),
   });
@@ -49,11 +50,9 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
-    }, 500);
+    }, 600);
     return () => clearTimeout(timer);
   }, [search]);
-
-  console.log(data);
 
   return (
     <SearchDropDown $isOpen={isOpen} ref={searchRef} className="max-sm:w-[90%]">
@@ -71,10 +70,18 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
 
           <IoClose
             className="cursor-pointer ml-auto"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              setSearch("");
+            }}
           />
         </div>
 
+        {isLoading && (
+          <div className="mx-auto">
+            <Loader />
+          </div>
+        )}
         {!!data?.coins.length && (
           <CoinResults
             data={data}
@@ -82,9 +89,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
             setIsOpen={setIsOpen}
           />
         )}
-        <div>
-          {isError && <span>Failed</span> }
-        </div>
+        <div>{isError && <span>Failed</span>}</div>
       </section>
     </SearchDropDown>
   );

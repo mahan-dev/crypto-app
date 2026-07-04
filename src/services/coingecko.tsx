@@ -47,9 +47,6 @@ const allMarketLists = async (
       `${BASE_URL}/coins/markets?vs_currency=${currency}`,
     );
 
-    console.log("hi");
-
-    console.log("💬 ~ coingecko.tsx:45 -> response: ", response);
     return response;
   } catch (error) {
     console.log(error);
