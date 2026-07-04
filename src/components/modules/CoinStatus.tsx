@@ -1,7 +1,7 @@
 import styles from "@/components/modules/css/coinStatus/route.module.css";
 import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
 import type { Coin } from "./Chart";
-import UseCoin from "@/hooks/useCoin";
+
 import type { MarketType } from "@/types/marketTypes";
 
 import CoinPrice from "@/components/elements/CoinPrice";
@@ -10,11 +10,15 @@ interface CoinProps {
   coinSymbol: Coin;
   coinName: string;
   show: boolean;
+  filteredData: MarketType["data"][number];
 }
-const CoinStatus = ({ coinSymbol, coinName, show }: CoinProps) => {
-  const { coin: cachedCoin } = UseCoin();
-
-  const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
+const CoinStatus = ({
+  coinSymbol,
+  coinName,
+  show,
+  filteredData,
+}: CoinProps) => {
+  const CachedTypeCoin: MarketType["data"][number] = filteredData;
 
   return (
     <div className=" px-7">

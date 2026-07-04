@@ -1,12 +1,12 @@
 import type { MarketType } from "@/types/marketTypes";
 
-import { useLocation, redirect } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 
-import { useEffect, useState } from "react";
-import UseCoin from "@/hooks/useCoin";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+
+import { useQuery } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
-import { coinChart, coinSentiment } from "@/services/coingecko";
+import { allMarketLists, coinChart, coinSentiment } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/types/coinsList/coinListTypes";
 
@@ -24,46 +24,39 @@ const CoinDetail = () => {
   const [type, setType] = useState<TypesCoin>("prices");
   const [sentiment, setSentiment] = useState<CoinSentiment | "">("");
 
-  const location = useLocation();
-  const coinName = location.pathname.split("/")[1];
+  const { coinId } = useParams();
 
-  const { symbol, page, currency } = location.state;
-  const coinSymbol = symbol as Coin;
-  const queryClient = useQueryClient();
-  const data: MarketType | undefined = queryClient.getQueryData([
-    "crypto",
-    page,
-    currency,
-  ]);
+  const {
+    data: allCoins,
 
-  const filterData = data?.data.find((item) => item.symbol === symbol);
+    error,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["allCoins"],
+    queryFn: async () => await allMarketLists(),
+  });
 
-  const { coin: cachedCoin, setCoin: setCachedCoin } = UseCoin();
+  console.log({
+    isSuccess,
+    error,
+    allCoins,
+  });
 
-  const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
+  const filterData = allCoins?.data.find(
+    (item) => item.id === coinId,
+  ) as MarketType["data"][number];
 
   const { isLoading, isError } = useQuery({
-    queryKey: ["coin-details", CachedTypeCoin?.id],
+    queryKey: ["coin-details", coinId],
     queryFn: async () => {
       const [chartData, sentimentData] = await Promise.all([
-        coinChart(CachedTypeCoin["id"]).then((res) => setChart(res)),
-        coinSentiment(CachedTypeCoin["id"]).then((res) => setSentiment(res)),
+        coinChart(coinId ?? "").then((res) => setChart(res)),
+        coinSentiment(coinId ?? "").then((res) => setSentiment(res)),
       ]);
 
       return { chartData, sentimentData };
     },
   });
-
-  useEffect(() => {
-    if (!filterData) return;
-
-    setCachedCoin(filterData);
-  }, [filterData]);
-
-  // if (!location.state) {
-  //   //  return <Navigate to={"/"} replace />;
-  //   throw redirect("/");
-  // }
 
   if (isError) redirect("/");
 
@@ -74,20 +67,27 @@ const CoinDetail = () => {
           <Loader />
         </div>
       )}
-
-      <CoinDetailAside
-        CachedTypeCoin={CachedTypeCoin}
-        coinSymbol={coinSymbol}
-        coinName={coinName}
-      />
-      <div className={styles.container__main}>
-        <CoinChart
-          coin={CachedTypeCoin["name"]}
-          chart={chart}
-          setChart={setChart}
-          type={type}
-          setType={setType}
+      {!!filterData && (
+        <CoinDetailAside
+          CachedTypeCoin={filterData}
+          coinSymbol={filterData.symbol}
+          coinName={filterData.name}
         />
+      )}
+      <div className={styles.container__main}>
+        {!isLoading && !!filterData && (
+          <CoinChart
+            coinSymbol={filterData.symbol}
+            coinName={filterData.name}
+            coin={filterData.name ?? ""}
+            chart={chart}
+            setChart={setChart}
+            type={type}
+            setType={setType}
+            coinId={filterData.id}
+            filteredData={filterData}
+          />
+        )}
         <div className={styles.sentiment}>
           <Sentiment sentiment={sentiment} />
         </div>

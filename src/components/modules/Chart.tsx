@@ -23,14 +23,14 @@ import {
 import { Button } from "../ui/button";
 import styles from "@/components/modules/css/chart/route.module.css";
 import type { MarketType } from "@/types/marketTypes";
-import { useLocation } from "react-router-dom";
-import UseCoin from "@/hooks/useCoin";
+
 import { coinChart } from "@/services/coingecko";
 
 import CoinStatus from "./CoinStatus";
 import ChartTabs from "../elements/ChartTabs";
 import { chartLabel } from "@/constants/chart/chart";
 import type { TypesCoin } from "@/types/coinsList/coinListTypes";
+import { useQueryClient } from "@tanstack/react-query";
 
 const chartConfig = {
   desktop: {
@@ -40,42 +40,51 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface CoinProps {
+  coinSymbol: MarketType["data"][number]["symbol"];
+  coinName: MarketType["data"][number]["name"];
   chart: DataProps["data"] | null;
   setChart: Dispatch<SetStateAction<DataProps["data"] | null>>;
   type: TypesCoin;
   setType: Dispatch<SetStateAction<TypesCoin>>;
   coin: MarketType["data"][number]["name"];
-  cmcPage?: boolean;
+  coinId: string;
+  filteredData: MarketType["data"][number];
 }
 
 export type Coin = MarketType["data"][number]["symbol"];
 export type Days = 1 | 7 | 30 | 90 | 365;
 
-const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
+const CoinChart = ({
+  chart,
+  type,
+  setType,
+  setChart,
+  coinSymbol,
+  coinName,
+  coinId,
+  filteredData,
+}: CoinProps) => {
   const [show] = useState(() => document.body.offsetWidth <= 1111);
   const [days, setDays] = useState<Days>(7);
+  console.log(chart);
 
   const finalData = useMemo(() => {
     if (!chart) return null;
     const items = convertedData(chart, type);
-    console.log(items);
     return items;
   }, [chart, type]);
+
+  const getQueryClient = useQueryClient();
+
+  const data = getQueryClient.getQueryData<MarketType>(["allCoins"]);
+  console.log(data);
 
   const buttonHandler = (value: TypesCoin) => {
     setType(value);
   };
 
-  const location = useLocation();
-  const coinName = location.pathname.split("/")[1];
-  const { coin: cachedCoin } = UseCoin();
-  const CachedTypeCoin: MarketType["data"][number] = cachedCoin;
-
-  const { symbol } = location.state;
-  const coinSymbol = symbol as Coin;
-
   const chartFetcher = async () => {
-    await coinChart(CachedTypeCoin["id"], days).then((res) => setChart(res));
+    await coinChart(coinId, days).then((res) => setChart(res));
   };
 
   useEffect(() => {
@@ -91,6 +100,7 @@ const CoinChart = ({ chart, type, setType, setChart }: CoinProps) => {
               coinSymbol={coinSymbol}
               coinName={coinName}
               show={show}
+              filteredData={filteredData}
             />
           </div>
 

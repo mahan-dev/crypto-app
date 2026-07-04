@@ -16,13 +16,14 @@ const positionToast = {
 } as const;
 
 const getMarketList = async (
-  currency: string,
-  page: number,
+  currency: string = "usd",
+  page: number = 1,
 ): Promise<MarketType> => {
   try {
     const response = await apiConfig(
       `${BASE_URL}/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=20&page=${page}&x-cg-demo-api-key:${API_KEY}&sparkline=false&price_change_percentage=24h`,
     );
+    console.log(response);
     return response;
   } catch (error) {
     if (isAxiosError(error)) {
@@ -31,11 +32,32 @@ const getMarketList = async (
       }
       toast.error(error.message, positionToast);
     }
-    return {
-      status: 500,
-      data: [],
-    };
   }
+  return {
+    status: 500,
+    data: [],
+  };
+};
+
+const allMarketLists = async (
+  currency: string = "usd",
+): Promise<MarketType> => {
+  try {
+    const response: MarketType = await apiConfig(
+      `${BASE_URL}/coins/markets?vs_currency=${currency}`,
+    );
+
+    console.log("hi");
+
+    console.log("💬 ~ coingecko.tsx:45 -> response: ", response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+  return {
+    status: 500,
+    data: [],
+  };
 };
 
 const coinChart = async (
@@ -46,6 +68,7 @@ const coinChart = async (
     const res: DataProps = await apiConfig(
       `${BASE_URL}/coins/${coin}/market_chart?vs_currency=usd&days=${days}`,
     );
+    console.log(res);
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -163,4 +186,5 @@ export {
   marketCapApi,
   marketCapChartApi,
   searchCoinApi,
+  allMarketLists,
 };

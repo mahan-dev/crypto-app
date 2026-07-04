@@ -34,7 +34,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
 
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
 
-  const { data } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: ["searchCoin", debouncedSearch],
     queryFn: async () => await searchCoinApi(debouncedSearch),
   });
@@ -44,8 +44,6 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
   const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearch(value);
-
-    if (value.trim() === "") return;
   };
 
   useEffect(() => {
@@ -77,7 +75,16 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
           />
         </div>
 
-        {data && <CoinResults data={data} />}
+        {!!data?.coins.length && (
+          <CoinResults
+            data={data}
+            setSearch={setSearch}
+            setIsOpen={setIsOpen}
+          />
+        )}
+        <div>
+          {isError && <span>Failed</span> }
+        </div>
       </section>
     </SearchDropDown>
   );
