@@ -21,25 +21,18 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-import FearAndGreed from "./FearAndGreed";
-import AltCoinSeason from "./AltCoinSeason";
-
-import styles from "@/components/modules/css/coinsList/route.module.css";
-
-import Cmc20Chart from "./Cmc20Chart";
-import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
+import { useMemo, useState } from "react";
 import { coinHandler } from "@/helper/coinsList/coinHandler";
 import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 import type { SortField, SortOrder } from "@/types/coinsList/coinListTypes";
+import { currencyHandler } from "@/helper/coinsList/currencyHandler";
 
-interface CoinsProps {
+export interface CoinsProps {
   data: MarketType["data"];
-  currency: string;
-  setCurrency: Dispatch<SetStateAction<string>>;
-  page: number;
+  currency: "usd" | "eur" | "pound";
 }
 
-const CoinsList = ({ data, currency, page }: CoinsProps) => {
+const CoinsList = ({ data, currency }: CoinsProps) => {
   const [sortField, setSortField] = useState<SortField>("default");
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
@@ -61,11 +54,8 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
 
   const navigate = useNavigate();
 
-  const coinClickHandler = async (
-    id: MarketType["data"][number]["id"],
-    symbol: MarketType["data"][number]["symbol"],
-  ) => {
-    await coinHandler(data, id, navigate, symbol, currency, page);
+  const coinClickHandler = async (id: MarketType["data"][number]["id"]) => {
+    await coinHandler(data, id, navigate);
   };
 
   const classNameHandler = (status: SortOrder, field: SortField) => {
@@ -75,16 +65,8 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
 
   return (
     <>
-      <div className={styles.banner}>
-        <FearAndGreed />
-
-        <AltCoinSeason />
-
-        <Cmc20Chart />
-      </div>
-
       {data && data.length && (
-        <Table className="text-white mt-12 ">
+        <Table className="text-white mt-4 ">
           <TableHeader>
             <TableRow className="*:text-white hover:bg-transparent">
               <TableHead className="w-2 text-center">#</TableHead>
@@ -165,7 +147,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
                 <TableRow
                   className="*:text-right cursor-pointer"
                   key={name}
-                  onClick={() => coinClickHandler(id, symbol)}
+                  onClick={() => coinClickHandler(id)}
                 >
                   <TableCell className=" first-of-type:text-center">
                     {market_cap_rank}
@@ -183,10 +165,7 @@ const CoinsList = ({ data, currency, page }: CoinsProps) => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    $
-                    {current_price < 1
-                      ? current_price.toFixed(4)
-                      : PriceCommaFormatter(current_price)}
+                    {currencyHandler(current_price, currency)}
                   </TableCell>
 
                   <TableCell

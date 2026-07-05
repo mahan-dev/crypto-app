@@ -1,27 +1,47 @@
 import { getMarketList } from "@/services/coingecko";
 import { useState } from "react";
-import CoinsList from "@/components/modules/CoinsList";
+import CoinsList, { type CoinsProps } from "@/components/modules/CoinsList";
 
 import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../loader/Loader";
+import CurrencyDropDown from "../modules/CurrencyDropDown";
+import FearAndGreed from "../modules/FearAndGreed";
+import AltCoinSeason from "../modules/AltCoinSeason";
+import Cmc20Chart from "../modules/Cmc20Chart";
+import stylesBanner from "@/components/modules/css/coinsList/route.module.css";
 
 const Home = () => {
   const [page, setPage] = useState(1);
-  const [currency, setCurrency] = useState("usd");
+  const [currency, setCurrency] = useState<CoinsProps["currency"]>("usd");
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["crypto", page, currency],
     queryFn: async () => await getMarketList(currency, page),
   });
 
   return (
     <section>
-      {data && data.data.length ? (
-        <>
-          <CoinsList data={data.data} page={page} currency={currency} setCurrency={setCurrency}/>
+      <div className={stylesBanner.banner}>
+        <FearAndGreed />
+
+        <AltCoinSeason />
+
+        <Cmc20Chart />
+      </div>
+      {isLoading && (
+        <div className="w-full flex h-[80vh] justify-center items-center">
+          <Loader />
+        </div>
+      )}
+      {data && !!data.data.length ? (
+        <div className="mt-6">
+          <CurrencyDropDown setCurrency={setCurrency} />
+
+          <CoinsList data={data.data} currency={currency} />
 
           <PaginationPage page={page} setPage={setPage} />
-        </>
+        </div>
       ) : (
         <h2 className="w-full flex justify-center mt-6">
           Something wen't wrong
