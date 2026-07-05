@@ -10,7 +10,7 @@ interface CoinProps {
   coinSymbol: Coin;
   coinName: string;
   show: boolean;
-  filteredData: MarketType["data"][number];
+  filteredData?: MarketType["data"][number];
 }
 const CoinStatus = ({
   coinSymbol,
@@ -18,7 +18,7 @@ const CoinStatus = ({
   show,
   filteredData,
 }: CoinProps) => {
-  const data: MarketType["data"][number] = filteredData;
+  const data: MarketType["data"][number] = filteredData as MarketType["data"][number];
 
   return (
     <div className=" px-7">
