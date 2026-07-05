@@ -18,7 +18,7 @@ const CoinStatus = ({
   show,
   filteredData,
 }: CoinProps) => {
-  const CachedTypeCoin: MarketType["data"][number] = filteredData;
+  const data: MarketType["data"][number] = filteredData;
 
   return (
     <div className=" px-7">
@@ -27,7 +27,7 @@ const CoinStatus = ({
           <span className={styles.coin__image}>
             <img
               className="rounded-full"
-              src={CachedTypeCoin["image"]}
+              src={data["image"]}
               width={25}
               height={25}
               alt="coin_image"
@@ -37,12 +37,12 @@ const CoinStatus = ({
           </span>
           <span className={styles.coin__symbol}>{coinSymbol}</span>
           <span className={styles["coin__market-cap"]}>
-            {`#${ValueChecker(CachedTypeCoin["market_cap_rank"])} `}
+            {`#${ValueChecker(data["market_cap_rank"])} `}
           </span>
         </div>
       </div>
-      {CachedTypeCoin["id"] === "tether" ? (
-        <span>${CachedTypeCoin["current_price"]}</span>
+      {data["id"] === "tether" ? (
+        <span>${data["current_price"]}</span>
       ) : (
         <CoinPrice coin={coinSymbol} boolean={show} />
       )}

@@ -4,7 +4,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "../../../@/components/ui/dropdown-menu";
@@ -12,9 +11,10 @@ import { type Dispatch, type SetStateAction } from "react";
 import type { CoinsProps } from "./CoinsList";
 
 interface CurrencyProps {
+  currency: CoinsProps["currency"];
   setCurrency: Dispatch<SetStateAction<CoinsProps["currency"]>>;
 }
-const CurrencyDropDown = ({ setCurrency }: CurrencyProps) => {
+const CurrencyDropDown = ({ currency, setCurrency }: CurrencyProps) => {
   const selectHandler = (field: CoinsProps["currency"]) => {
     setCurrency((prev) => {
       if (prev === field) return prev;
@@ -24,14 +24,13 @@ const CurrencyDropDown = ({ setCurrency }: CurrencyProps) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger className="cursor-pointer" asChild>
         <Button className="text-black" variant="outline">
-          Currency
+          {currency.toLocaleUpperCase()}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup className="**:cursor-pointer">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuItem onSelect={() => selectHandler("usd")}>
             USD
             <DropdownMenuShortcut>💶 </DropdownMenuShortcut>

@@ -15,7 +15,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [currency, setCurrency] = useState<CoinsProps["currency"]>("usd");
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["crypto", page, currency],
     queryFn: async () => await getMarketList(currency, page),
   });
@@ -34,15 +34,16 @@ const Home = () => {
           <Loader />
         </div>
       )}
-      {data && !!data.data.length ? (
+      {data && !!data.data.length && (
         <div className="mt-6">
-          <CurrencyDropDown setCurrency={setCurrency} />
+          <CurrencyDropDown currency={currency} setCurrency={setCurrency} />
 
           <CoinsList data={data.data} currency={currency} />
 
           <PaginationPage page={page} setPage={setPage} />
         </div>
-      ) : (
+      )}
+      {isError && (
         <h2 className="w-full flex justify-center mt-6">
           Something wen't wrong
         </h2>

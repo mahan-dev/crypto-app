@@ -3,3 +3,7 @@
 .card {
     @apply w-full bg-[#252525] text-white ;
 }
+
+.card__status {
+    @apply flex justify-between pr-7 max-sm:mb-4 max-sm:flex-wrap max-sm:gap-2;
+}

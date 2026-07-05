@@ -4,7 +4,7 @@ import { PriceCommaFormatter } from "./formattedData";
 const currencyList = {
   usd: "$",
   eur: "€",
-  pound: "£",
+  gbp: "£",
 };
 
 const currencyHandler = (

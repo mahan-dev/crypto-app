@@ -30,7 +30,6 @@ import CoinStatus from "./CoinStatus";
 import ChartTabs from "../elements/ChartTabs";
 import { chartLabel } from "@/constants/chart/chart";
 import type { TypesCoin } from "@/types/coinsList/coinListTypes";
-import { useQueryClient } from "@tanstack/react-query";
 
 const chartConfig = {
   desktop: {
@@ -74,11 +73,6 @@ const CoinChart = ({
     return items;
   }, [chart, type]);
 
-  const getQueryClient = useQueryClient();
-
-  const data = getQueryClient.getQueryData<MarketType>(["allCoins"]);
-  console.log(data);
-
   const buttonHandler = (value: TypesCoin) => {
     setType(value);
   };
@@ -94,7 +88,7 @@ const CoinChart = ({
   return (
     <>
       <Card className={styles.card}>
-        <div className="flex justify-between pr-7 max-sm:mb-4 max-sm:flex-wrap max-sm:gap-2">
+        <div className={styles.card__status}>
           <div className="max-[1110px]:visible min-[1111px]:hidden">
             <CoinStatus
               coinSymbol={coinSymbol}

@@ -29,7 +29,7 @@ import { currencyHandler } from "@/helper/coinsList/currencyHandler";
 
 export interface CoinsProps {
   data: MarketType["data"];
-  currency: "usd" | "eur" | "pound";
+  currency: "usd" | "eur" | "gbp";
 }
 
 const CoinsList = ({ data, currency }: CoinsProps) => {
@@ -72,7 +72,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
               <TableHead className="w-2 text-center">#</TableHead>
               <TableHead className="w-35 flex items-center">Name</TableHead>
               <TableHead className="w-px text-right">
-                <div className="flex items-center gap-2">
+                <div className="flex justify-end items-center gap-2">
                   Price
                   <div onClick={() => statusHandler("price")}>
                     <TiArrowSortedUp
@@ -86,7 +86,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
               </TableHead>
 
               <TableHead className="w-7  text-right">
-                <div className=" flex items-center gap-2">
+                <div className=" flex justify-end items-center gap-2">
                   24h %
                   <div onClick={() => statusHandler("24h")}>
                     <TiArrowSortedUp
