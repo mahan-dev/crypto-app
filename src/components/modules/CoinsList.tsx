@@ -26,6 +26,7 @@ import { coinHandler } from "@/helper/coinsList/coinHandler";
 import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 import type { SortField, SortOrder } from "@/types/coinsList/coinListTypes";
 import { currencyHandler } from "@/helper/coinsList/currencyHandler";
+import { statusHelperHandler } from "@/helper/coinsList/statusHandlerHelper";
 
 export interface CoinsProps {
   data: MarketType["data"];
@@ -42,12 +43,8 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   const statusHandler = (field: SortField) => {
     if (!data.length) return;
-
-    setSortField(field);
-
-    setSortOrder((prev) => {
-      return prev === "default" ? "down" : prev === "down" ? "up" : "default";
-    });
+    statusHelperHandler(field, sortField, setSortOrder, setSortField)
+   
   };
 
   const coinToRender = sortedCoins.length ? sortedCoins : data;
