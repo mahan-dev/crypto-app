@@ -18,6 +18,7 @@ import Loader from "../loader/Loader";
 import CoinDetailAside from "../modules/coinDetailAside";
 import Sentiment from "../modules/Sentiment";
 import { toast } from "sonner";
+import { useErrorRedirect } from "@/hooks/useErrorRedirect";
 
 export type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
@@ -27,7 +28,7 @@ const CoinDetail = () => {
 
   const { coinId } = useParams();
 
-  const { data: allCoins } = useQuery({
+  const { data: allCoins, isError } = useQuery({
     queryKey: ["allCoins"],
     queryFn: async () => await allMarketLists(),
   });
@@ -36,35 +37,25 @@ const CoinDetail = () => {
     (item) => item.id === coinId,
   ) as MarketType["data"][number];
 
-  const { isLoading, isError } = useQuery({
+  console.log(filterData);
+
+  const { data, isLoading } = useQuery({
     queryKey: ["coin-details", coinId],
     queryFn: async () => {
       const [chartData, sentimentData] = await Promise.all([
-        coinChart(coinId ?? "").then((res) => setChart(res)),
-        coinSentiment(coinId ?? "").then((res) => setSentiment(res)),
+        coinChart(coinId ?? ""),
+        coinSentiment(coinId ?? ""),
       ]);
+      setChart(chartData ?? null);
+      setSentiment(sentimentData ?? null);
 
       return { chartData, sentimentData };
     },
   });
+  console.log(data);
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(isError);
-    if (!isError) return;
-
-    toast.error("something wen't wrong", {
-      position: "top-center",
-      duration: 1000,
-    });
-    const timer = setTimeout(() => {
-      navigate("/", { replace: true });
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [isError, navigate]);
-
+  useErrorRedirect(isError)
+  
   return (
     <section className={styles.container}>
       {isLoading && (

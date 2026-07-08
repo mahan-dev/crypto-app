@@ -42,19 +42,11 @@ const getMarketList = async (
 const allMarketLists = async (
   currency: string = "usd",
 ): Promise<MarketType> => {
-  try {
-    const response: MarketType = await apiConfig(
-      `${BASE_URL}/coins/markets?vs_currency=${currency}`,
-    );
+  const response: MarketType = await apiConfig(
+    `${BASE_URL}/coins/markets?vs_currency=${currency}`,
+  );
 
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-  return {
-    status: 500,
-    data: [],
-  };
+  return response;
 };
 
 const coinChart = async (
