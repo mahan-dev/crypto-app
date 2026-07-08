@@ -1,8 +1,8 @@
 import type { MarketType } from "@/types/marketTypes";
 
-import { redirect, useParams } from "react-router-dom";
+import { Navigate, redirect, useNavigate, useParams } from "react-router-dom";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
@@ -17,6 +17,7 @@ import type { CoinSentiment } from "@/types/coinTypes";
 import Loader from "../loader/Loader";
 import CoinDetailAside from "../modules/coinDetailAside";
 import Sentiment from "../modules/Sentiment";
+import { toast } from "sonner";
 
 export type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {
@@ -47,7 +48,22 @@ const CoinDetail = () => {
     },
   });
 
-  if (isError) redirect("/");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(isError);
+    if (!isError) return;
+
+    toast.error("something wen't wrong", {
+      position: "top-center",
+      duration: 1000,
+    });
+    const timer = setTimeout(() => {
+      navigate("/", { replace: true });
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [isError, navigate]);
 
   return (
     <section className={styles.container}>
