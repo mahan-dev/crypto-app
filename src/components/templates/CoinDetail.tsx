@@ -1,8 +1,8 @@
 import type { MarketType } from "@/types/marketTypes";
 
-import { Navigate, redirect, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
@@ -17,7 +17,6 @@ import type { CoinSentiment } from "@/types/coinTypes";
 import Loader from "../loader/Loader";
 import CoinDetailAside from "../modules/coinDetailAside";
 import Sentiment from "../modules/Sentiment";
-import { toast } from "sonner";
 import { useErrorRedirect } from "@/hooks/useErrorRedirect";
 
 export type Coin = MarketType["data"][number]["symbol"];
