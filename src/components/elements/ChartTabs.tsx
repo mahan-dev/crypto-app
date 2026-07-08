@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import { Tabs, TabsList, TabsTrigger } from "../../../@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Days } from "../modules/Chart";
 import { toast } from "sonner";
 

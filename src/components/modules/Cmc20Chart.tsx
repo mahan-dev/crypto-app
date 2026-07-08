@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader } from "../../../@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 import {
   ChartContainer,
   type ChartConfig,
-} from "../../../@/components/ui/chart";
+} from "@/components/ui/chart";
 import { Area, AreaChart } from "recharts";
 import { convertedData } from "@/helper/coinsList/formattedData";
 

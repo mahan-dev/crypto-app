@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { FiSearch } from "react-icons/fi";
 
 import styles from "@/components/elements/styles/search/route.module.css";

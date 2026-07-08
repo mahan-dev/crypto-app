@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../../../@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { type Dispatch, type SetStateAction } from "react";
 import type { CoinsProps } from "./CoinsList";
 

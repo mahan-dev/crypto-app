@@ -42,5 +42,5 @@
 }
 
 .content__circle {
-    @apply text-white   absolute top-1/2 h-4 w-4 -translate-y-1/2 border-2 rounded-full border-[#1E1F24];
+    @apply text-white  absolute top-1/2 h-5 w-5 -translate-y-1/2 border-3 rounded-full border-[#1E1F24];
 }

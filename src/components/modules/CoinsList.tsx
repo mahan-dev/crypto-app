@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../@/components/ui/table";
+} from "../ui/table";
 
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -43,8 +43,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   const statusHandler = (field: SortField) => {
     if (!data.length) return;
-    statusHelperHandler(field, sortField, setSortOrder, setSortField)
-   
+    statusHelperHandler(field, sortField, setSortOrder, setSortField);
   };
 
   const coinToRender = sortedCoins.length ? sortedCoins : data;

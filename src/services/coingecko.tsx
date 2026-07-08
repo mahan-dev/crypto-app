@@ -23,7 +23,7 @@ const getMarketList = async (
     const response = await apiConfig(
       `${BASE_URL}/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=20&page=${page}&x-cg-demo-api-key:${API_KEY}&sparkline=false&price_change_percentage=24h`,
     );
-    console.log(response);
+
     return response;
   } catch (error) {
     if (isAxiosError(error)) {

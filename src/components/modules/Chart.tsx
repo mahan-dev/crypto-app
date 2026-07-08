@@ -1,12 +1,12 @@
 import { Area, AreaChart, XAxis } from "recharts";
 
-import { Card, CardContent, CardFooter } from "../../../@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "../../../@/components/ui/chart";
+} from "@/components/ui/chart";
 
 import {
   useEffect,
@@ -20,7 +20,7 @@ import {
   type DataProps,
 } from "@/helper/coinsList/formattedData";
 
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import styles from "@/components/modules/css/chart/route.module.css";
 import type { MarketType } from "@/types/marketTypes";
 

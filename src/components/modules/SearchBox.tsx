@@ -38,6 +38,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
   const { data, isError, isLoading } = useQuery({
     queryKey: ["searchCoin", debouncedSearch],
     queryFn: async () => await searchCoinApi(debouncedSearch),
+    enabled: !!debouncedSearch,
   });
 
   useClickOutSide({ isOpen, searchRef, setIsOpen, setSearch });
