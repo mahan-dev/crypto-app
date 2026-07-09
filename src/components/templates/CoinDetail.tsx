@@ -2,7 +2,7 @@ import type { MarketType } from "@/types/marketTypes";
 
 import { useParams } from "react-router-dom";
 
-import {  useState } from "react";
+import { useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import CoinChart from "../modules/Chart";
@@ -36,9 +36,7 @@ const CoinDetail = () => {
     (item) => item.id === coinId,
   ) as MarketType["data"][number];
 
-  console.log(filterData);
-
-  const { data, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["coin-details", coinId],
     queryFn: async () => {
       const [chartData, sentimentData] = await Promise.all([
@@ -51,10 +49,9 @@ const CoinDetail = () => {
       return { chartData, sentimentData };
     },
   });
-  console.log(data);
 
-  useErrorRedirect(isError)
-  
+  useErrorRedirect(isError);
+
   return (
     <section className={styles.container}>
       {isLoading && (

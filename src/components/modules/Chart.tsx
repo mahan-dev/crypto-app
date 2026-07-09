@@ -65,7 +65,6 @@ const CoinChart = ({
 }: CoinProps) => {
   const [show] = useState(() => document.body.offsetWidth <= 1111);
   const [days, setDays] = useState<Days>(7);
-  console.log(chart);
 
   const finalData = useMemo(() => {
     if (!chart) return null;

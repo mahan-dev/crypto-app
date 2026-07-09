@@ -16,8 +16,8 @@ const Sentiment = ({ sentiment }: SentimentProps) => {
             <VscDashboard className="text-[1.3rem]" /> Community sentiment
           </span>
           <WinLossBar
-            sentimentUp={sentiment.sentiment_votes_up_percentage}
-            sentimentDown={sentiment.sentiment_votes_down_percentage}
+            sentimentUp={sentiment.sentiment_votes_up_percentage ?? "50"}
+            sentimentDown={sentiment.sentiment_votes_down_percentage ?? "50"}
           />
         </div>
       )}
