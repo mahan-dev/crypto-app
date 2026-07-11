@@ -1,7 +1,7 @@
 import type { CoinsProps } from "@/components/modules/CoinsList";
 import { PriceCommaFormatter } from "./formattedData";
 
-const currencyList = {
+export const currencyList = {
   usd: "$",
   eur: "€",
   gbp: "£",
