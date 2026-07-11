@@ -9,11 +9,7 @@ const coinHandler = async (
   const finalD = data?.find((item) => item.id === id);
 
   if (finalD) {
-    // localStorage.setItem("crypto - detail", JSON.stringify(finalD));
-
-    navigate(`${id}`, {
-      // state: { symbol, currency, page },
-    });
+    navigate(`${id}`, {});
   }
 };
 
