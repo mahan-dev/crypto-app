@@ -19,7 +19,7 @@ import {
   symbolFormatter,
 } from "@/helper/coinsList/formattedData";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useEffect, useMemo, useState } from "react";
 import { coinHandler } from "@/helper/coinsList/coinHandler";
@@ -240,8 +240,10 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
-      <div className="flex justify-center items-center w-12 h-12 fixed z-20 bottom-7 right-3 rounded-full bg-[#32333b]">
-        <GrFavorite />
+      <div className="w-12 h-12 bg-[#32333b] flex justify-center items-center fixed z-20 bottom-7 right-3 rounded-full cursor-pointer">
+        <Link to={"/favorite"}>
+          <GrFavorite />
+        </Link>
       </div>
     </>
   );

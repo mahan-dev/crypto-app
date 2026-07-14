@@ -1,0 +1,14 @@
+@reference "tailwindcss";
+
+
+.list {
+@apply w-32 bg-[#1E1F24] border border-[#3b3b3b] flex flex-col items-center gap-2 rounded-md py-2 px-3;
+}
+
+.list__header {
+    @apply w-full flex justify-between;
+}
+
+.list__main {
+    @apply w-full flex justify-between items-center gap-2;
+}
