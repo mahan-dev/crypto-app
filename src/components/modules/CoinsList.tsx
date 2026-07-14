@@ -21,13 +21,16 @@ import {
 
 import { useNavigate } from "react-router-dom";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { coinHandler } from "@/helper/coinsList/coinHandler";
 import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 import type { SortField, SortOrder } from "@/types/coinsList/coinListTypes";
 import { currencyHandler } from "@/helper/coinsList/currencyHandler";
 import { statusHelperHandler } from "@/helper/coinsList/statusHandlerHelper";
 
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import { useWishList, wishListHelper } from "@/hooks/useWishList";
 export interface CoinsProps {
   data: MarketType["data"];
   currency: "usd" | "eur" | "gbp";
@@ -58,6 +61,26 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
     if (sortField !== field) return "opacity-25";
     return sortOrder === status ? "opacity-100" : "opacity-25";
   };
+
+  const { wishList, setWishList } = useWishList();
+
+  const wishListHandler = (item: MarketType["data"][number]) => {
+
+    setWishList(prev => wishListHelper(prev, item))
+    
+  };
+
+  const removeHandler = (coin: MarketType["data"][number]) => {
+    const { id } = coin;
+
+    const updateWishList = wishList.filter((item) => item.id !== id);
+    localStorage.setItem("wishList", JSON.stringify(updateWishList));
+  };
+
+  useEffect(() => {
+    if (!wishList.length) return;
+    localStorage.setItem("wishList", JSON.stringify(wishList));
+  }, [wishList]);
 
   return (
     <>
@@ -176,12 +199,19 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                     <span className="ml-2">{symbolFormatter(symbol)}</span>
                   </TableCell>
                   <TableCell>
-                    <img
-                      className="ml-auto"
-                      src={percentage_24 > 0 ? chartUp : chartDown}
-                      alt={"chart svg"}
-                      width={100}
-                    />
+                    <div className="relative z-20 flex gap-3 items-center">
+                      <img
+                        className="ml-auto"
+                        src={percentage_24 > 0 ? chartUp : chartDown}
+                        alt={"chart svg"}
+                        width={100}
+                      />
+                      {wishList.some((item) => item.id === coin.id) ? (
+                        <FaStar onClick={() => removeHandler(coin)} />
+                      ) : (
+                        <FaRegStar onClick={() => wishListHandler(coin)} />
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               );
