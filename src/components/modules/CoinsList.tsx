@@ -8,8 +8,6 @@ import {
   TableRow,
 } from "../ui/table";
 
-import { MouseEvent } from "react";
-
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
 
@@ -67,7 +65,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
   const { wishList, setWishList } = useWishList();
 
   const wishListHandler = (
-    e: MouseEvent<SVGElement>,
+    e: React.MouseEvent<SVGElement>,
     item: MarketType["data"][number],
   ) => {
     e.stopPropagation();
@@ -75,7 +73,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
   };
 
   const removeHandler = (
-    e: MouseEvent<SVGElement>,
+    e: React.MouseEvent<SVGElement>,
     coin: MarketType["data"][number],
   ) => {
     const { id } = coin;
@@ -91,8 +89,8 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
   }, [wishList]);
 
   const wishListIds = useMemo(() => {
-  return new Set(wishList.map(item => item.id));
-}, [wishList]);
+    return new Set(wishList.map((item) => item.id));
+  }, [wishList]);
 
   return (
     <>
@@ -222,7 +220,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                       {wishListIds.has(id) ? (
                         <div className=" w-5 h-5">
                           <FaStar
-                            onClick={(e: MouseEvent<SVGElement>) =>
+                            onClick={(e: React.MouseEvent<SVGElement>) =>
                               removeHandler(e, coin)
                             }
                           />
@@ -230,7 +228,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                       ) : (
                         <div className=" w-5 h-5">
                           <FaRegStar
-                            onClick={(e: MouseEvent<SVGElement>) =>
+                            onClick={(e: React.MouseEvent<SVGElement>) =>
                               wishListHandler(e, coin)
                             }
                           />
