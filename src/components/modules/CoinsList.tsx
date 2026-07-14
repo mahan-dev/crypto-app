@@ -8,6 +8,8 @@ import {
   TableRow,
 } from "../ui/table";
 
+import { MouseEvent } from "react";
+
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
 
@@ -64,17 +66,23 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   const { wishList, setWishList } = useWishList();
 
-  const wishListHandler = (item: MarketType["data"][number]) => {
-
-    setWishList(prev => wishListHelper(prev, item))
-    
+  const wishListHandler = (
+    e: MouseEvent<SVGElement>,
+    item: MarketType["data"][number],
+  ) => {
+    e.stopPropagation();
+    setWishList((prev) => wishListHelper(prev, item));
   };
 
-  const removeHandler = (coin: MarketType["data"][number]) => {
+  const removeHandler = (
+    e: MouseEvent<SVGElement>,
+    coin: MarketType["data"][number],
+  ) => {
     const { id } = coin;
-
+    e.stopPropagation();
     const updateWishList = wishList.filter((item) => item.id !== id);
     localStorage.setItem("wishList", JSON.stringify(updateWishList));
+    setWishList(updateWishList);
   };
 
   useEffect(() => {
@@ -82,8 +90,13 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
     localStorage.setItem("wishList", JSON.stringify(wishList));
   }, [wishList]);
 
+  const wishListIds = useMemo(() => {
+  return new Set(wishList.map(item => item.id));
+}, [wishList]);
+
   return (
     <>
+      {console.log("hi")}
       {data && data.length && (
         <Table className="text-white mt-4 ">
           <TableHeader>
@@ -206,10 +219,22 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                         alt={"chart svg"}
                         width={100}
                       />
-                      {wishList.some((item) => item.id === coin.id) ? (
-                        <FaStar onClick={() => removeHandler(coin)} />
+                      {wishListIds.has(id) ? (
+                        <div className=" w-5 h-5">
+                          <FaStar
+                            onClick={(e: MouseEvent<SVGElement>) =>
+                              removeHandler(e, coin)
+                            }
+                          />
+                        </div>
                       ) : (
-                        <FaRegStar onClick={() => wishListHandler(coin)} />
+                        <div className=" w-5 h-5">
+                          <FaRegStar
+                            onClick={(e: MouseEvent<SVGElement>) =>
+                              wishListHandler(e, coin)
+                            }
+                          />
+                        </div>
                       )}
                     </div>
                   </TableCell>
