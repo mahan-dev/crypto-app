@@ -31,6 +31,9 @@ import { statusHelperHandler } from "@/helper/coinsList/statusHandlerHelper";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { useWishList, wishListHelper } from "@/hooks/useWishList";
+import { removeHelper } from "@/helper/coinsList/removeHelper";
+
+import { GrFavorite } from "react-icons/gr";
 export interface CoinsProps {
   data: MarketType["data"];
   currency: "usd" | "eur" | "gbp";
@@ -76,11 +79,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
     e: React.MouseEvent<SVGElement>,
     coin: MarketType["data"][number],
   ) => {
-    const { id } = coin;
-    e.stopPropagation();
-    const updateWishList = wishList.filter((item) => item.id !== id);
-    localStorage.setItem("wishList", JSON.stringify(updateWishList));
-    setWishList(updateWishList);
+    removeHelper({ e, coin, wishList, setWishList });
   };
 
   useEffect(() => {
@@ -94,7 +93,6 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   return (
     <>
-      {console.log("hi")}
       {data && data.length && (
         <Table className="text-white mt-4 ">
           <TableHeader>
@@ -242,6 +240,9 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
+      <div className="flex justify-center items-center w-12 h-12 fixed z-20 bottom-7 right-3 rounded-full bg-[#32333b]">
+        <GrFavorite />
+      </div>
     </>
   );
 };
