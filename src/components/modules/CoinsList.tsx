@@ -184,6 +184,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                     <div className="flex gap-2 items-center ">
                       <img
                         className="rounded-full w-6.25 h-6.25"
+                        loading="lazy"
                         src={coin.image}
                         alt={symbol}
                         width={25}

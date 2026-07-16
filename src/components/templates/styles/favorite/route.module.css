@@ -2,13 +2,26 @@
 
 
 .list {
-@apply w-32 bg-[#1E1F24] border border-[#3b3b3b] flex flex-col items-center gap-2 rounded-md py-2 px-3;
+    @apply relative w-32 bg-[#1E1F24] py-2 px-3 border border-[#3b3b3b] flex items-center gap-2 rounded-md transition-all;
+    transition: width 0.2s ease;
+    @apply  transition-all
 }
 
 .list__header {
-    @apply w-full flex justify-between;
+    @apply w-full justify-between flex;
+
+  
 }
 
 .list__main {
     @apply w-full flex justify-between items-center gap-2;
+}
+
+.list__remove {
+    @apply w-6  bg-white text-black absolute z-10 left-full -translate-x-5  py-0.5 rounded-md opacity-0  transition-all duration-300 cursor-pointer;
+}
+
+.list:hover .list__remove{
+    @apply opacity-100 -translate-x-1/2;
+    
 }

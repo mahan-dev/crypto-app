@@ -3,7 +3,7 @@ import type { Dispatch, SetStateAction } from "react";
 import type React from "react";
 
 interface RemoveProps {
-  e: React.MouseEvent<SVGElement>;
+  e: React.MouseEvent<SVGElement | HTMLButtonElement>;
   coin: MarketType["data"][number];
   wishList: MarketType["data"];
   setWishList: Dispatch<SetStateAction<MarketType["data"]>>;
