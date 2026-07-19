@@ -34,6 +34,7 @@ import { useWishList, wishListHelper } from "@/hooks/useWishList";
 import { removeHelper } from "@/helper/coinsList/removeHelper";
 
 import { GrFavorite } from "react-icons/gr";
+import { IoChatbubbleOutline } from "react-icons/io5";
 
 import styles from "@/components/modules/css/coinsList/route.module.css";
 export interface CoinsProps {
@@ -243,6 +244,10 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
+      <div className={styles.chat}>
+        <IoChatbubbleOutline />
+      </div>
+
       <div className={styles.favorite}>
         <Link className={styles.favorite__icon} to={"/favorite"}>
           <GrFavorite />

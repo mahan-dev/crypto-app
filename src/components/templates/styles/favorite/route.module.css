@@ -1,8 +1,13 @@
 @reference "tailwindcss";
 
 
+.list__container {
+    @apply flex flex-wrap gap-4 max-md:grid max-md:grid-cols-2;
+
+}
+
 .list {
-    @apply relative w-32 bg-[#1E1F24] py-2 px-3 border border-[#3b3b3b] flex items-center gap-2 rounded-md transition-all;
+    @apply relative w-32  bg-[#1E1F24] py-2 px-3  border border-[#3b3b3b] flex items-center gap-2 rounded-md transition-all max-md:grow max-md:w-full;
     transition: width 0.2s ease;
     @apply  transition-all
 }

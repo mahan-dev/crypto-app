@@ -23,6 +23,11 @@
     
 }
 
+
+.chat {
+    @apply w-12 h-12 text-[1.1rem] flex justify-center items-center rounded-full bg-[#32333b] fixed left-3 bottom-7;
+}
+
 .favorite {
     @apply w-12 h-12 overflow-hidden bg-[#32333b] fixed z-20 bottom-7 right-3 rounded-full cursor-pointer;
 }

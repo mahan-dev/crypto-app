@@ -23,12 +23,7 @@ const Home = () => {
 
   const buttonHandler = async () => {
     if (!data?.data.length) return;
-    const res = await geminiChatBot(
-      // "which coin is good to invest ?",
-      "how should i buy crypto ?",
-      data.data,
-    );
-    console.log(res);
+    const res = await geminiChatBot("how should i buy crypto ?", data.data);
   };
 
   return (
