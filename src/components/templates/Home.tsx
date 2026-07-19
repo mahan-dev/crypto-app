@@ -23,7 +23,7 @@ const Home = () => {
 
   const buttonHandler = async () => {
     if (!data?.data.length) return;
-    const res = await geminiChatBot("how should i buy crypto ?", data.data);
+    await geminiChatBot("how should i buy crypto ?", data.data);
   };
 
   return (
