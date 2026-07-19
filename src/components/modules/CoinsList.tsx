@@ -34,6 +34,8 @@ import { useWishList, wishListHelper } from "@/hooks/useWishList";
 import { removeHelper } from "@/helper/coinsList/removeHelper";
 
 import { GrFavorite } from "react-icons/gr";
+
+import styles from "@/components/modules/css/coinsList/route.module.css";
 export interface CoinsProps {
   data: MarketType["data"];
   currency: "usd" | "eur" | "gbp";
@@ -241,8 +243,8 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
-      <div className="w-12 h-12 bg-[#32333b] flex justify-center items-center fixed z-20 bottom-7 right-3 rounded-full cursor-pointer">
-        <Link to={"/favorite"}>
+      <div className={styles.favorite}>
+        <Link className={styles.favorite__icon} to={"/favorite"}>
           <GrFavorite />
         </Link>
       </div>

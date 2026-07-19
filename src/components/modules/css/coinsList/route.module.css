@@ -23,10 +23,10 @@
     
 }
 
-/* @media only screen and (max-width: 768px) {
-    .banner {
-        grid-template-columns: repeat(3, 165px);
-        @apply overflow-x-auto;
-    }
-    
-} */
+.favorite {
+    @apply w-12 h-12 overflow-hidden bg-[#32333b] fixed z-20 bottom-7 right-3 rounded-full cursor-pointer;
+}
+
+.favorite__icon {
+    @apply w-full h-full flex justify-center items-center;
+}

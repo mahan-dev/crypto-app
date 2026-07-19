@@ -4,12 +4,13 @@ import CoinsList, { type CoinsProps } from "@/components/modules/CoinsList";
 
 import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "../loader/Loader";
-import CurrencyDropDown from "../modules/CurrencyDropDown";
-import FearAndGreed from "../modules/FearAndGreed";
-import AltCoinSeason from "../modules/AltCoinSeason";
-import Cmc20Chart from "../modules/Cmc20Chart";
+import Loader from "@/components/loader/Loader";
+import CurrencyDropDown from "@/components/modules/CurrencyDropDown";
+import FearAndGreed from "@/components/modules/FearAndGreed";
+import AltCoinSeason from "@/components/modules/AltCoinSeason";
+import Cmc20Chart from "@/components/modules/Cmc20Chart";
 import stylesBanner from "@/components/modules/css/coinsList/route.module.css";
+import { geminiChatBot } from "@/services/geminiApi";
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -20,8 +21,20 @@ const Home = () => {
     queryFn: async () => await getMarketList(currency, page),
   });
 
+  const buttonHandler = async () => {
+    if (!data?.data.length) return;
+    const res = await geminiChatBot(
+      // "which coin is good to invest ?",
+      "how should i buy crypto ?",
+      data.data,
+    );
+    console.log(res);
+  };
+
   return (
     <section>
+      <button onClick={buttonHandler}>Get result</button>
+
       <div className={stylesBanner.banner}>
         <FearAndGreed />
 
