@@ -37,6 +37,7 @@ import { GrFavorite } from "react-icons/gr";
 import { IoChatbubbleOutline } from "react-icons/io5";
 
 import styles from "@/components/modules/css/coinsList/route.module.css";
+import ChatBot from "@/components/modules/ChatBot";
 export interface CoinsProps {
   data: MarketType["data"];
   currency: "usd" | "eur" | "gbp";
@@ -247,6 +248,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
       <div className={styles.chat}>
         <IoChatbubbleOutline />
       </div>
+      <ChatBot data={data} />
 
       <div className={styles.favorite}>
         <Link className={styles.favorite__icon} to={"/favorite"}>

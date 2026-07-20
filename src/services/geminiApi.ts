@@ -1,5 +1,6 @@
 import type { MarketType } from "@/types/marketTypes";
 import { GoogleGenAI } from "@google/genai";
+import type { Dispatch, SetStateAction } from "react";
 
 const genAiApiKey = import.meta.env.VITE_GEN_AI_API_KEY;
 
@@ -24,11 +25,18 @@ Rules:
 export const geminiChatBot = async (
   question: string,
   cryptoData: MarketType["data"],
+  setLoading: Dispatch<SetStateAction<boolean>>,
 ) => {
-  const response = await ai.models.generateContent({
-    model: "models/gemini-3.5-flash",
-    contents: `${prompt} Current cryptoData : ${cryptoData}  User : ${question}`,
-  });
-
-  return response.text;
+  try {
+    const response = await ai.models.generateContent({
+      model: "models/gemini-3.5-flash",
+      contents: `${prompt} Current cryptoData : ${cryptoData}  User : ${question}`,
+    });
+    return response.text;
+  } catch (error) {
+    console.log(error);
+    return "Failed";
+  } finally {
+    setLoading(false);
+  }
 };

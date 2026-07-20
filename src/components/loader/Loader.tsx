@@ -1,11 +1,14 @@
 import { ThreeDots } from "react-loader-spinner";
 
-const Loader = () => {
+interface LoaderProps {
+  small?: boolean;
+}
+const Loader = ({ small }: LoaderProps) => {
   return (
     <ThreeDots
       visible={true}
-      height="80"
-      width="80"
+      height={`${small ? 40 : 80}`}
+      width={`${small ? 40 : 80}`}
       color="#ffffff"
       radius="9"
       ariaLabel="three-dots-loading"
