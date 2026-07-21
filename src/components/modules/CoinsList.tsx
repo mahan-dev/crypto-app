@@ -21,7 +21,7 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { coinHandler } from "@/helper/coinsList/coinHandler";
 import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 import type { SortField, SortOrder } from "@/types/coinsList/coinListTypes";
@@ -56,13 +56,10 @@ const ChatButton = styled.div<{ $isOpen: boolean }>`
   bottom: 1.75rem;
 `;
 
-
 const CoinsList = ({ data, currency }: CoinsProps) => {
   const [sortField, setSortField] = useState<SortField>("default");
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
   const [open, setOpen] = useState(false);
-
-  const chatRef = useRef<HTMLDivElement | null>(null);
 
   const sortedCoins = useMemo(() => {
     return coinPriceSorting(data, sortOrder, sortField);
@@ -276,7 +273,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
       </div>
 
       <ChatButton $isOpen={open}>
-        <ChatBot data={data} ref={chatRef} />
+        <ChatBot data={data} />
       </ChatButton>
 
       <div className={styles.favorite}>
