@@ -56,30 +56,7 @@ const ChatButton = styled.div<{ $isOpen: boolean }>`
   bottom: 1.75rem;
 `;
 
-// const ChatIcon = styled.div<{ $open: boolean }>`
-//   transition:
-//     transform 0.25s ease,
-//     opacity 0.25s ease;
-//   transform: ${({ $open }) => ($open ? "translateX(-20px)" : "translateX(0)")};
-//   opacity: ${({ $open }) => ($open ? 0 : 1)};
-// `;
-// const CloseIcon = styled.div<{ $open: boolean }>`
-//   position: absolute;
 
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-
-//   inset: 0;
-
-//   transition:
-//     transform 0.25s ease,
-//     opacity 0.25s ease;
-
-//   transform: translateX(${({ $open }) => ($open ? "0" : "20px")});
-
-//   opacity: ${({ $open }) => ($open ? 1 : 0)};
-// `;
 const CoinsList = ({ data, currency }: CoinsProps) => {
   const [sortField, setSortField] = useState<SortField>("default");
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
