@@ -26,13 +26,15 @@ export const geminiChatBot = async (
   question: string,
   cryptoData: MarketType["data"],
   setLoading: Dispatch<SetStateAction<boolean>>,
-) => {
+): Promise<string | null> => {
+  const convertedData = JSON.stringify(cryptoData);
+
   try {
     const response = await ai.models.generateContent({
       model: "models/gemini-3.5-flash",
-      contents: `${prompt} Current cryptoData : ${cryptoData}  User : ${question}`,
+      contents: `${prompt} Current cryptoData : ${convertedData}  User : ${question}`,
     });
-    return response.text;
+    return response.text || null;
   } catch (error) {
     console.log(error);
     return "Failed";

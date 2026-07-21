@@ -11,7 +11,7 @@ interface ChatBotProps {
 const ChatBot = ({ data }: ChatBotProps) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<string[]>([]);
-  const [response, setResponse] = useState<string | undefined>("");
+  const [response, setResponse] = useState<string | null>("");
   const [loading, setLoading] = useState(false);
 
   const sendHandler = async () => {
@@ -20,12 +20,7 @@ const ChatBot = ({ data }: ChatBotProps) => {
     setMessages((prev) => [...prev, message]);
     setMessage("");
 
-    const res = await geminiChatBot(
-      "how should i buy crypto ?",
-      data,
-      setLoading,
-    );
-    console.log("🛠️ ~ ChatBot.tsx:20 -> res: ", res);
+    const res = await geminiChatBot(message, data, setLoading);
 
     setResponse(res);
   };
@@ -46,12 +41,22 @@ const ChatBot = ({ data }: ChatBotProps) => {
       >
         {messages.map((currentMessage, index) => (
           <p className={styles.messages__user} key={index}>
+            <span>user</span>
             {currentMessage}
           </p>
         ))}
-        {
-          !!response?.length && <span>{response}</span>
-        }
+        {!!response?.length &&
+          (!response.includes("Failed") ? (
+            <span className={styles["chat__ai-response-success"]}>
+              <span>bot</span>
+              {response}
+            </span>
+          ) : (
+            <span className={styles["chat__ai-response-failed"]}>
+              <span>bot</span>
+              {response}
+            </span>
+          ))}
         {loading && (
           <div className="bg-blue-500 flex justify-center items-center mt-2  rounded-md w-[30%] h-8">
             {<Loader small={true} />}
@@ -69,7 +74,7 @@ const ChatBot = ({ data }: ChatBotProps) => {
           value={message}
         />
         <div
-          className={`${styles.chat__send} `}
+          className={`${loading ? styles["chat__send--disabled"] : styles.chat__send}`}
           onClick={sendHandler}
         >
           <IoSend />

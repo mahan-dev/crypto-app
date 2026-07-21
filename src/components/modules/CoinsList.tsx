@@ -221,7 +221,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                         width={100}
                       />
                       {wishListIds.has(id) ? (
-                        <div className=" w-5 h-5">
+                        <div className="w-5 h-5">
                           <FaStar
                             onClick={(e: React.MouseEvent<SVGElement>) =>
                               removeHandler(e, coin)
