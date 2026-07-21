@@ -1,7 +1,7 @@
 @reference "tailwindcss";
 
 .chat {
-    @apply fixed flex flex-col gap-2 bottom-7 left-28 bg-[#171717] border border-zinc-800 rounded-lg w-60 h-82;
+    @apply  flex flex-col gap-2 bottom-7 left-28 bg-[#171717] border border-zinc-800 rounded-lg w-full h-full  ;
 }
 
 

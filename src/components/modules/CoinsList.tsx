@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "@/components/ui/table";
 
 import { TiArrowSortedUp } from "react-icons/ti";
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -21,7 +21,7 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { coinHandler } from "@/helper/coinsList/coinHandler";
 import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
 import type { SortField, SortOrder } from "@/types/coinsList/coinListTypes";
@@ -38,14 +38,54 @@ import { IoChatbubbleOutline } from "react-icons/io5";
 
 import styles from "@/components/modules/css/coinsList/route.module.css";
 import ChatBot from "@/components/modules/ChatBot";
+import styled from "styled-components";
+import { IoClose } from "react-icons/io5";
+
 export interface CoinsProps {
   data: MarketType["data"];
   currency: "usd" | "eur" | "gbp";
 }
 
+const ChatButton = styled.div<{ $isOpen: boolean }>`
+  transform: translateX(${(props) => (props.$isOpen ? "0%" : "-100%")});
+  transition: all 0.2s ease;
+  position: fixed;
+  width: 15rem;
+  height: 20.5rem;
+  left: ${(props) => (props.$isOpen ? "4rem" : "0")};
+  bottom: 1.75rem;
+`;
+
+// const ChatIcon = styled.div<{ $open: boolean }>`
+//   transition:
+//     transform 0.25s ease,
+//     opacity 0.25s ease;
+//   transform: ${({ $open }) => ($open ? "translateX(-20px)" : "translateX(0)")};
+//   opacity: ${({ $open }) => ($open ? 0 : 1)};
+// `;
+// const CloseIcon = styled.div<{ $open: boolean }>`
+//   position: absolute;
+
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+
+//   inset: 0;
+
+//   transition:
+//     transform 0.25s ease,
+//     opacity 0.25s ease;
+
+//   transform: translateX(${({ $open }) => ($open ? "0" : "20px")});
+
+//   opacity: ${({ $open }) => ($open ? 1 : 0)};
+// `;
 const CoinsList = ({ data, currency }: CoinsProps) => {
   const [sortField, setSortField] = useState<SortField>("default");
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
+  const [open, setOpen] = useState(false);
+
+  const chatRef = useRef<HTMLDivElement | null>(null);
 
   const sortedCoins = useMemo(() => {
     return coinPriceSorting(data, sortOrder, sortField);
@@ -245,10 +285,22 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
           </TableBody>
         </Table>
       )}
-      <div className={styles.chat}>
-        <IoChatbubbleOutline />
+
+      <div
+        className={`${styles.chat} ${open ? styles.open : ""}`}
+        onClick={() => setOpen(!open)}
+      >
+        <div className={styles.chat__chatIcon}>
+          <IoChatbubbleOutline />
+        </div>
+        <div className={styles.chat__closeIcon}>
+          <IoClose />
+        </div>
       </div>
-      <ChatBot data={data} />
+
+      <ChatButton $isOpen={open}>
+        <ChatBot data={data} ref={chatRef} />
+      </ChatButton>
 
       <div className={styles.favorite}>
         <Link className={styles.favorite__icon} to={"/favorite"}>

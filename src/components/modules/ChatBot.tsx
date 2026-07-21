@@ -1,4 +1,9 @@
-import { useState, type ChangeEvent, type KeyboardEvent } from "react";
+import {
+  useState,
+  type ChangeEvent,
+  type KeyboardEvent,
+  type RefObject,
+} from "react";
 import { IoSend } from "react-icons/io5";
 import styles from "@/components/modules/css/chatBot/route.module.css";
 import { geminiChatBot } from "@/services/geminiApi";
@@ -7,8 +12,9 @@ import Loader from "../loader/Loader";
 
 interface ChatBotProps {
   data: MarketType["data"];
+  ref: RefObject<HTMLDivElement | null>;
 }
-const ChatBot = ({ data }: ChatBotProps) => {
+const ChatBot = ({ data, ref }: ChatBotProps) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<string[]>([]);
   const [response, setResponse] = useState<string | null>("");
