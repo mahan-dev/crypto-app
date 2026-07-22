@@ -50,6 +50,7 @@ const ChatButton = styled.div<{ $isOpen: boolean }>`
   transform: translateX(${(props) => (props.$isOpen ? "0%" : "-100%")});
   transition: all 0.2s ease;
   position: fixed;
+  z-index: 20;
   width: 15rem;
   height: 20.5rem;
   left: ${(props) => (props.$isOpen ? "4rem" : "0")};
