@@ -18,7 +18,8 @@ const CoinStatus = ({
   show,
   filteredData,
 }: CoinProps) => {
-  const data: MarketType["data"][number] = filteredData as MarketType["data"][number];
+  const data: MarketType["data"][number] =
+    filteredData as MarketType["data"][number];
 
   return (
     <div className=" px-7">
