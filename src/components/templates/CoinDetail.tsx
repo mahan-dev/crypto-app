@@ -45,8 +45,6 @@ const CoinDetail = () => {
       ]);
       setChart(chartData ?? null);
       setSentiment(sentimentData ?? null);
-
-      return { chartData, sentimentData };
     },
   });
 

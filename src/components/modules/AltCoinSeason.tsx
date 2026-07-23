@@ -8,12 +8,16 @@ import Loader from "../loader/Loader";
 const AltCoinSeason = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["altcoinIndex"],
-    queryFn: async () => await altcoinSeasonApi(),
+    queryFn: altcoinSeasonApi,
   });
 
   return (
     <div className={styles.container}>
-      {isLoading && <div className="my-auto"><Loader /></div>}
+      {isLoading && (
+        <div className="my-auto">
+          <Loader />
+        </div>
+      )}
       {isError && <h2 className="m-auto">Failed ... 😞</h2>}
 
       {data && !isError && (
