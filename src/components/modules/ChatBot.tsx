@@ -4,7 +4,7 @@ import styles from "@/components/modules/css/chatBot/route.module.css";
 
 import type { MarketType } from "@/types/marketTypes";
 import Loader from "../loader/Loader";
-import { aiChatBot } from "@/services/aiChatBot";
+import { ChatMessageHandler } from "@/helper/chatBot/ChatMessageHandler";
 
 interface ChatBotProps {
   data: MarketType["data"];
@@ -21,28 +21,13 @@ const ChatBot = ({ data }: ChatBotProps) => {
   const [loading, setLoading] = useState(false);
 
   const sendHandler = async () => {
-    if (!message.trim()) return;
-    setLoading(true);
-    setMessages((prev) => [
-      ...prev,
-      {
-        role: "USER",
-        text: message,
-      },
-    ]);
-
-    const res = await aiChatBot(data, message, setLoading);
-
-    if (!res) return;
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        role: "BOT",
-        text: res,
-      },
-    ]);
-    setMessage("");
+    await ChatMessageHandler({
+      message,
+      setLoading,
+      setMessages,
+      data,
+      setMessage,
+    });
   };
 
   const enterClickHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
