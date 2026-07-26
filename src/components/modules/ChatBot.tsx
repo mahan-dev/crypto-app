@@ -67,7 +67,7 @@ const ChatBot = ({ data }: ChatBotProps) => {
         ))}
 
         {loading && (
-          <div className={styles.chat}>{<Loader small={true} />}</div>
+          <div className={styles.chat__loader}>{<Loader small={true} />}</div>
         )}
       </div>
 
