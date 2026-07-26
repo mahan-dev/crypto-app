@@ -1,6 +1,6 @@
 @reference "tailwindcss";
 
-.banner {
+.coin__status {
     @apply grid gap-3 overflow-x-auto;
     grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
     grid-template-rows: 140px;
@@ -8,7 +8,7 @@
 
 
 @media only screen and (max-width: 1090px) {
-    .banner {
+    .coin__status {
         grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
 
     }
@@ -16,9 +16,9 @@
 }
 
 @media only screen and (max-width: 690px) {
-    .banner {
+    .coin__status {
         grid-template-columns: repeat(3, minmax(165px, 1fr));
-        @apply overflow-x-auto
+        @apply overflow-x-auto pb-2;
     }
 
 }

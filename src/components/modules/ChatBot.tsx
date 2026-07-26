@@ -5,7 +5,8 @@ import styles from "@/components/modules/css/chatBot/route.module.css";
 import type { MarketType } from "@/types/marketTypes";
 import Loader from "../loader/Loader";
 import { ChatMessageHandler } from "@/helper/chatBot/ChatMessageHandler";
-
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 interface ChatBotProps {
   data: MarketType["data"];
 }
@@ -17,8 +18,11 @@ export type Message = {
 
 const ChatBot = ({ data }: ChatBotProps) => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: "BOT", text: "Hey, I'm coinzed assistance how can i help you ? " },
+  ]);
   const [loading, setLoading] = useState(false);
+  const [chatIcon, setChatIcon] = useState(false);
 
   const sendHandler = async () => {
     await ChatMessageHandler({
@@ -28,6 +32,10 @@ const ChatBot = ({ data }: ChatBotProps) => {
       data,
       setMessage,
     });
+  };
+
+  const chatIconHandler = () => {
+    setChatIcon(!chatIcon);
   };
 
   const enterClickHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -44,52 +52,41 @@ const ChatBot = ({ data }: ChatBotProps) => {
       <div
         className={`${styles.chat__messages} ${messages.length ? "block" : "hidden"}`}
       >
-        {messages
-          // .filter((item) => item.role === "USER")
-          .map((currentMessage, index) => (
-            <p
-              className={
-                currentMessage.role === "BOT"
-                  ? styles["chat__ai-response-success"]
-                  : styles.messages__user
-              }
-              key={index}
-            >
-              <span>{currentMessage.role === "BOT" ? "bot" : "user"}</span>
-              {currentMessage.text}
-            </p>
-          ))}
-        {/* {
-          !!messages?.length &&
-            messages
-              .filter((item) => item.role === "BOT")
-              .map((item, index) => (
-                <li key={index} className={styles["chat__ai-response-success"]}>
-                  {item.text}
-                </li>
-              ))
-          // (!response.includes("Failed") ? (
-          //   <span className={styles["chat__ai-response-success"]}>
-          //     <span>bot</span>
-          //     {response}
-          //   </span>
-          // ) : (
-          //   <span className={styles["chat__ai-response-failed"]}>
-          //     <span>bot</span>
-          //     {response}
-          //   </span>
-          // ))
-        } */}
+        {messages.map((currentMessage, index) => (
+          <p
+            className={
+              currentMessage.role === "BOT"
+                ? styles["chat__ai-response-success"]
+                : styles.messages__user
+            }
+            key={index}
+          >
+            <span>{currentMessage.role === "BOT" ? "bot" : "user"}</span>
+
+            {currentMessage.text}
+          </p>
+        ))}
+
         {loading && (
-          <div className="bg-blue-500 flex justify-center items-center mt-2  rounded-md w-[30%] h-8">
-            {<Loader small={true} />}
-          </div>
+          <div className={styles.chat}>{<Loader small={true} />}</div>
         )}
       </div>
 
       <div className={styles.chat__message}>
+        <div
+          className="flex h-3 overflow-hidden justify-center items-center cursor-pointer"
+          onClick={chatIconHandler}
+        >
+          {chatIcon ? (
+            <IoIosArrowUp className="w-40 h-6 " />
+          ) : (
+            <IoIosArrowDown className="w-40 h-6 " />
+          )}
+        </div>
         <textarea
-          className={styles.message__content}
+          className={`${styles.message__content} overflow-hidden transition-all duration-300 ${
+            chatIcon ? "max-h-0 opacity-0" : "max-h-40 opacity-100"
+          }`}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             setMessage(e.target.value)
           }

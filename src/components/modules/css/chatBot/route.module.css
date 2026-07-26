@@ -32,17 +32,21 @@
     @apply bg-blue-600;
 }
 
+.chat__loader {
+    @apply bg-blue-500 flex justify-center items-center mt-2  rounded-md w-[30%] h-8;
+}
+
 .chat__ai-response-failed {
     @apply w-fit bg-red-600 ;
 }
 
 .chat__message {
-    @apply flex flex-col gap-3 items-center mt-auto bg-[#282828] mb-3 mx-3 p-3 rounded-md;
+    @apply flex flex-col gap-3 items-center mt-auto bg-[#282828] mb-3 mx-3 p-3 rounded-md transition-all duration-300;
 }
 
 
 .message__content {
-    @apply w-full h-fit px-1 outline-none  rounded-lg resize-none;
+    @apply w-full h-22 px-1 outline-none  rounded-lg resize-none;
 }
 
 .chat__send, .chat__send--disabled {

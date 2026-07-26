@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <section>
-      <div className={stylesBanner.banner}>
+      <div className={stylesBanner.coin__status}>
         <FearAndGreed />
 
         <AltCoinSeason />
