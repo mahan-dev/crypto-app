@@ -31,8 +31,8 @@ export const aiChatBot = async (
 ): Promise<string | null> => {
   const finalData = data.find(
     (item) =>
-      question.toLocaleLowerCase().includes(item.name.toLowerCase()) ||
-      question.toLocaleLowerCase().includes(item.symbol.toLocaleLowerCase()),
+      question.toLowerCase().includes(item.name.toLowerCase()) ||
+      question.toLowerCase().includes(item.symbol.toLowerCase()),
   );
 
   try {
