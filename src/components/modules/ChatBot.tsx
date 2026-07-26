@@ -3,10 +3,11 @@ import { IoSend } from "react-icons/io5";
 import styles from "@/components/modules/css/chatBot/route.module.css";
 
 import type { MarketType } from "@/types/marketTypes";
-import Loader from "../loader/Loader";
+import Loader from "@/components/loader/Loader";
 import { ChatMessageHandler } from "@/helper/chatBot/ChatMessageHandler";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
+import { ChatBotMessage } from "@/constants/ChatBot/ChatBotConstant";
 interface ChatBotProps {
   data: MarketType["data"];
 }
@@ -18,9 +19,7 @@ export type Message = {
 
 const ChatBot = ({ data }: ChatBotProps) => {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "BOT", text: "Hey, I'm coinzed assistance how can i help you ? " },
-  ]);
+  const [messages, setMessages] = useState<Message[]>(ChatBotMessage);
   const [loading, setLoading] = useState(false);
   const [chatIcon, setChatIcon] = useState(false);
 

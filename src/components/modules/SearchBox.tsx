@@ -40,6 +40,8 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
     queryFn: async () => await searchCoinApi(debouncedSearch),
     enabled: !!debouncedSearch,
   });
+  const searchNoResult =
+    debouncedSearch.trim() && !isLoading && !isError && !data?.coins.length;
 
   useClickOutSide({ isOpen, searchRef, setIsOpen, setSearch });
 
@@ -77,6 +79,12 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
             }}
           />
         </div>
+
+        {searchNoResult && (
+          <span className=" text-[1rem] mx-auto mt-2 text-gray-300">
+            Nothing found
+          </span>
+        )}
 
         {isLoading && (
           <div className="mx-auto">
