@@ -119,7 +119,7 @@ const altcoinSeasonApi = async () => {
 
   const { data } = await axios(URL);
 
-  return data.data.altcoin_index;
+  return data.data.altcoin_index || null;
 };
 
 const cmc20TokenIndexApi = async (): Promise<DataProps["data"] | null> => {

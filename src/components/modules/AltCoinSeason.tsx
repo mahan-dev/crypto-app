@@ -18,39 +18,40 @@ const AltCoinSeason = () => {
           <Loader />
         </div>
       )}
-      {isError && <h2 className="m-auto">Failed ... 😞</h2>}
+      {/* {isError && <h2 className="m-auto">Failed ... 😞</h2>} */}
 
-      {data && !isError && (
-        <>
-          <h3 className="self-start font-medium">Altcoin Season</h3>
+      {data ||
+        (isError && (
+          <>
+            <h3 className="self-start font-medium">Altcoin Season</h3>
 
-          <div className={styles.container__display}>
-            {data}
-            <span>/100</span>
-          </div>
-
-          <div className={styles.container__labels}>
-            <span>Bitcoin</span>
-            <span>Altcoin</span>
-          </div>
-
-          <div className={styles.container__graph}>
-            <div className={styles.graph__content}>
-              <div className={styles.content__orange} />
-              <div className={styles["content__fade-orange"]} />
-              <div className={styles["content__fade-blue"]} />
-              <div className={styles.content__blue} />
+            <div className={styles.container__display}>
+              {data || "null"}
+              <span>/100</span>
             </div>
 
-            <GiPlainCircle
-              className={styles.content__circle}
-              style={{
-                left: `calc(${data}% - 8px)`,
-              }}
-            />
-          </div>
-        </>
-      )}
+            <div className={styles.container__labels}>
+              <span>Bitcoin</span>
+              <span>Altcoin</span>
+            </div>
+
+            <div className={styles.container__graph}>
+              <div className={styles.graph__content}>
+                <div className={styles.content__orange} />
+                <div className={styles["content__fade-orange"]} />
+                <div className={styles["content__fade-blue"]} />
+                <div className={styles.content__blue} />
+              </div>
+
+              <GiPlainCircle
+                className={styles.content__circle}
+                style={{
+                  left: `${isError ? "0" : `calc(${data}% - 8px)`} `,
+                }}
+              />
+            </div>
+          </>
+        ))}
     </div>
   );
 };
