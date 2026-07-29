@@ -1,9 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-import {
-  ChartContainer,
-  type ChartConfig,
-} from "@/components/ui/chart";
+import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
 import { Area, AreaChart } from "recharts";
 import { convertedData } from "@/helper/coinsList/formattedData";
 
@@ -26,7 +23,7 @@ interface CmcProps {
 const Cmc20Chart = ({ title }: CmcProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["cmc20Token"],
-    queryFn: async () => await cmc20TokenIndexApi(),
+    queryFn: cmc20TokenIndexApi,
   });
   const splittedData = data?.prices.at(-1)?.[1].toFixed(2) ?? null;
 
@@ -54,7 +51,6 @@ const Cmc20Chart = ({ title }: CmcProps) => {
             <ChartContainer className=" w-full h-16 " config={chartConfig}>
               <AreaChart
                 accessibilityLayer
-                
                 data={finalData ?? []}
                 margin={{
                   left: 12,

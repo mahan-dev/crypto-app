@@ -9,7 +9,6 @@ import type { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 const positionToast = {
   position: "top-center",
@@ -20,11 +19,14 @@ const getMarketList = async (
   page: number = 1,
 ): Promise<MarketType> => {
   try {
-    const response = await apiConfig(
-      `${BASE_URL}/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=20&page=${page}&x-cg-demo-api-key:${API_KEY}&sparkline=false&price_change_percentage=24h`,
-    );
+    const response = await apiConfig("/market", {
+      params: {
+        currency,
+        page,
+      },
+    });
 
-    return response;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       if (error.response?.status === 429) {
@@ -119,15 +121,15 @@ const altcoinSeasonApi = async () => {
 
   const { data } = await axios(URL);
 
-  return data.data.altcoin_index || null;
+  const result = data.data.altcoin_index || null;
+
+  return result;
 };
 
 const cmc20TokenIndexApi = async (): Promise<DataProps["data"] | null> => {
-  const URL =
-    "/coins/coinmarketcap-20-index-dtf/market_chart?vs_currency=usd&days=360";
+  const { data } = await apiConfig("/chart");
 
-  const { data } = await apiConfig(URL);
-  const result = data as DataProps["data"];
+  const result = data.data as DataProps["data"];
 
   return result;
 };
