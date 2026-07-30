@@ -116,10 +116,7 @@ const fearAndGreedApi = async () => {
   return data;
 };
 const altcoinSeasonApi = async () => {
-  const URL =
-    "https://pro-api.coinmarketcap.com/public-api/v1/altcoin-season-index/latest";
-
-  const { data } = await axios(URL);
+  const { data } = (await apiConfig("/altcoin-season")).data;
 
   const result = data.data.altcoin_index || null;
 
