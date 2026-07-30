@@ -40,6 +40,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
     queryFn: async () => await searchCoinApi(debouncedSearch),
     enabled: !!debouncedSearch,
   });
+
   const searchNoResult =
     debouncedSearch.trim() && !isLoading && !isError && !data?.coins.length;
 
@@ -56,6 +57,11 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
     }, 600);
     return () => clearTimeout(timer);
   }, [search]);
+
+  useEffect(() => {
+    console.log("search:", search);
+    console.log("debounced:", debouncedSearch);
+  }, [search, debouncedSearch]);
 
   return (
     <SearchDropDown $isOpen={isOpen} ref={searchRef} className="max-sm:w-[90%]">

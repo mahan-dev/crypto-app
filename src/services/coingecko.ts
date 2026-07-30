@@ -149,8 +149,14 @@ export interface SearchCoinProps {
 }
 
 const searchCoinApi = async (coin: string): Promise<SearchCoinProps> => {
-  const { data } = await apiConfig(`/search?query=${coin}`);
-  const dataType: SearchCoinProps = data;
+  console.log("working");
+  const { data } = await apiConfig(`/search-query`, {
+    params: {
+      coin,
+    },
+  });
+
+  const dataType: SearchCoinProps = data.data;
 
   return dataType;
 };
