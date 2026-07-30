@@ -131,14 +131,6 @@ const cmc20TokenIndexApi = async (): Promise<DataProps["data"] | null> => {
   return result;
 };
 
-const marketCapApi = async () => {
-  const { data } = await apiConfig("/global");
-  console.log(data);
-
-  const res = data.data.total_market_cap.usd;
-  return res;
-};
-
 const marketCapChartApi = async () => {
   const data = await axios("https://api.coinlore.net/api/global/");
   console.log(data);
@@ -171,7 +163,6 @@ export {
   fearAndGreedApi,
   altcoinSeasonApi,
   cmc20TokenIndexApi,
-  marketCapApi,
   marketCapChartApi,
   searchCoinApi,
   allMarketLists,
