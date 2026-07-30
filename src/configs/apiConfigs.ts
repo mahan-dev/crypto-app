@@ -1,19 +1,7 @@
 import axios from "axios";
 
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
-// const API_KEY = import.meta.env.VITE_API_KEY;
-
-// const BASE_URL =
-//   "https://crypto-app-backend-git-main-mahan-soodbakhshs-projects.vercel.app/api";
 const BASE_URL =
-  "http://localhost:3000/api";
-
-// const apiConfig = axios.create({
-//   baseURL: BASE_URL,
-//   headers: {
-//     Authorization: API_KEY,
-//   },
-// });
+  "https://crypto-app-backend-git-main-mahan-soodbakhshs-projects.vercel.app/api";
 
 const apiConfig = axios.create({
   baseURL: BASE_URL,
