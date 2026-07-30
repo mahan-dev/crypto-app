@@ -204,7 +204,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                       <img
                         className="rounded-full w-6.25 h-6.25"
                         loading="lazy"
-                        src={coin.image}
+                        src={coin.image.replace("/large/", "/small/")}
                         alt={symbol}
                         width={25}
                         height={25}

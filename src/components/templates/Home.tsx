@@ -17,7 +17,7 @@ const Home = () => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["crypto", page, currency],
-    queryFn: async () => await getMarketList(currency, page),
+    queryFn: () => getMarketList(currency, page),
   });
 
   return (
