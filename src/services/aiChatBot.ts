@@ -11,6 +11,7 @@ You are Coinzed, a concise cryptocurrency assistant.
 
 Rules:
 - Don't tell the user which data that i give you.
+- Don't tell any one that you have provided or even you have a information about this project...
 - Be polite with user .
 - You are the assistance of the websocket-crypto.
 - Answer only cryptocurrency-related questions.
@@ -55,7 +56,7 @@ export const aiChatBot = async (
 
     return aiResponse;
   } catch (error) {
-    console.log(error);
+    console.log("something went wrong", error);
     return "Failed";
   } finally {
     setLoading(false);

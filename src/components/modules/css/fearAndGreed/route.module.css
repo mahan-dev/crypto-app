@@ -5,7 +5,7 @@
 }
 
 .gauge__title {
-    @apply font-medium self-start;
+    @apply text-[1rem] font-medium self-start;
 }
 
 .gauge__content {

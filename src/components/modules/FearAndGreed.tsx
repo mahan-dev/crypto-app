@@ -2,7 +2,7 @@ import { fearAndGreedApi } from "@/services/coingecko";
 import { useQuery } from "@tanstack/react-query";
 import { GaugeComponent } from "react-gauge-component";
 import styles from "@/components/modules/css/fearAndGreed/route.module.css";
-import Loader from "../loader/Loader";
+import Loader from "@/components/loader/Loader";
 
 const FearAndGreed = () => {
   const { data, isError, isLoading } = useQuery({
@@ -14,6 +14,7 @@ const FearAndGreed = () => {
 
   return (
     <section className={styles.gauge}>
+      <h4 className={styles.gauge__title}>Fear & Greed</h4>
       {isLoading && (
         <div className="my-auto">
           <Loader />
@@ -23,7 +24,6 @@ const FearAndGreed = () => {
 
       {data && (
         <>
-          <h4 className={styles.gauge__title}>Fear & Greed</h4>
           <div className={styles.gauge__content}>
             <GaugeComponent
               value={data?.data[0].value}

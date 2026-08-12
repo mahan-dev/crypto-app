@@ -58,10 +58,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
     return () => clearTimeout(timer);
   }, [search]);
 
-  useEffect(() => {
-    console.log("search:", search);
-    console.log("debounced:", debouncedSearch);
-  }, [search, debouncedSearch]);
+  
 
   return (
     <SearchDropDown $isOpen={isOpen} ref={searchRef} className="max-sm:w-[90%]">

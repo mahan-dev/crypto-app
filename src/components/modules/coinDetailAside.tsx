@@ -15,6 +15,7 @@ interface CoinAsideProps {
   coinSymbol: Coin;
   coinName: string;
 }
+
 const CoinDetailAside = ({
   CachedTypeCoin,
   coinSymbol,

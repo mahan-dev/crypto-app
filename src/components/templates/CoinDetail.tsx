@@ -2,10 +2,10 @@ import type { MarketType } from "@/types/marketTypes";
 
 import { useParams } from "react-router-dom";
 
-import { useState } from "react";
+import { lazy, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
-import CoinChart from "../modules/Chart";
+// import CoinChart from "@/components/modules/Chart";
 import { allMarketLists, coinChart, coinSentiment } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/types/coinsList/coinListTypes";
@@ -18,6 +18,8 @@ import Loader from "../loader/Loader";
 import CoinDetailAside from "../modules/coinDetailAside";
 import Sentiment from "../modules/Sentiment";
 import { useErrorRedirect } from "@/hooks/useErrorRedirect";
+
+const CoinChart = lazy(() => import("@/components/modules/Chart"));
 
 export type Coin = MarketType["data"][number]["symbol"];
 const CoinDetail = () => {

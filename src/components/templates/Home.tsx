@@ -4,12 +4,13 @@ import CoinsList, { type CoinsProps } from "@/components/modules/CoinsList";
 
 import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "@/components/loader/Loader";
+
 import CurrencyDropDown from "@/components/modules/CurrencyDropDown";
 import FearAndGreed from "@/components/modules/FearAndGreed";
 import AltCoinSeason from "@/components/modules/AltCoinSeason";
 import Cmc20Chart from "@/components/modules/Cmc20Chart";
 import stylesBanner from "@/components/modules/css/coinsList/route.module.css";
+import Loader from "@/components/loader/Loader";
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -24,7 +25,6 @@ const Home = () => {
     <section>
       <div className={stylesBanner.coin__status}>
         <FearAndGreed />
-
         <AltCoinSeason />
 
         <Cmc20Chart />
@@ -39,7 +39,6 @@ const Home = () => {
           <CurrencyDropDown currency={currency} setCurrency={setCurrency} />
 
           <CoinsList data={data.data} currency={currency} />
-
           <PaginationPage page={page} setPage={setPage} />
         </div>
       )}

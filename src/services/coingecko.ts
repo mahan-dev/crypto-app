@@ -133,7 +133,7 @@ const cmc20TokenIndexApi = async (): Promise<DataProps["data"] | null> => {
 
 const marketCapChartApi = async () => {
   const data = await axios("https://api.coinlore.net/api/global/");
-  console.log(data);
+
   return data;
 };
 
@@ -149,7 +149,6 @@ export interface SearchCoinProps {
 }
 
 const searchCoinApi = async (coin: string): Promise<SearchCoinProps> => {
-  console.log("working");
   const { data } = await apiConfig(`/search-query`, {
     params: {
       coin,
