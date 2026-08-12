@@ -1,8 +1,15 @@
 import { fearAndGreedApi } from "@/services/coingecko";
 import { useQuery } from "@tanstack/react-query";
-import { GaugeComponent } from "react-gauge-component";
+// import { GaugeComponent } from "react-gauge-component";
 import styles from "@/components/modules/css/fearAndGreed/route.module.css";
 import Loader from "@/components/loader/Loader";
+import { lazy } from "react";
+
+const GaugeComponent = lazy(() =>
+  import("react-gauge-component").then((module) => ({
+    default: module.GaugeComponent,
+  })),
+);
 
 const FearAndGreed = () => {
   const { data, isError, isLoading } = useQuery({

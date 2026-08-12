@@ -3,28 +3,26 @@ import { GiPlainCircle } from "react-icons/gi";
 import styles from "@/components/modules/css/AltCoinSeason/route.module.css";
 import { altcoinSeasonApi } from "@/services/coingecko";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "../loader/Loader";
+import Loader from "@/components/loader/Loader";
 
 const AltCoinSeason = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["altcoinIndex"],
     queryFn: altcoinSeasonApi,
   });
-  
 
   return (
     <div className={styles.container}>
+      <h3 className="self-start font-medium">Altcoin Season</h3>
       {isLoading && (
         <div className="my-auto">
           <Loader />
         </div>
       )}
-      {/* {isError && <h2 className="m-auto">Failed ... 😞</h2>} */}
+      {isError && <h2 className="m-auto">Failed ... 😞</h2>}
 
       {data && (
         <>
-          <h3 className="self-start font-medium">Altcoin Season</h3>
-
           <div className={styles.container__display}>
             {data || "null"}
             <span>/100</span>

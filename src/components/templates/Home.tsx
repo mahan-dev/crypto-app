@@ -1,16 +1,26 @@
 import { getMarketList } from "@/services/coingecko";
-import { useState } from "react";
-import CoinsList, { type CoinsProps } from "@/components/modules/CoinsList";
+import { lazy, Suspense, useState } from "react";
+import type { CoinsProps } from "@/components/modules/CoinsList";
 
-import PaginationPage from "@/components/modules/Pagination";
+// import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
 
-import CurrencyDropDown from "@/components/modules/CurrencyDropDown";
-import FearAndGreed from "@/components/modules/FearAndGreed";
-import AltCoinSeason from "@/components/modules/AltCoinSeason";
-import Cmc20Chart from "@/components/modules/Cmc20Chart";
+// import CurrencyDropDown from "@/components/modules/CurrencyDropDown";
+// import FearAndGreed from "@/components/modules/FearAndGreed";
+// import AltCoinSeason from "@/components/modules/AltCoinSeason";
+// import Cmc20Chart from "@/components/modules/Cmc20Chart";
 import stylesBanner from "@/components/modules/css/coinsList/route.module.css";
 import Loader from "@/components/loader/Loader";
+
+const CurrencyDropDown = lazy(
+  () => import("@/components/modules/CurrencyDropDown"),
+);
+const CoinsList = lazy(() => import("@/components/modules/CoinsList"));
+const PaginationPage = lazy(() => import("@/components/modules/Pagination"));
+
+const FearAndGreed = lazy(() => import("@/components/modules/FearAndGreed"));
+const AltCoinSeason = lazy(() => import("@/components/modules/AltCoinSeason"));
+const Cmc20Chart = lazy(() => import("@/components/modules/Cmc20Chart"));
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -24,10 +34,12 @@ const Home = () => {
   return (
     <section>
       <div className={stylesBanner.coin__status}>
-        <FearAndGreed />
-        <AltCoinSeason />
+        <Suspense fallback={<h2>Loading</h2>}>
+          <FearAndGreed />
+          <AltCoinSeason />
 
-        <Cmc20Chart />
+          <Cmc20Chart />
+        </Suspense>
       </div>
       {isLoading && (
         <div className="w-full flex h-[80vh] justify-center items-center">

@@ -35,6 +35,7 @@ const Cmc20Chart = ({ title }: CmcProps) => {
 
   return (
     <Card className={"bg-[#1E1F24] text-white h-full border border-[#3b3b3b]"}>
+      <span className="px-4">{title ? title : "CMC20"}</span>
       {isLoading && (
         <div className="m-auto">
           <Loader />
@@ -43,10 +44,7 @@ const Cmc20Chart = ({ title }: CmcProps) => {
       {isError && <h2 className="m-auto">Failed ... 😞</h2>}
       {data && (
         <>
-          <CardHeader>
-            <span>{title ? title : "CMC20"}</span>
-            {`$${splittedData}`}
-          </CardHeader>
+          <CardHeader>{`$${splittedData}`}</CardHeader>
           <CardContent className="h-1">
             <ChartContainer className=" w-full h-16 " config={chartConfig}>
               <AreaChart

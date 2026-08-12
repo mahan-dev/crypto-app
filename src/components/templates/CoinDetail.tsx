@@ -14,9 +14,9 @@ import styles from "@/components/templates/styles/coinDetails/route.module.css";
 
 import type { CoinSentiment } from "@/types/coinTypes";
 
-import Loader from "../loader/Loader";
-import CoinDetailAside from "../modules/coinDetailAside";
-import Sentiment from "../modules/Sentiment";
+import Loader from "@/components/loader/Loader";
+import CoinDetailAside from "@/components/modules/coinDetailAside";
+import Sentiment from "@/components/modules/Sentiment";
 import { useErrorRedirect } from "@/hooks/useErrorRedirect";
 
 const CoinChart = lazy(() => import("@/components/modules/Chart"));
