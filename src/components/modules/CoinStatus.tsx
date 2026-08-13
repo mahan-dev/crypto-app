@@ -5,6 +5,7 @@ import type { Coin } from "./Chart";
 import type { MarketType } from "@/types/marketTypes";
 
 import CoinPrice from "@/components/elements/CoinPrice";
+import { coinTitleHandler } from "@/helper/coinStatus/coinStatusHelper";
 
 interface CoinProps {
   coinSymbol: Coin;
@@ -34,7 +35,7 @@ const CoinStatus = ({
               alt="coin_image"
             />
 
-            {coinName.charAt(0).toUpperCase() + coinName.slice(1)}
+            {coinTitleHandler(coinName)}
           </span>
           <span className={styles.coin__symbol}>{coinSymbol}</span>
           <span className={styles["coin__market-cap"]}>

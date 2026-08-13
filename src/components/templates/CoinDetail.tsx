@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { lazy, useState } from "react";
 
 import { useQuery } from "@tanstack/react-query";
-// import CoinChart from "@/components/modules/Chart";
 import { allMarketLists, coinChart, coinSentiment } from "@/services/coingecko";
 import type { DataProps } from "@/helper/coinsList/formattedData";
 import type { TypesCoin } from "@/types/coinsList/coinListTypes";
