@@ -34,7 +34,9 @@ const Cmc20Chart = ({ title }: CmcProps) => {
   }, [data]);
 
   return (
-    <Card className={"bg-[#1E1F24] text-white h-full border border-[#3b3b3b]"}>
+    <Card
+      className={"bg-[#1E1F24] text-white gap-2 h-full border border-[#3b3b3b]"}
+    >
       <span className="px-4">{title ? title : "CMC20"}</span>
       {isLoading && (
         <div className="m-auto">

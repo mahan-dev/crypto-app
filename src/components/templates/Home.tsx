@@ -2,13 +2,7 @@ import { getMarketList } from "@/services/coingecko";
 import { lazy, Suspense, useState } from "react";
 import type { CoinsProps } from "@/components/modules/CoinsList";
 
-// import PaginationPage from "@/components/modules/Pagination";
 import { useQuery } from "@tanstack/react-query";
-
-// import CurrencyDropDown from "@/components/modules/CurrencyDropDown";
-// import FearAndGreed from "@/components/modules/FearAndGreed";
-// import AltCoinSeason from "@/components/modules/AltCoinSeason";
-// import Cmc20Chart from "@/components/modules/Cmc20Chart";
 import stylesBanner from "@/components/modules/css/coinsList/route.module.css";
 import Loader from "@/components/loader/Loader";
 
@@ -22,6 +16,9 @@ const FearAndGreed = lazy(() => import("@/components/modules/FearAndGreed"));
 const AltCoinSeason = lazy(() => import("@/components/modules/AltCoinSeason"));
 const Cmc20Chart = lazy(() => import("@/components/modules/Cmc20Chart"));
 
+import HeaderSkeleton from "@/components/ui/reactSkeleton/skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 const Home = () => {
   const [page, setPage] = useState(1);
   const [currency, setCurrency] = useState<CoinsProps["currency"]>("usd");
@@ -34,7 +31,7 @@ const Home = () => {
   return (
     <section>
       <div className={stylesBanner.coin__status}>
-        <Suspense fallback={<h2>Loading</h2>}>
+        <Suspense fallback={<HeaderSkeleton />}>
           <FearAndGreed />
           <AltCoinSeason />
 
