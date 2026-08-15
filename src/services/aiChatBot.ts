@@ -30,10 +30,13 @@ export const aiChatBot = async (
   question: string,
   setLoading: Dispatch<SetStateAction<boolean>>,
 ): Promise<string | null> => {
+
+  const lowerQuestion = question.toLowerCase().trim();
+
   const finalData = data.find(
     (item) =>
-      question.toLowerCase().includes(item.name.toLowerCase()) ||
-      question.toLowerCase().includes(item.symbol.toLowerCase()),
+      lowerQuestion.includes(item.name.toLowerCase()) ||
+      lowerQuestion.includes(item.symbol.toLowerCase()),
   );
 
   try {
@@ -51,6 +54,7 @@ export const aiChatBot = async (
       stream: false,
       stop: null,
     });
+    
 
     const aiResponse = chatCompletion.choices[0].message.content;
 
@@ -62,3 +66,5 @@ export const aiChatBot = async (
     setLoading(false);
   }
 };
+
+
