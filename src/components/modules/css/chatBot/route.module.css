@@ -41,7 +41,7 @@
 }
 
 .chat__message {
-    @apply flex flex-col gap-3 items-center mt-auto bg-[#282828] mb-3 mx-3 p-3 rounded-md transition-all duration-300;
+    @apply flex flex-col gap-1.5 items-center mt-auto bg-[#282828] mb-3 mx-3 p-3 rounded-md transition-all duration-300;
 }
 
 
