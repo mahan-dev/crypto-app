@@ -19,6 +19,14 @@ const Cmc20Chart = lazy(() => import("@/components/modules/Cmc20Chart"));
 import HeaderSkeleton from "@/components/ui/reactSkeleton/skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+interface DataStatus {
+  data: {
+    status: {
+      error_code: number;
+    };
+  };
+}
+
 const Home = () => {
   const [page, setPage] = useState(1);
   const [currency, setCurrency] = useState<CoinsProps["currency"]>("usd");
@@ -28,8 +36,7 @@ const Home = () => {
     queryFn: () => getMarketList(currency, page),
   });
 
-  const status = data && data.data.status?.error_code === 429;
-
+  // const status = data && (data.data.status.error_code as DataStatus) === 429;
 
   return (
     <section>
@@ -54,12 +61,11 @@ const Home = () => {
           <PaginationPage page={page} setPage={setPage} />
         </div>
       )}
-      {isError ||
-        (status && (
-          <h2 className="w-full flex justify-center mt-6">
-            Something wen't wrong
-          </h2>
-        ))}
+      {isError && (
+        <h2 className="w-full flex justify-center mt-6">
+          Something wen't wrong
+        </h2>
+      )}
     </section>
   );
 };
