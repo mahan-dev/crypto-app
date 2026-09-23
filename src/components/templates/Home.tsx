@@ -19,14 +19,6 @@ const Cmc20Chart = lazy(() => import("@/components/modules/Cmc20Chart"));
 import HeaderSkeleton from "@/components/ui/reactSkeleton/skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-interface DataStatus {
-  data: {
-    status: {
-      error_code: number;
-    };
-  };
-}
-
 const Home = () => {
   const [page, setPage] = useState(1);
   const [currency, setCurrency] = useState<CoinsProps["currency"]>("usd");
