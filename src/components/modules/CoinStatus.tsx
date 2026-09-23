@@ -11,17 +11,10 @@ interface CoinProps {
   coinSymbol: Coin;
   coinName: string;
   show: boolean;
-  filteredData?: MarketType["data"][number];
+  data: MarketType["data"][number];
 }
-const CoinStatus = ({
-  coinSymbol,
-  coinName,
-  show,
-  filteredData,
-}: CoinProps) => {
-  const data: MarketType["data"][number] =
-    filteredData as MarketType["data"][number];
-
+const CoinStatus = ({ coinSymbol, coinName, show, data }: CoinProps) => {
+  if (!data) return <h2>Something wen't wrong `CoinStatus`</h2>;
   return (
     <div className=" px-7">
       <div className={styles.left__header}>
@@ -29,7 +22,7 @@ const CoinStatus = ({
           <span className={styles.coin__image}>
             <img
               className="rounded-full"
-              src={data["image"]}
+              src={data.image ?? ""}
               width={25}
               height={25}
               alt="coin_image"
@@ -43,6 +36,7 @@ const CoinStatus = ({
           </span>
         </div>
       </div>
+
       {data["id"] === "tether" ? (
         <span>${data["current_price"]}</span>
       ) : (

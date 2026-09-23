@@ -47,7 +47,7 @@ export const aiChatBot = async (
           content: `${prompt}  User : ${question} cryptoData:${JSON.stringify(finalData) || []} `,
         },
       ],
-      model: "llama-3.1-8b-instant",
+      model: "openai/gpt-oss-120b",
       temperature: 0.7,
       max_completion_tokens: 300,
       top_p: 1,

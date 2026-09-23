@@ -75,8 +75,8 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   const navigate = useNavigate();
 
-  const coinClickHandler = async (id: MarketType["data"][number]["id"]) => {
-    await coinHandler(data, id, navigate);
+  const coinClickHandler =  (id: MarketType["data"][number]["id"]) => {
+     coinHandler(data, id, navigate);
   };
 
   const classNameHandler = (status: SortOrder, field: SortField) => {

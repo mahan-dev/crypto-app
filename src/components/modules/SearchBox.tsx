@@ -58,8 +58,6 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
     return () => clearTimeout(timer);
   }, [search]);
 
-  
-
   return (
     <SearchDropDown $isOpen={isOpen} ref={searchRef} className="max-sm:w-[90%]">
       <section className={styles.searchBox}>

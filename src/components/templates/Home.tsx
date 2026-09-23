@@ -28,6 +28,9 @@ const Home = () => {
     queryFn: () => getMarketList(currency, page),
   });
 
+  const status = data && data.data.status?.error_code === 429;
+
+
   return (
     <section>
       <div className={stylesBanner.coin__status}>
@@ -51,11 +54,12 @@ const Home = () => {
           <PaginationPage page={page} setPage={setPage} />
         </div>
       )}
-      {isError && (
-        <h2 className="w-full flex justify-center mt-6">
-          Something wen't wrong
-        </h2>
-      )}
+      {isError ||
+        (status && (
+          <h2 className="w-full flex justify-center mt-6">
+            Something wen't wrong
+          </h2>
+        ))}
     </section>
   );
 };

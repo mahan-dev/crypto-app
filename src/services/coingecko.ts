@@ -34,6 +34,7 @@ const getMarketList = async (
       }
       toast.error(error.message, positionToast);
     }
+    
   }
   return {
     status: 500,

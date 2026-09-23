@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 
 import styles from "@/components/templates/styles/coinDetails/route.module.css";
 import CoinStatus from "./CoinStatus";
@@ -23,12 +23,16 @@ const CoinDetailAside = ({
 }: CoinAsideProps) => {
   const [show] = useState(() => document.body.offsetWidth > 1111);
 
+  console.log(CachedTypeCoin);
   return (
     <div className={styles.container__left}>
       <div className="max-[1110px]:hidden min-[1111px]:visible">
-        {show && (
-          <CoinStatus coinSymbol={coinSymbol} coinName={coinName} show={show} />
-        )}
+        <CoinStatus
+          coinSymbol={coinSymbol}
+          coinName={coinName}
+          show={show}
+          data={CachedTypeCoin}
+        />
       </div>
 
       <div className={styles.left__body}>

@@ -6,9 +6,9 @@ const coinHandler = async (
   id: MarketType["data"][number]["id"],
   navigate: ReturnType<typeof useNavigate>,
 ) => {
-  const finalD = data?.find((item) => item.id === id);
+  const finalID = data?.find((item) => item.id === id);
 
-  if (finalD) {
+  if (finalID) {
     navigate(`${id}`, {});
   }
 };

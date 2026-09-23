@@ -93,7 +93,7 @@ const CoinChart = ({
               coinSymbol={coinSymbol}
               coinName={coinName}
               show={show}
-              filteredData={filteredData}
+              data={filteredData}
             />
           </div>
 
