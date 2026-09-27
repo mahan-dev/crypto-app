@@ -37,6 +37,8 @@ const CoinDetail = () => {
     (item) => item.id === coinId,
   ) as MarketType["data"][number];
 
+
+
   const { isLoading } = useQuery({
     queryKey: ["coin-details", coinId],
     queryFn: async () => {
