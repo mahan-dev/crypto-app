@@ -1,19 +1,19 @@
-import { fearAndGreedApi } from "@/services/coingecko";
-import { useQuery } from "@tanstack/react-query";
-// import { GaugeComponent } from "react-gauge-component";
-import styles from "@/components/modules/css/fearAndGreed/route.module.css";
-import Loader from "@/components/loader/Loader";
-import { lazy } from "react";
+import { fearAndGreedApi } from '@/services/coingecko';
+import { useQuery } from '@tanstack/react-query';
+
+import styles from '@/components/modules/css/fearAndGreed/route.module.css';
+import Loader from '@/components/loader/Loader';
+import { lazy } from 'react';
 
 const GaugeComponent = lazy(() =>
-  import("react-gauge-component").then((module) => ({
+  import('react-gauge-component').then((module) => ({
     default: module.GaugeComponent,
   })),
 );
 
 const FearAndGreed = () => {
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["fearAndGreed"],
+    queryKey: ['fearAndGreed'],
     queryFn: async () => fearAndGreedApi(),
   });
 
@@ -42,47 +42,39 @@ const FearAndGreed = () => {
                 padding: 0.02,
                 cornerRadius: 60,
                 subArcs: [],
-                colorArray: [
-                  "#EA4228",
-                  "#f5981b",
-                  "#e6eb25",
-                  "#88db35",
-                  "#1af7e0",
-                ],
+                colorArray: ['#EA4228', '#f5981b', '#e6eb25', '#88db35', '#1af7e0'],
                 nbSubArcs: 5,
               }}
               pointer={{
-                type: "blob",
-                color: "#e0e0e0",
+                type: 'blob',
+                color: '#e0e0e0',
                 strokeWidth: 3,
-                strokeColor: "#252525",
+                strokeColor: '#252525',
                 width: 25,
                 maxFps: 60,
               }}
               labels={{
                 valueLabel: {
                   style: {
-                    fontSize: "50px",
-                    display: "none",
-                    fill: "#e0e0e0",
-                    fontWeight: "bold",
+                    fontSize: '50px',
+                    display: 'none',
+                    fill: '#e0e0e0',
+                    fontWeight: 'bold',
                   },
                 },
                 tickLabels: {
-                  type: "outer",
+                  type: 'outer',
                   hideMinMax: true,
                   defaultTickValueConfig: {
-                    style: { fontSize: "9px", fill: "#aaa" },
+                    style: { fontSize: '9px', fill: '#aaa' },
                   },
-                  defaultTickLineConfig: { color: "#666", length: 4, width: 1 },
+                  defaultTickLineConfig: { color: '#666', length: 4, width: 1 },
                 },
               }}
             />
 
             <p className={styles.content__display}>
-              <span className={styles.display__value}>
-                {data?.data[0].value}
-              </span>
+              <span className={styles.display__value}>{data?.data[0].value}</span>
               <span className={styles.display__status}>{status}</span>
             </p>
           </div>

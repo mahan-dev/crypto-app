@@ -1,4 +1,4 @@
-import type { MarketType } from "@/types/marketTypes";
+import type { MarketType } from '@/types/marketTypes';
 import {
   Table,
   TableBody,
@@ -6,60 +6,60 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
-import { TiArrowSortedUp } from "react-icons/ti";
-import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from 'react-icons/ti';
+import { TiArrowSortedDown } from 'react-icons/ti';
 
-import chartUp from "@/assets/chart-up.svg";
-import chartDown from "@/assets/chart-down.svg";
+import chartUp from '@/assets/chart-up.svg';
+import chartDown from '@/assets/chart-down.svg';
 import {
   coinPriceSorting,
   PriceCommaFormatter,
   symbolFormatter,
-} from "@/helper/coinsList/formattedData";
+} from '@/helper/coinsList/formattedData';
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 
-import { useEffect, useMemo, useState } from "react";
-import { coinHandler } from "@/helper/coinsList/coinHandler";
-import { formatPrice } from "@/helper/coinDetails/coinValueChecker";
-import type { SortField, SortOrder } from "@/types/coinsList/coinListTypes";
-import { currencyHandler } from "@/helper/coinsList/currencyHandler";
-import { statusHelperHandler } from "@/helper/coinsList/statusHandlerHelper";
+import { useEffect, useMemo, useState } from 'react';
+import { coinHandler } from '@/helper/coinsList/coinHandler';
+import { formatPrice } from '@/helper/coinDetails/coinValueChecker';
+import type { SortField, SortOrder } from '@/types/coinsList/coinListTypes';
+import { currencyHandler } from '@/helper/coinsList/currencyHandler';
+import { statusHelperHandler } from '@/helper/coinsList/statusHandlerHelper';
 
-import { FaRegStar } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
-import { useWishList, wishListHelper } from "@/hooks/useWishList";
-import { removeHelper } from "@/helper/coinsList/removeHelper";
+import { FaRegStar } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import { useWishList, wishListHelper } from '@/hooks/useWishList';
+import { removeHelper } from '@/helper/coinsList/removeHelper';
 
-import { GrFavorite } from "react-icons/gr";
-import { IoChatbubbleOutline } from "react-icons/io5";
+import { GrFavorite } from 'react-icons/gr';
+import { IoChatbubbleOutline } from 'react-icons/io5';
 
-import styles from "@/components/modules/css/coinsList/route.module.css";
-import ChatBot from "@/components/modules/ChatBot";
-import styled from "styled-components";
-import { IoClose } from "react-icons/io5";
+import styles from '@/components/modules/css/coinsList/route.module.css';
+import ChatBot from '@/components/modules/ChatBot';
+import styled from 'styled-components';
+import { IoClose } from 'react-icons/io5';
 
 export interface CoinsProps {
-  data: MarketType["data"];
-  currency: "usd" | "eur" | "gbp";
+  data: MarketType['data'];
+  currency: 'usd' | 'eur' | 'gbp';
 }
 
 const ChatButton = styled.div<{ $isOpen: boolean }>`
-  transform: translateX(${(props) => (props.$isOpen ? "0%" : "-100%")});
+  transform: translateX(${(props) => (props.$isOpen ? '0%' : '-100%')});
   transition: all 0.2s ease;
   position: fixed;
   z-index: 20;
   width: 15rem;
   height: 20.5rem;
-  left: ${(props) => (props.$isOpen ? "4rem" : "0")};
+  left: ${(props) => (props.$isOpen ? '4rem' : '0')};
   bottom: 1.75rem;
 `;
 
 const CoinsList = ({ data, currency }: CoinsProps) => {
-  const [sortField, setSortField] = useState<SortField>("default");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("default");
+  const [sortField, setSortField] = useState<SortField>('default');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('default');
   const [open, setOpen] = useState(false);
 
   const sortedCoins = useMemo(() => {
@@ -75,35 +75,29 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   const navigate = useNavigate();
 
-  const coinClickHandler =  (id: MarketType["data"][number]["id"]) => {
-     coinHandler(data, id, navigate);
+  const coinClickHandler = (id: MarketType['data'][number]['id']) => {
+    coinHandler(data, id, navigate);
   };
 
   const classNameHandler = (status: SortOrder, field: SortField) => {
-    if (sortField !== field) return "opacity-25";
-    return sortOrder === status ? "opacity-100" : "opacity-25";
+    if (sortField !== field) return 'opacity-25';
+    return sortOrder === status ? 'opacity-100' : 'opacity-25';
   };
 
   const { wishList, setWishList } = useWishList();
 
-  const wishListHandler = (
-    e: React.MouseEvent<SVGElement>,
-    item: MarketType["data"][number],
-  ) => {
+  const wishListHandler = (e: React.MouseEvent<SVGElement>, item: MarketType['data'][number]) => {
     e.stopPropagation();
     setWishList((prev) => wishListHelper(prev, item));
   };
 
-  const removeHandler = (
-    e: React.MouseEvent<SVGElement>,
-    coin: MarketType["data"][number],
-  ) => {
+  const removeHandler = (e: React.MouseEvent<SVGElement>, coin: MarketType['data'][number]) => {
     removeHelper({ e, coin, wishList, setWishList });
   };
 
   useEffect(() => {
     if (!wishList.length) return;
-    localStorage.setItem("wishList", JSON.stringify(wishList));
+    localStorage.setItem('wishList', JSON.stringify(wishList));
   }, [wishList]);
 
   const wishListIds = useMemo(() => {
@@ -121,13 +115,9 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
               <TableHead className="w-px text-right">
                 <div className="flex justify-end items-center gap-2">
                   Price
-                  <div onClick={() => statusHandler("price")}>
-                    <TiArrowSortedUp
-                      className={classNameHandler("up", "price")}
-                    />
-                    <TiArrowSortedDown
-                      className={classNameHandler("down", "price")}
-                    />
+                  <div onClick={() => statusHandler('price')}>
+                    <TiArrowSortedUp className={classNameHandler('up', 'price')} />
+                    <TiArrowSortedDown className={classNameHandler('down', 'price')} />
                   </div>
                 </div>
               </TableHead>
@@ -135,13 +125,9 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
               <TableHead className="w-7  text-right">
                 <div className=" flex justify-end items-center gap-2">
                   24h %
-                  <div onClick={() => statusHandler("24h")}>
-                    <TiArrowSortedUp
-                      className={classNameHandler("up", "24h")}
-                    />
-                    <TiArrowSortedDown
-                      className={classNameHandler("down", "24h")}
-                    />
+                  <div onClick={() => statusHandler('24h')}>
+                    <TiArrowSortedUp className={classNameHandler('up', '24h')} />
+                    <TiArrowSortedDown className={classNameHandler('down', '24h')} />
                   </div>
                 </div>
               </TableHead>
@@ -149,13 +135,9 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
               <TableHead className="w-37 text-right">
                 <div className="flex justify-end items-center gap-2">
                   Market Cap
-                  <div onClick={() => statusHandler("market_cap")}>
-                    <TiArrowSortedUp
-                      className={classNameHandler("up", "market_cap")}
-                    />
-                    <TiArrowSortedDown
-                      className={classNameHandler("down", "market_cap")}
-                    />
+                  <div onClick={() => statusHandler('market_cap')}>
+                    <TiArrowSortedUp className={classNameHandler('up', 'market_cap')} />
+                    <TiArrowSortedDown className={classNameHandler('down', 'market_cap')} />
                   </div>
                 </div>
               </TableHead>
@@ -163,13 +145,9 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
               <TableHead className="text-right">
                 <div className="flex gap-2 items-center justify-end">
                   Circulating Supply
-                  <div onClick={() => statusHandler("circulating_supply")}>
-                    <TiArrowSortedUp
-                      className={classNameHandler("up", "circulating_supply")}
-                    />
-                    <TiArrowSortedDown
-                      className={classNameHandler("down", "circulating_supply")}
-                    />
+                  <div onClick={() => statusHandler('circulating_supply')}>
+                    <TiArrowSortedUp className={classNameHandler('up', 'circulating_supply')} />
+                    <TiArrowSortedDown className={classNameHandler('down', 'circulating_supply')} />
                   </div>
                 </div>
               </TableHead>
@@ -196,15 +174,13 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                   key={name}
                   onClick={() => coinClickHandler(id)}
                 >
-                  <TableCell className=" first-of-type:text-center">
-                    {market_cap_rank}
-                  </TableCell>
+                  <TableCell className=" first-of-type:text-center">{market_cap_rank}</TableCell>
                   <TableCell className="align-middle">
                     <div className="flex gap-2 items-center ">
                       <img
                         className="rounded-full w-6.25 h-6.25"
                         loading="lazy"
-                        src={coin.image.replace("/large/", "/small/")}
+                        src={coin.image.replace('/large/', '/small/')}
                         alt={symbol}
                         width={25}
                         height={25}
@@ -212,14 +188,12 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                       {symbolFormatter(symbol)}
                     </div>
                   </TableCell>
-                  <TableCell>
-                    {currencyHandler(current_price, currency)}
-                  </TableCell>
+                  <TableCell>{currencyHandler(current_price, currency)}</TableCell>
 
                   <TableCell
-                    className={`${percentage_24 === null ? "" : percentage_24 > 0 ? "text-green-500" : "text-red-500"}`}
+                    className={`${percentage_24 === null ? '' : percentage_24 > 0 ? 'text-green-500' : 'text-red-500'}`}
                   >
-                    {percentage_24 ? percentage_24.toFixed(2) : "null"}
+                    {percentage_24 ? percentage_24.toFixed(2) : 'null'}
                   </TableCell>
                   <TableCell>{PriceCommaFormatter(market_cap)}</TableCell>
 
@@ -232,23 +206,20 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                       <img
                         className="ml-auto"
                         src={percentage_24 > 0 ? chartUp : chartDown}
-                        alt={"chart svg"}
+                        alt={'chart svg'}
                         width={100}
+                        height={100}
                       />
                       {wishListIds.has(id) ? (
                         <div className="w-5 h-5">
                           <FaStar
-                            onClick={(e: React.MouseEvent<SVGElement>) =>
-                              removeHandler(e, coin)
-                            }
+                            onClick={(e: React.MouseEvent<SVGElement>) => removeHandler(e, coin)}
                           />
                         </div>
                       ) : (
                         <div className=" w-5 h-5">
                           <FaRegStar
-                            onClick={(e: React.MouseEvent<SVGElement>) =>
-                              wishListHandler(e, coin)
-                            }
+                            onClick={(e: React.MouseEvent<SVGElement>) => wishListHandler(e, coin)}
                           />
                         </div>
                       )}
@@ -261,10 +232,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
         </Table>
       )}
 
-      <div
-        className={`${styles.chat} ${open ? styles.open : ""}`}
-        onClick={() => setOpen(!open)}
-      >
+      <div className={`${styles.chat} ${open ? styles.open : ''}`} onClick={() => setOpen(!open)}>
         <div className={styles.chat__chatIcon}>
           <IoChatbubbleOutline />
         </div>
@@ -278,7 +246,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
       </ChatButton>
 
       <div className={styles.favorite}>
-        <Link className={styles.favorite__icon} to={"/favorite"}>
+        <Link className={styles.favorite__icon} to={'/favorite'}>
           <GrFavorite />
         </Link>
       </div>

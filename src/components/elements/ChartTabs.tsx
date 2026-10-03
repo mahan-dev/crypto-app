@@ -1,7 +1,7 @@
-import type { Dispatch, SetStateAction } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { Days } from "../modules/Chart";
-import { toast } from "sonner";
+import type { Dispatch, SetStateAction } from 'react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import type { Days } from '../modules/Chart';
+import { toast } from 'sonner';
 
 interface ChartProps {
   setDays: Dispatch<SetStateAction<Days>>;
@@ -9,7 +9,7 @@ interface ChartProps {
 const ChartTabs = ({ setDays }: ChartProps) => {
   const valueHandler = (value: string) => {
     if (!Number(value)) {
-      toast.error("your not allowed", { position: "top-center" });
+      toast.error('your not allowed', { position: 'top-center' });
       return;
     }
 

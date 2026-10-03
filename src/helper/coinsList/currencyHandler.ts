@@ -1,22 +1,17 @@
-import type { CoinsProps } from "@/components/modules/CoinsList";
-import { PriceCommaFormatter } from "./formattedData";
+import type { CoinsProps } from '@/components/modules/CoinsList';
+import { PriceCommaFormatter } from './formattedData';
 
 export const currencyList = {
-  usd: "$",
-  eur: "€",
-  gbp: "£",
+  usd: '$',
+  eur: '€',
+  gbp: '£',
 };
 
-const currencyHandler = (
-  current_price: number,
-  currency: CoinsProps["currency"],
-) => {
+const currencyHandler = (current_price: number, currency: CoinsProps['currency']) => {
   const finalCurrency = currencyList[currency];
 
   return `${finalCurrency}${
-    current_price < 1
-      ? current_price.toFixed(4)
-      : PriceCommaFormatter(current_price)
+    current_price < 1 ? current_price.toFixed(4) : PriceCommaFormatter(current_price)
   }`;
 };
 

@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { FiSearch } from "react-icons/fi";
+import { Button } from '@/components/ui/button';
+import { FiSearch } from 'react-icons/fi';
 
-import styles from "@/components/elements/styles/search/route.module.css";
-import SearchBox from "../modules/SearchBox";
-import styled from "styled-components";
-import { useEffect, useState } from "react";
+import styles from '@/components/elements/styles/search/route.module.css';
+import SearchBox from '../modules/SearchBox';
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 const SearchDropDown = styled.div<{ $isOpen: boolean }>`
   opacity: ${(props) => (props.$isOpen ? 1 : 0)};
@@ -12,7 +12,7 @@ const SearchDropDown = styled.div<{ $isOpen: boolean }>`
   transition:
     opacity 0.4s ease,
     transform 0.4s ease;
-  backdrop-filter: ${(props) => (props.$isOpen ? "blur(0.6px)" : "none")};
+  backdrop-filter: ${(props) => (props.$isOpen ? 'blur(0.6px)' : 'none')};
   display: flex;
   justify-content: center;
   height: 100vh;
@@ -20,7 +20,7 @@ const SearchDropDown = styled.div<{ $isOpen: boolean }>`
   inset: 0;
   z-index: 10;
   overflow: hidden;
-  pointer-events: ${(props) => (props.$isOpen ? "auto" : "none")};
+  pointer-events: ${(props) => (props.$isOpen ? 'auto' : 'none')};
 `;
 
 const Search = () => {
@@ -31,7 +31,7 @@ const Search = () => {
   };
 
   const overFlowHandler = () => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
   };
 
   useEffect(() => {

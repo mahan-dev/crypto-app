@@ -1,17 +1,17 @@
-import styles from "@/components/modules/css/coinStatus/route.module.css";
-import { ValueChecker } from "@/helper/coinDetails/coinValueChecker";
-import type { Coin } from "./Chart";
+import styles from '@/components/modules/css/coinStatus/route.module.css';
+import { ValueChecker } from '@/helper/coinDetails/coinValueChecker';
+import type { Coin } from './Chart';
 
-import type { MarketType } from "@/types/marketTypes";
+import type { MarketType } from '@/types/marketTypes';
 
-import CoinPrice from "@/components/elements/CoinPrice";
-import { coinTitleHandler } from "@/helper/coinStatus/coinStatusHelper";
+import CoinPrice from '@/components/elements/CoinPrice';
+import { coinTitleHandler } from '@/helper/coinStatus/coinStatusHelper';
 
 interface CoinProps {
   coinSymbol: Coin;
   coinName: string;
   show: boolean;
-  data: MarketType["data"][number];
+  data: MarketType['data'][number];
 }
 const CoinStatus = ({ coinSymbol, coinName, show, data }: CoinProps) => {
   if (!data) return <h2>Something wen't wrong `CoinStatus`</h2>;
@@ -22,7 +22,7 @@ const CoinStatus = ({ coinSymbol, coinName, show, data }: CoinProps) => {
           <span className={styles.coin__image}>
             <img
               className="rounded-full"
-              src={data.image ?? ""}
+              src={data.image ?? ''}
               width={25}
               height={25}
               alt="coin_image"
@@ -31,14 +31,14 @@ const CoinStatus = ({ coinSymbol, coinName, show, data }: CoinProps) => {
             {coinTitleHandler(coinName)}
           </span>
           <span className={styles.coin__symbol}>{coinSymbol}</span>
-          <span className={styles["coin__market-cap"]}>
-            {`#${ValueChecker(data["market_cap_rank"])} `}
+          <span className={styles['coin__market-cap']}>
+            {`#${ValueChecker(data['market_cap_rank'])} `}
           </span>
         </div>
       </div>
 
-      {data["id"] === "tether" ? (
-        <span>${data["current_price"]}</span>
+      {data['id'] === 'tether' ? (
+        <span>${data['current_price']}</span>
       ) : (
         <CoinPrice coin={coinSymbol} boolean={show} />
       )}

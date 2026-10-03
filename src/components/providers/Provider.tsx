@@ -1,9 +1,9 @@
-import { type PropsWithChildren } from "react";
-import { Toaster } from "sonner";
-import Layout from "@/components/layout/Layout";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { defaultOptions } from "@/utils/queryClientOptions";
-import { SkeletonTheme } from "react-loading-skeleton";
+import { type PropsWithChildren } from 'react';
+import { Toaster } from 'sonner';
+import Layout from '@/components/layout/Layout';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { defaultOptions } from '@/utils/queryClientOptions';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 const queryClient = new QueryClient({
   defaultOptions,

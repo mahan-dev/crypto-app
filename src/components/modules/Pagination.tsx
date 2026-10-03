@@ -1,4 +1,4 @@
-import type { Dispatch, MouseEvent, SetStateAction } from "react";
+import { UsePage } from '@/hooks/usePage';
 import {
   Pagination,
   PaginationContent,
@@ -7,9 +7,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-
-import { UsePage } from "@/hooks/usePage";
+} from '@/components/ui/pagination';
+import type { Dispatch, MouseEvent, SetStateAction } from 'react';
 
 interface PaginationProps {
   page: number;
@@ -40,7 +39,7 @@ const PaginationPage = ({ page, setPage }: PaginationProps) => {
           </PaginationItem>
           <PaginationItem onClick={clickHandler}>
             <PaginationLink
-              className={`${page === 1 ? "text-black" : ""}`}
+              className={`${page === 1 ? 'text-black' : ''}`}
               isActive={page === 1 ? true : false}
             >
               1
@@ -48,7 +47,7 @@ const PaginationPage = ({ page, setPage }: PaginationProps) => {
           </PaginationItem>
           <PaginationItem onClick={clickHandler}>
             <PaginationLink
-              className={`${page === 2 ? "text-black" : ""}`}
+              className={`${page === 2 ? 'text-black' : ''}`}
               isActive={page === 2 ? true : false}
             >
               2
@@ -60,10 +59,7 @@ const PaginationPage = ({ page, setPage }: PaginationProps) => {
           <>
             <PaginationEllipsis />
             <PaginationItem onClick={clickHandler}>
-              <PaginationLink
-                className={`${page ? "text-black" : ""}`}
-                isActive
-              >
+              <PaginationLink className={`${page ? 'text-black' : ''}`} isActive>
                 {page}
               </PaginationLink>
             </PaginationItem>
@@ -71,18 +67,12 @@ const PaginationPage = ({ page, setPage }: PaginationProps) => {
         )}
         <PaginationEllipsis />
         <PaginationItem onClick={clickHandler}>
-          <PaginationLink
-            className={`${page === 9 && "text-black"}`}
-            isActive={page === 9}
-          >
+          <PaginationLink className={`${page === 9 && 'text-black'}`} isActive={page === 9}>
             9
           </PaginationLink>
         </PaginationItem>
         <PaginationItem onClick={clickHandler}>
-          <PaginationLink
-            className={`${page === 10 && "text-black"}`}
-            isActive={page === 10}
-          >
+          <PaginationLink className={`${page === 10 && 'text-black'}`} isActive={page === 10}>
             10
           </PaginationLink>
         </PaginationItem>

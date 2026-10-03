@@ -1,18 +1,18 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-import { ChartContainer, type ChartConfig } from "@/components/ui/chart";
-import { Area, AreaChart } from "recharts";
-import { convertedData } from "@/helper/coinsList/formattedData";
+import { ChartContainer, type ChartConfig } from '@/components/ui/chart';
+import { Area, AreaChart } from 'recharts';
+import { convertedData } from '@/helper/coinsList/formattedData';
 
-import { useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { cmc20TokenIndexApi } from "@/services/coingecko";
-import Loader from "../loader/Loader";
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { cmc20TokenIndexApi } from '@/services/coingecko';
+import Loader from '../loader/Loader';
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
+    label: 'Desktop',
+    color: 'var(--chart-1)',
   },
 } satisfies ChartConfig;
 
@@ -22,22 +22,20 @@ interface CmcProps {
 
 const Cmc20Chart = ({ title }: CmcProps) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["cmc20Token"],
+    queryKey: ['cmc20Token'],
     queryFn: cmc20TokenIndexApi,
   });
   const splittedData = data?.prices.at(-1)?.[1].toFixed(2) ?? null;
 
   const finalData = useMemo(() => {
     if (!data) return;
-    const result = convertedData(data, "prices");
+    const result = convertedData(data, 'prices');
     return result;
   }, [data]);
 
   return (
-    <Card
-      className={"bg-[#1E1F24] text-white gap-2 h-full border border-[#3b3b3b]"}
-    >
-      <span className="px-4">{title ? title : "CMC20"}</span>
+    <Card className={'bg-[#1E1F24] text-white gap-2 h-full border border-[#3b3b3b]'}>
+      <span className="px-4">{title ? title : 'CMC20'}</span>
       {isLoading && (
         <div className="m-auto">
           <Loader />

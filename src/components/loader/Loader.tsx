@@ -1,4 +1,4 @@
-import { ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from 'react-loader-spinner';
 
 interface LoaderProps {
   small?: boolean;

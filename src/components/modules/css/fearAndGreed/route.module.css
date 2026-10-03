@@ -1,25 +1,25 @@
 @reference "tailwindcss";
 
 .gauge {
-    @apply p-4 flex flex-col items-center justify-between bg-[#1E1F24] border border-[#3b3b3b] rounded-lg ;
+  @apply p-4 flex flex-col items-center justify-between bg-[#1E1F24] border border-[#3b3b3b] rounded-lg;
 }
 
 .gauge__title {
-    @apply text-[1rem] font-medium self-start;
+  @apply text-[1rem] font-medium self-start;
 }
 
 .gauge__content {
-    @apply flex justify-center relative w-35 h-20;
+  @apply flex justify-center relative w-35 h-20;
 }
 
 .content__display {
-    @apply flex flex-col items-center absolute text-[0.8rem] top-[38%];
+  @apply flex flex-col items-center absolute text-[0.8rem] top-[38%];
 }
 
 .display__value {
-    @apply text-[1.2rem] font-bold;
+  @apply text-[1.2rem] font-bold;
 }
 
 .display__status {
-    @apply text-[0.7rem] text-gray-300;
+  @apply text-[0.7rem] text-gray-300;
 }

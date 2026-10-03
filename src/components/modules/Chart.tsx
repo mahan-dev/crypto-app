@@ -1,56 +1,47 @@
-import { Area, AreaChart, XAxis } from "recharts";
+import { Area, AreaChart, XAxis } from 'recharts';
 
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@/components/ui/chart";
+} from '@/components/ui/chart';
 
-import {
-  useEffect,
-  useMemo,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
-import {
-  convertedData,
-  type DataProps,
-} from "@/helper/coinsList/formattedData";
+import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from 'react';
+import { convertedData, type DataProps } from '@/helper/coinsList/formattedData';
 
-import { Button } from "@/components/ui/button";
-import styles from "@/components/modules/css/chart/route.module.css";
-import type { MarketType } from "@/types/marketTypes";
+import { Button } from '@/components/ui/button';
+import styles from '@/components/modules/css/chart/route.module.css';
+import type { MarketType } from '@/types/marketTypes';
 
-import { coinChart } from "@/services/coingecko";
+import { coinChart } from '@/services/coingecko';
 
-import CoinStatus from "./CoinStatus";
-import ChartTabs from "../elements/ChartTabs";
-import { chartLabel } from "@/constants/chart/chart";
-import type { TypesCoin } from "@/types/coinsList/coinListTypes";
+import CoinStatus from './CoinStatus';
+import ChartTabs from '../elements/ChartTabs';
+import { chartLabel } from '@/constants/chart/chart';
+import type { TypesCoin } from '@/types/coinsList/coinListTypes';
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
+    label: 'Desktop',
+    color: 'var(--chart-1)',
   },
 } satisfies ChartConfig;
 
 interface CoinProps {
-  coinSymbol: MarketType["data"][number]["symbol"];
-  coinName: MarketType["data"][number]["name"];
-  chart: DataProps["data"] | null;
-  setChart: Dispatch<SetStateAction<DataProps["data"] | null>>;
+  coinSymbol: MarketType['data'][number]['symbol'];
+  coinName: MarketType['data'][number]['name'];
+  chart: DataProps['data'] | null;
+  setChart: Dispatch<SetStateAction<DataProps['data'] | null>>;
   type: TypesCoin;
   setType: Dispatch<SetStateAction<TypesCoin>>;
-  coin: MarketType["data"][number]["name"];
+  coin: MarketType['data'][number]['name'];
   coinId: string;
-  filteredData: MarketType["data"][number];
+  filteredData: MarketType['data'][number];
 }
 
-export type Coin = MarketType["data"][number]["symbol"];
+export type Coin = MarketType['data'][number]['symbol'];
 export type Days = 1 | 7 | 30 | 90 | 365;
 
 const CoinChart = ({
@@ -122,12 +113,7 @@ const CoinChart = ({
               />
               <ChartTooltip
                 cursor={false}
-                content={
-                  <ChartTooltipContent
-                    className="text-black"
-                    indicator="line"
-                  />
-                }
+                content={<ChartTooltipContent className="text-black" indicator="line" />}
               />
               <Area
                 dataKey="prices"

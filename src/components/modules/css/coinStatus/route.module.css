@@ -1,67 +1,65 @@
 @reference "tailwindcss";
 
 .container {
-    @apply flex mt-4 sticky top-5 gap-3 max-lg:px-3;
+  @apply flex mt-4 sticky top-5 gap-3 max-lg:px-3;
 }
 
 .container__left {
-    @apply sticky top-0 max-w-82.5 w-full p-3 shrink-0 max-xl:static;
+  @apply sticky top-0 max-w-82.5 w-full p-3 shrink-0 max-xl:static;
 }
 
 .left__header {
-    @apply flex mb-4  gap-1.5;
+  @apply flex mb-4  gap-1.5;
 }
 
 .header__coin {
-    @apply flex items-center gap-1.5;
+  @apply flex items-center gap-1.5;
 }
 
-.coin__image{
-    @apply flex items-center gap-2 text-[1.2rem] tracking-wide font-medium;
+.coin__image {
+  @apply flex items-center gap-2 text-[1.2rem] tracking-wide font-medium;
 }
 
-.coin-status__market-cap{
-    @apply text-[0.8rem] bg-gray-600 py-0.5 px-2 tracking-wide rounded-lg;
+.coin-status__market-cap {
+  @apply text-[0.8rem] bg-gray-600 py-0.5 px-2 tracking-wide rounded-lg;
 }
 
 .coin__symbol {
-    @apply text-[0.8rem] text-gray-400 uppercase;
+  @apply text-[0.8rem] text-gray-400 uppercase;
 }
 
 .coin__market-cap {
-    @apply text-[0.8rem] bg-[#424242] py-0.5 px-2 tracking-wide rounded-lg;
+  @apply text-[0.8rem] bg-[#424242] py-0.5 px-2 tracking-wide rounded-lg;
 }
 
 .left__body {
-    @apply flex flex-col gap-2 mt-5;
+  @apply flex flex-col gap-2 mt-5;
 }
 
 .body__item {
-    @apply flex flex-col items-center gap-1 py-1 border border-[#5b5b5b] rounded-md;
+  @apply flex flex-col items-center gap-1 py-1 border border-[#5b5b5b] rounded-md;
 }
 
 .item__title {
-    @apply font-bold text-[0.7rem] text-gray-400;
+  @apply font-bold text-[0.7rem] text-gray-400;
 }
 
 .body__grouped {
-    @apply w-full flex gap-2;
+  @apply w-full flex gap-2;
 }
 .grouped__item {
-    @apply flex flex-col flex-1 items-center border border-[#5b5b5b] rounded-md p-1;
+  @apply flex flex-col flex-1 items-center border border-[#5b5b5b] rounded-md p-1;
 }
 
 .container__right {
-    @apply w-full;
+  @apply w-full;
 }
 
-
 @media only screen and (max-width: 1110px) {
-    .container {
-        @apply flex-wrap
-    }
-    .container__right {
-        @apply -order-1
-    }
-    
+  .container {
+    @apply flex-wrap;
+  }
+  .container__right {
+    @apply -order-1;
+  }
 }

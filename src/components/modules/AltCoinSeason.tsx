@@ -1,13 +1,13 @@
-import { GiPlainCircle } from "react-icons/gi";
+import { GiPlainCircle } from 'react-icons/gi';
 
-import styles from "@/components/modules/css/AltCoinSeason/route.module.css";
-import { altcoinSeasonApi } from "@/services/coingecko";
-import { useQuery } from "@tanstack/react-query";
-import Loader from "@/components/loader/Loader";
+import styles from '@/components/modules/css/AltCoinSeason/route.module.css';
+import { altcoinSeasonApi } from '@/services/coingecko';
+import { useQuery } from '@tanstack/react-query';
+import Loader from '@/components/loader/Loader';
 
 const AltCoinSeason = () => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["altcoinIndex"],
+    queryKey: ['altcoinIndex'],
     queryFn: altcoinSeasonApi,
   });
 
@@ -24,7 +24,7 @@ const AltCoinSeason = () => {
       {data && (
         <>
           <div className={styles.container__display}>
-            {data || "null"}
+            {data || 'null'}
             <span>/100</span>
           </div>
 
@@ -36,15 +36,15 @@ const AltCoinSeason = () => {
           <div className={styles.container__graph}>
             <div className={styles.graph__content}>
               <div className={styles.content__orange} />
-              <div className={styles["content__fade-orange"]} />
-              <div className={styles["content__fade-blue"]} />
+              <div className={styles['content__fade-orange']} />
+              <div className={styles['content__fade-blue']} />
               <div className={styles.content__blue} />
             </div>
 
             <GiPlainCircle
               className={styles.content__circle}
               style={{
-                left: `${isError ? "0" : `calc(${data}% - 8px)`} `,
+                left: `${isError ? '0' : `calc(${data}% - 8px)`} `,
               }}
             />
           </div>

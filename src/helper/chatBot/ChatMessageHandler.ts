@@ -1,14 +1,14 @@
-import type { Message } from "@/components/modules/ChatBot";
-import { aiChatBot } from "@/services/aiChatBot";
-import type { MarketType } from "@/types/marketTypes";
-import type { Dispatch, SetStateAction } from "react";
+import type { Message } from '@/components/modules/ChatBot';
+import { aiChatBot } from '@/services/aiChatBot';
+import type { MarketType } from '@/types/marketTypes';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface ChatProps {
   message: string;
   setLoading: Dispatch<SetStateAction<boolean>>;
   setMessages: Dispatch<SetStateAction<Message[]>>;
   setMessage: Dispatch<SetStateAction<string>>;
-  data: MarketType["data"];
+  data: MarketType['data'];
 }
 
 export const ChatMessageHandler = async ({
@@ -23,12 +23,12 @@ export const ChatMessageHandler = async ({
   setMessages((prev) => [
     ...prev,
     {
-      role: "USER",
+      role: 'USER',
       text: message,
     },
   ]);
 
-  setMessage("");
+  setMessage('');
   const res = await aiChatBot(data, message, setLoading);
 
   if (!res) return;
@@ -36,7 +36,7 @@ export const ChatMessageHandler = async ({
   setMessages((prev) => [
     ...prev,
     {
-      role: "BOT",
+      role: 'BOT',
       text: res,
     },
   ]);

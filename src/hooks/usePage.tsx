@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from 'react';
 
 export const UsePage = (
   step: number,
@@ -7,14 +7,12 @@ export const UsePage = (
 ) => {
   const url = new URL(window.location.href);
 
-  
-    setPage((prev) => {
-      const nextPage = click ? step : prev + step;
+  setPage((prev) => {
+    const nextPage = click ? step : prev + step;
 
-      url.searchParams.set("page", nextPage.toString());
-      window.history.pushState({}, "", url.toString());
+    url.searchParams.set('page', nextPage.toString());
+    window.history.pushState({}, '', url.toString());
 
-      return nextPage;
-    });
-  
+    return nextPage;
+  });
 };

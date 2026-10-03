@@ -5,16 +5,16 @@ import {
   type ChangeEvent,
   type Dispatch,
   type SetStateAction,
-} from "react";
-import { FiSearch } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
-import styles from "@/components/modules/css/searchBox/route.module.css";
-import styled from "styled-components";
-import useClickOutSide from "@/hooks/UseClickOutSide";
-import { searchCoinApi } from "@/services/coingecko";
-import { useQuery } from "@tanstack/react-query";
-import CoinResults from "./CoinResults";
-import Loader from "../loader/Loader";
+} from 'react';
+import { FiSearch } from 'react-icons/fi';
+import { IoClose } from 'react-icons/io5';
+import styles from '@/components/modules/css/searchBox/route.module.css';
+import styled from 'styled-components';
+import useClickOutSide from '@/hooks/UseClickOutSide';
+import { searchCoinApi } from '@/services/coingecko';
+import { useQuery } from '@tanstack/react-query';
+import CoinResults from './CoinResults';
+import Loader from '../loader/Loader';
 
 interface SearchBoxProps {
   isOpen: boolean;
@@ -22,7 +22,7 @@ interface SearchBoxProps {
 }
 const SearchDropDown = styled.div<{ $isOpen: boolean }>`
   opacity: ${(props) => (props.$isOpen ? 1 : 0)};
-  transform: translateY(${(props) => (props.$isOpen ? "4.6rem" : "-20px")});
+  transform: translateY(${(props) => (props.$isOpen ? '4.6rem' : '-20px')});
   transition:
     opacity 0.4s ease,
     transform 0.4s ease;
@@ -31,18 +31,17 @@ const SearchDropDown = styled.div<{ $isOpen: boolean }>`
 const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
   const searchRef = useRef<HTMLDivElement | null>(null);
 
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>('');
 
-  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
+  const [debouncedSearch, setDebouncedSearch] = useState<string>('');
 
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["searchCoin", debouncedSearch],
+    queryKey: ['searchCoin', debouncedSearch],
     queryFn: async () => await searchCoinApi(debouncedSearch),
     enabled: !!debouncedSearch,
   });
 
-  const searchNoResult =
-    debouncedSearch.trim() && !isLoading && !isError && !data?.coins.length;
+  const searchNoResult = debouncedSearch.trim() && !isLoading && !isError && !data?.coins.length;
 
   useClickOutSide({ isOpen, searchRef, setIsOpen, setSearch });
 
@@ -65,10 +64,10 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
           <FiSearch />
 
           <input
-            type={"text"}
+            type={'text'}
             className={styles.searchBox___searchInput}
             onChange={changeHandler}
-            value={!isOpen ? "" : search}
+            value={!isOpen ? '' : search}
             placeholder="Search coin, pair, contract address, exchange, or post"
           />
 
@@ -76,15 +75,13 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
             className="cursor-pointer ml-auto"
             onClick={() => {
               setIsOpen(false);
-              setSearch("");
+              setSearch('');
             }}
           />
         </div>
 
         {searchNoResult && (
-          <span className=" text-[1rem] mx-auto mt-2 text-gray-300">
-            Nothing found
-          </span>
+          <span className=" text-[1rem] mx-auto mt-2 text-gray-300">Nothing found</span>
         )}
 
         {isLoading && (
@@ -93,11 +90,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
           </div>
         )}
         {!!data?.coins.length && (
-          <CoinResults
-            data={data}
-            setSearch={setSearch}
-            setIsOpen={setIsOpen}
-          />
+          <CoinResults data={data} setSearch={setSearch} setIsOpen={setIsOpen} />
         )}
         <div>{isError && <span>Failed</span>}</div>
       </section>

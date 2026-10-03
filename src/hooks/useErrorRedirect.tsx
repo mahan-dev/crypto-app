@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
-const defaultPath = "/";
+const defaultPath = '/';
 
 const redirectDelay = 1000;
 
@@ -13,7 +13,7 @@ export const useErrorRedirect = (isError: boolean) => {
 
     toast.error("something wen't wrong", {
       duration: redirectDelay,
-      position: "top-center",
+      position: 'top-center',
     });
 
     const timer = setTimeout(() => {

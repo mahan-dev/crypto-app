@@ -1,62 +1,53 @@
 @reference "tailwindcss";
 
 .coin__status {
-    @apply grid gap-3 overflow-x-auto;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
-    grid-template-rows: 140px;
+  @apply grid gap-3 overflow-x-auto;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+  grid-template-rows: 140px;
 }
 
-
 @media only screen and (max-width: 1090px) {
-    .coin__status {
-        grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
-
-    }
-
+  .coin__status {
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  }
 }
 
 @media only screen and (max-width: 690px) {
-    .coin__status {
-        grid-template-columns: repeat(3, minmax(165px, 1fr));
-        @apply overflow-x-auto pb-2;
-    }
-
+  .coin__status {
+    grid-template-columns: repeat(3, minmax(165px, 1fr));
+    @apply overflow-x-auto pb-2;
+  }
 }
 
-
 .chat {
-    @apply w-12 h-12 text-[1.1rem] flex justify-center items-center rounded-full bg-[#32333b] fixed left-3 bottom-7 cursor-pointer overflow-hidden z-20;
+  @apply w-12 h-12 text-[1.1rem] flex justify-center items-center rounded-full bg-[#32333b] fixed left-3 bottom-7 cursor-pointer overflow-hidden z-20;
 }
 
 .chat__chatIcon,
 .chat__closeIcon {
-    @apply absolute inset-0 flex justify-center items-center transition-all duration-300;
-
+  @apply absolute inset-0 flex justify-center items-center transition-all duration-300;
 }
 
 .chat__chatIcon {
-    @apply opacity-100 translate-x-0;
+  @apply opacity-100 translate-x-0;
 }
 
 .chat__closeIcon {
-    @apply opacity-0 translate-x-5;
+  @apply opacity-0 translate-x-5;
 }
 
-
 .open .chat__chatIcon {
-    @apply opacity-0 -translate-x-5
+  @apply opacity-0 -translate-x-5;
 }
 
 .open .chat__closeIcon {
-    @apply opacity-100 translate-x-0
+  @apply opacity-100 translate-x-0;
 }
 
-
-
 .favorite {
-    @apply w-12 h-12 overflow-hidden bg-[#32333b] fixed z-20 bottom-7 right-3 rounded-full;
+  @apply w-12 h-12 overflow-hidden bg-[#32333b] fixed z-20 bottom-7 right-3 rounded-full;
 }
 
 .favorite__icon {
-    @apply w-full h-full flex justify-center items-center;
+  @apply w-full h-full flex justify-center items-center;
 }

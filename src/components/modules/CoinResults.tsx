@@ -1,8 +1,8 @@
-import type { SearchCoinProps } from "@/services/coingecko";
-import { useState, type Dispatch, type SetStateAction } from "react";
-import { Link } from "react-router-dom";
+import type { SearchCoinProps } from '@/services/coingecko';
+import { useState, type Dispatch, type SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
 
-import styles from "@/components/modules/css/coinResult/route.module.css";
+import styles from '@/components/modules/css/coinResult/route.module.css';
 
 interface CoinResults {
   data: SearchCoinProps;
@@ -24,7 +24,7 @@ const CoinResults = ({ data, setIsOpen, setSearch }: CoinResults) => {
               key={item.id}
               onClick={() => {
                 setIsOpen(false);
-                setSearch("");
+                setSearch('');
               }}
             >
               <li key={item.id} className={styles.result__list}>
@@ -45,10 +45,14 @@ const CoinResults = ({ data, setIsOpen, setSearch }: CoinResults) => {
           );
         })}
         {!showMore && !!data.coins.length && (
-          <div className={styles.result__button} onClick={() => setShowMore(true)}>ShowMore</div>
+          <div className={styles.result__button} onClick={() => setShowMore(true)}>
+            ShowMore
+          </div>
         )}
         {showMore && !!data.coins.length && (
-          <div className={styles.result__button} onClick={() => setShowMore(false)}>Show less</div>
+          <div className={styles.result__button} onClick={() => setShowMore(false)}>
+            Show less
+          </div>
         )}
       </>
     </ul>

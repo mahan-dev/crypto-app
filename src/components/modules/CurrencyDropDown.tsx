@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,16 +6,16 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { type Dispatch, type SetStateAction } from "react";
-import type { CoinsProps } from "./CoinsList";
+} from '@/components/ui/dropdown-menu';
+import { type Dispatch, type SetStateAction } from 'react';
+import type { CoinsProps } from './CoinsList';
 
 interface CurrencyProps {
-  currency: CoinsProps["currency"];
-  setCurrency: Dispatch<SetStateAction<CoinsProps["currency"]>>;
+  currency: CoinsProps['currency'];
+  setCurrency: Dispatch<SetStateAction<CoinsProps['currency']>>;
 }
 const CurrencyDropDown = ({ currency, setCurrency }: CurrencyProps) => {
-  const selectHandler = (field: CoinsProps["currency"]) => {
+  const selectHandler = (field: CoinsProps['currency']) => {
     setCurrency((prev) => {
       if (prev === field) return prev;
       return field;
@@ -31,15 +31,15 @@ const CurrencyDropDown = ({ currency, setCurrency }: CurrencyProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup className="**:cursor-pointer">
-          <DropdownMenuItem onSelect={() => selectHandler("usd")}>
+          <DropdownMenuItem onSelect={() => selectHandler('usd')}>
             USD
             <DropdownMenuShortcut>💶 </DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => selectHandler("eur")}>
+          <DropdownMenuItem onSelect={() => selectHandler('eur')}>
             EUR
             <DropdownMenuShortcut>💶</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => selectHandler("gbp")}>
+          <DropdownMenuItem onSelect={() => selectHandler('gbp')}>
             GBP
             <DropdownMenuShortcut> 💷</DropdownMenuShortcut>
           </DropdownMenuItem>

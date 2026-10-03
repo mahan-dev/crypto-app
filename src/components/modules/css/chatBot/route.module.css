@@ -1,61 +1,60 @@
 @reference "tailwindcss";
 
 .chat {
-    @apply  flex flex-col gap-2 bg-[#171717] border border-zinc-800 rounded-lg w-full h-full ;
+  @apply flex flex-col gap-2 bg-[#171717] border border-zinc-800 rounded-lg w-full h-full;
 }
 
-
 .chat__header {
-    @apply w-full p-3 border-b border-b-gray-600;
+  @apply w-full p-3 border-b border-b-gray-600;
 }
 
 .chat__messages {
-    @apply flex flex-col gap-1.5 p-3 overflow-hidden overflow-y-auto ;
-    
+  @apply flex flex-col gap-1.5 p-3 overflow-hidden overflow-y-auto;
 }
 
 .messages__user {
-    span {
-        @apply text-[0.8rem] text-gray-300 text-left;
-    };
-    @apply flex flex-col  w-fit text-right break-all ml-auto px-2 py-1 bg-zinc-800 border border-zinc-700 rounded-md;;
+  span {
+    @apply text-[0.8rem] text-gray-300 text-left;
+  }
+  @apply flex flex-col  w-fit text-right break-all ml-auto px-2 py-1 bg-zinc-800 border border-zinc-700 rounded-md;
 }
 
-.chat__ai-response-success, .chat__ai-response-failed {
-    span {
-        @apply text-[0.8rem];
-    }
-    @apply flex flex-col rounded-md p-2;
+.chat__ai-response-success,
+.chat__ai-response-failed {
+  span {
+    @apply text-[0.8rem];
+  }
+  @apply flex flex-col rounded-md p-2;
 }
 
 .chat__ai-response-success {
-    @apply bg-blue-600;
+  @apply bg-blue-600;
 }
 
 .chat__loader {
-    @apply bg-blue-500 flex justify-center items-center mt-2  rounded-md w-[30%] h-8;
+  @apply bg-blue-500 flex justify-center items-center mt-2  rounded-md w-[30%] h-8;
 }
 
 .chat__ai-response-failed {
-    @apply w-fit bg-red-600 ;
+  @apply w-fit bg-red-600;
 }
 
 .chat__message {
-    @apply flex flex-col gap-1.5 items-center mt-auto bg-[#282828] mb-3 mx-3 p-3 rounded-md transition-all duration-300;
+  @apply flex flex-col gap-1.5 items-center mt-auto bg-[#282828] mb-3 mx-3 p-3 rounded-md transition-all duration-300;
 }
-
 
 .message__content {
-    @apply w-full h-22 px-1 outline-none  rounded-lg resize-none;
+  @apply w-full h-22 px-1 outline-none  rounded-lg resize-none;
 }
 
-.chat__send, .chat__send--disabled {
-    @apply flex self-end bg-blue-600 p-1.5 rounded-md cursor-pointer transition-all duration-200 ;
+.chat__send,
+.chat__send--disabled {
+  @apply flex self-end bg-blue-600 p-1.5 rounded-md cursor-pointer transition-all duration-200;
 }
 .chat__send {
-    @apply hover:opacity-50
+  @apply hover:opacity-50;
 }
 
-.chat__send--disabled{
-    @apply cursor-not-allowed bg-blue-600 opacity-30;
+.chat__send--disabled {
+  @apply cursor-not-allowed bg-blue-600 opacity-30;
 }

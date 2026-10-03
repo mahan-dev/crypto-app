@@ -1,17 +1,14 @@
-import { useWishList } from "@/hooks/useWishList";
-import styles from "@/components/templates/styles/favorite/route.module.css";
-import type { MouseEvent } from "react";
-import type { MarketType } from "@/types/marketTypes";
-import { removeHelper } from "@/helper/coinsList/removeHelper";
-import { symbolFormatter } from "@/helper/coinsList/formattedData";
+import { useWishList } from '@/hooks/useWishList';
+import styles from '@/components/templates/styles/favorite/route.module.css';
+import type { MouseEvent } from 'react';
+import type { MarketType } from '@/types/marketTypes';
+import { removeHelper } from '@/helper/coinsList/removeHelper';
+import { symbolFormatter } from '@/helper/coinsList/formattedData';
 
 const Favorite = () => {
   const { wishList, setWishList } = useWishList();
 
-  const removeHandler = (
-    e: MouseEvent<HTMLButtonElement>,
-    coin: MarketType["data"][number],
-  ) => {
+  const removeHandler = (e: MouseEvent<HTMLButtonElement>, coin: MarketType['data'][number]) => {
     removeHelper({ e, coin, wishList, setWishList });
   };
 
@@ -23,28 +20,18 @@ const Favorite = () => {
             <div className="flex flex-col w-full gap-3">
               <div className={styles.list__header}>
                 <span className="text-[1rem] ">{item.market_cap_rank}</span>
-                <span className="text-[0.8rem]">
-                  {symbolFormatter(item.symbol)}
-                </span>
+                <span className="text-[0.8rem]">{symbolFormatter(item.symbol)}</span>
               </div>
               <div className={styles.list__main}>
                 <div className="w-8 h-8 ">
-                  <img
-                    className="rounded-full"
-                    src={item.image}
-                    alt="coin-imgs"
-                  />
+                  <img className="rounded-full" src={item.image} alt="coin-imgs" />
                 </div>
-                <span className=" text-[0.8rem] text-gray-300">
-                  {item.name}
-                </span>
+                <span className=" text-[0.8rem] text-gray-300">{item.name}</span>
               </div>
             </div>
             <button
               className={styles.list__remove}
-              onClick={(e: MouseEvent<HTMLButtonElement>) =>
-                removeHandler(e, item)
-              }
+              onClick={(e: MouseEvent<HTMLButtonElement>) => removeHandler(e, item)}
             >
               -
             </button>

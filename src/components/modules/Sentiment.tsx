@@ -1,11 +1,11 @@
-import WinLossBar from "../elements/SentimentGraph";
-import type { CoinSentiment } from "@/types/coinTypes";
-import { VscDashboard } from "react-icons/vsc";
+import WinLossBar from '../elements/SentimentGraph';
+import type { CoinSentiment } from '@/types/coinTypes';
+import { VscDashboard } from 'react-icons/vsc';
 
-import styles from "@/components/templates/styles/coinDetails/route.module.css";
+import styles from '@/components/templates/styles/coinDetails/route.module.css';
 
 interface SentimentProps {
-  sentiment: CoinSentiment | "";
+  sentiment: CoinSentiment | '';
 }
 const Sentiment = ({ sentiment }: SentimentProps) => {
   return (
@@ -16,8 +16,8 @@ const Sentiment = ({ sentiment }: SentimentProps) => {
             <VscDashboard className="text-[1.3rem]" /> Community sentiment
           </span>
           <WinLossBar
-            sentimentUp={sentiment.sentiment_votes_up_percentage ?? "50"}
-            sentimentDown={sentiment.sentiment_votes_down_percentage ?? "50"}
+            sentimentUp={sentiment.sentiment_votes_up_percentage ?? '50'}
+            sentimentDown={sentiment.sentiment_votes_down_percentage ?? '50'}
           />
         </div>
       )}

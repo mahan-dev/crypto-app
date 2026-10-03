@@ -1,5 +1,5 @@
 @reference "tailwindcss";
 
 .header {
-    @apply flex items-center justify-between mt-2 bg-[#333333cf] rounded-md p-2
+  @apply flex items-center justify-between mt-2 bg-[#333333cf] rounded-md p-2;
 }

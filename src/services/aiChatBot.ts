@@ -1,6 +1,6 @@
-import type { MarketType } from "@/types/marketTypes";
-import { Groq } from "groq-sdk";
-import type { Dispatch, SetStateAction } from "react";
+import type { MarketType } from '@/types/marketTypes';
+import { Groq } from 'groq-sdk';
+import type { Dispatch, SetStateAction } from 'react';
 const groq = new Groq({
   apiKey: import.meta.env.VITE_GROQ_AI_API_KEY,
   dangerouslyAllowBrowser: true,
@@ -26,11 +26,10 @@ Rules:
 `;
 
 export const aiChatBot = async (
-  data: MarketType["data"],
+  data: MarketType['data'],
   question: string,
   setLoading: Dispatch<SetStateAction<boolean>>,
 ): Promise<string | null> => {
-
   const lowerQuestion = question.toLowerCase().trim();
 
   const finalData = data.find(
@@ -43,28 +42,25 @@ export const aiChatBot = async (
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         {
-          role: "user",
+          role: 'user',
           content: `${prompt}  User : ${question} cryptoData:${JSON.stringify(finalData) || []} `,
         },
       ],
-      model: "openai/gpt-oss-120b",
+      model: 'openai/gpt-oss-120b',
       temperature: 0.7,
       max_completion_tokens: 300,
       top_p: 1,
       stream: false,
       stop: null,
     });
-    
 
     const aiResponse = chatCompletion.choices[0].message.content;
 
     return aiResponse;
   } catch (error) {
-    console.log("something went wrong", error);
-    return "Failed";
+    console.log('something went wrong', error);
+    return 'Failed';
   } finally {
     setLoading(false);
   }
 };
-
-
