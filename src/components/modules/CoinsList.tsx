@@ -21,7 +21,7 @@ import {
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, useEffect, useMemo, useState } from 'react';
 import { coinHandler } from '@/helper/coinsList/coinHandler';
 import { formatPrice } from '@/helper/coinDetails/coinValueChecker';
 import type { SortField, SortOrder } from '@/types/coinsList/coinListTypes';
@@ -37,7 +37,8 @@ import { GrFavorite } from 'react-icons/gr';
 import { IoChatbubbleOutline } from 'react-icons/io5';
 
 import styles from '@/components/modules/css/coinsList/route.module.css';
-import ChatBot from '@/components/modules/ChatBot';
+
+const ChatBot = lazy(() => import('@/components/modules/ChatBot'));
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 
@@ -202,9 +203,9 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                     <span className="ml-2">{symbolFormatter(symbol)}</span>
                   </TableCell>
                   <TableCell>
-                    <div className="relative z-20 flex gap-3 items-center">
+                    <div className="relative z-20 flex gap-3 items-center max-lg:w-27.5 max-lg:ml-auto">
                       <img
-                        className="ml-auto"
+                        className="ml-auto max-lg:w-20"
                         src={percentage_24 > 0 ? chartUp : chartDown}
                         alt={'chart svg'}
                         width={100}

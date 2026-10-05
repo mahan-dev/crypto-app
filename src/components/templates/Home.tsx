@@ -4,7 +4,7 @@ import type { CoinsProps } from '@/components/modules/CoinsList';
 
 import { useQuery } from '@tanstack/react-query';
 import stylesBanner from '@/components/modules/css/coinsList/route.module.css';
-import Loader from '@/components/loader/Loader';
+// import CurrencyDropDown from '@/components/modules/CurrencyDropDown';
 
 const CurrencyDropDown = lazy(() => import('@/components/modules/CurrencyDropDown'));
 const CoinsList = lazy(() => import('@/components/modules/CoinsList'));
@@ -15,7 +15,10 @@ const AltCoinSeason = lazy(() => import('@/components/modules/AltCoinSeason'));
 const Cmc20Chart = lazy(() => import('@/components/modules/Cmc20Chart'));
 
 import 'react-loading-skeleton/dist/skeleton.css';
-import HeaderSkeleton from '../ui/reactSkeleton/skeleton';
+import HeaderSkeleton from '@/components/ui/reactSkeleton/skeleton';
+
+import TableSkeleton from '@/components/ui/reactSkeleton/tableSkeleton';
+import type { MarketType } from '@/types/marketTypes';
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -25,9 +28,9 @@ const Home = () => {
     queryKey: ['crypto', page, currency],
     queryFn: () => getMarketList(currency, page),
   });
-  console.log(data);
 
-  // const status = data && (data.data.status.error_code as DataStatus) === 429;
+  const { status } = (data as MarketType) ?? [];
+  const errorStatus = isError || status !== 'Success';
 
   return (
     <section>
@@ -45,11 +48,7 @@ const Home = () => {
       </div>
 
       {data?.status === 429 && <h1 className="w-fit mx-auto mt-12">Something went wrong</h1>}
-      {isLoading && (
-        <div className="w-full flex h-[80vh] justify-center items-center">
-          <Loader />
-        </div>
-      )}
+      {isLoading && <TableSkeleton />}
       {data && !!data.data.length && (
         <div className="mt-6">
           <CurrencyDropDown currency={currency} setCurrency={setCurrency} />
@@ -58,7 +57,7 @@ const Home = () => {
           <PaginationPage page={page} setPage={setPage} />
         </div>
       )}
-      {isError && <h2 className="w-full flex justify-center mt-6">Something wen't wrong</h2>}
+      {errorStatus && <h2 className="w-full flex justify-center mt-6">Something wen't wrong</h2>}
     </section>
   );
 };
