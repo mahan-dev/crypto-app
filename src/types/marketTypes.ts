@@ -1,5 +1,5 @@
 interface MarketType {
-  status: number;
+  status: number | string;
   data: {
     id: string;
     symbol: string;

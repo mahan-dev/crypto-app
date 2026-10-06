@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer';
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
-    <section className="w-full mx-auto px-4">
+    <section className="w-full max-w-500 mx-auto px-4">
       <Header />
       <section className="min-h-screen py-6">{children}</section>
       <Footer />

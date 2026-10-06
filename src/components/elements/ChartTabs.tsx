@@ -13,7 +13,7 @@ const ChartTabs = ({ setDays }: ChartProps) => {
       return;
     }
 
-    const formatted = +value as Days;
+    const formatted = Number(value) as Days;
 
     setDays(formatted);
   };

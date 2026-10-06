@@ -29,7 +29,7 @@ const FearAndGreed = () => {
       )}
       {isError && <h2 className="m-auto">Failed ... 😞</h2>}
 
-      {data && (
+      {data && !isError && (
         <>
           <div className={styles.gauge__content}>
             <GaugeComponent
