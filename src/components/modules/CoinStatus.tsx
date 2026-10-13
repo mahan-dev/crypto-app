@@ -14,7 +14,7 @@ interface CoinProps {
   data: MarketType['data'][number];
 }
 const CoinStatus = ({ coinSymbol, coinName, show, data }: CoinProps) => {
-  if (!data) return <h2>Something wen't wrong `CoinStatus`</h2>;
+  if (!data) return <h2>Something wen&apos;t wrong `CoinStatus`</h2>;
   return (
     <div className=" px-7">
       <div className={styles.left__header}>

@@ -30,7 +30,7 @@ const Home = () => {
   });
 
   const { status } = (data as MarketType) ?? [];
-  const errorStatus = isError || status !== 'Success';
+  const errorStatus = isError && status !== 'Success';
 
   return (
     <section>
@@ -57,7 +57,9 @@ const Home = () => {
           <PaginationPage page={page} setPage={setPage} />
         </div>
       )}
-      {errorStatus && <h2 className="w-full flex justify-center mt-6">Something wen't wrong</h2>}
+      {errorStatus && (
+        <h2 className="w-full flex justify-center mt-6">Something wen&apos;t wrong</h2>
+      )}
     </section>
   );
 };
