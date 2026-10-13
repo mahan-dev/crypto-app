@@ -16,6 +16,7 @@ const Cmc20Chart = lazy(() => import('@/components/modules/Cmc20Chart'));
 
 import 'react-loading-skeleton/dist/skeleton.css';
 import HeaderSkeleton from '../ui/reactSkeleton/skeleton';
+import type { MarketType } from '@/types/marketTypes';
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -26,8 +27,8 @@ const Home = () => {
     queryFn: () => getMarketList(currency, page),
   });
   console.log(data);
-
-  // const status = data && (data.data.status.error_code as DataStatus) === 429;
+  const { status } = (data as MarketType) ?? {};
+  const errorStatus = isError && (status !== 'Success' ? true : false);
 
   return (
     <section>
@@ -58,7 +59,7 @@ const Home = () => {
           <PaginationPage page={page} setPage={setPage} />
         </div>
       )}
-      {isError && <h2 className="w-full flex justify-center mt-6">Something wen't wrong</h2>}
+      {errorStatus && <h2 className="w-full flex justify-center mt-6">Something wen't wrong</h2>}
     </section>
   );
 };
