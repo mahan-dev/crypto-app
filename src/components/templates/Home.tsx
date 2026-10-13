@@ -4,7 +4,6 @@ import type { CoinsProps } from '@/components/modules/CoinsList';
 
 import { useQuery } from '@tanstack/react-query';
 import stylesBanner from '@/components/modules/css/coinsList/route.module.css';
-// import CurrencyDropDown from '@/components/modules/CurrencyDropDown';
 
 const CurrencyDropDown = lazy(() => import('@/components/modules/CurrencyDropDown'));
 const CoinsList = lazy(() => import('@/components/modules/CoinsList'));
