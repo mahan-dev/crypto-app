@@ -6,7 +6,7 @@ export const defaultOptions = {
     refetchOnMount: false,
     retry: false,
     staleTime: TEN_MINUTES,
-    // Must be >= persist maxAge so restored cache is not garbage-collected immediately.
+
     gcTime: TEN_MINUTES,
   },
 };

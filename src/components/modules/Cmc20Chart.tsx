@@ -42,7 +42,7 @@ const Cmc20Chart = ({ title }: CmcProps) => {
         </div>
       )}
       {isError && <h2 className="m-auto">Failed ... 😞</h2>}
-      {data && (
+      {data && !isError && (
         <>
           <CardHeader>{`$${splittedData}`}</CardHeader>
           <CardContent className="h-1">

@@ -16,10 +16,7 @@ interface CurrencyProps {
 }
 const CurrencyDropDown = ({ currency, setCurrency }: CurrencyProps) => {
   const selectHandler = (field: CoinsProps['currency']) => {
-    setCurrency((prev) => {
-      if (prev === field) return prev;
-      return field;
-    });
+    setCurrency(field);
   };
 
   return (
