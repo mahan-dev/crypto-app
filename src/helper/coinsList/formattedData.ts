@@ -2,8 +2,6 @@ import type { SortOrder, SortField } from '@/types/coinsList/coinListTypes';
 import type { MarketType } from '@/types/marketTypes';
 import { z } from 'zod';
 
-
-
 const DataPropsZod = z.object({
   data: z.object({
     market_caps: z.array(z.tuple([z.number(), z.number()])),
@@ -14,10 +12,12 @@ const DataPropsZod = z.object({
 
 export type DataProps = z.infer<typeof DataPropsZod>;
 
-export interface DataResponse {
-  date: string;
-  prices: number;
-}
+const DataResponseZod = z.object({
+  date: z.string(),
+  prices: z.number(),
+});
+
+export type DataResponse = z.infer<typeof DataResponseZod>;
 
 const priceFormatter = (price: number): string => {
   return (price / 1000000).toLocaleString(undefined, {
