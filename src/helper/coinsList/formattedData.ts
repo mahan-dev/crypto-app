@@ -3,6 +3,7 @@ import type { MarketType } from '@/types/marketTypes';
 import { z } from 'zod';
 
 
+
 const DataPropsZod = z.object({
   data: z.object({
     market_caps: z.array(z.tuple([z.number(), z.number()])),
@@ -11,7 +12,7 @@ const DataPropsZod = z.object({
   }),
 });
 
-type DataProps = z.infer<typeof DataPropsZod>;
+export type DataProps = z.infer<typeof DataPropsZod>;
 
 export interface DataResponse {
   date: string;
