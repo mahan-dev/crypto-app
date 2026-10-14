@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const marketSchema = z.object({
   status: z.union([z.number(), z.string()]),
+
   data: z.array(
     z.object({
       id: z.string(),
