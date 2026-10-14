@@ -1,13 +1,17 @@
 import type { SortOrder, SortField } from '@/types/coinsList/coinListTypes';
 import type { MarketType } from '@/types/marketTypes';
+import { z } from 'zod';
 
-export interface DataProps {
-  data: {
-    market_caps: [number, number][];
-    prices: [number, number][];
-    total_volumes: [number, number][];
-  };
-}
+
+const DataPropsZod = z.object({
+  data: z.object({
+    market_caps: z.array(z.tuple([z.number(), z.number()])),
+    prices: z.array(z.tuple([z.number(), z.number()])),
+    total_volumes: z.array(z.tuple([z.number(), z.number()])),
+  }),
+});
+
+type DataProps = z.infer<typeof DataPropsZod>;
 
 export interface DataResponse {
   date: string;
