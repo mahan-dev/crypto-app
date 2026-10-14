@@ -42,9 +42,11 @@ const ChatBot = lazy(() => import('@/components/modules/ChatBot'));
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5';
 
+import type { CurrencyType } from '@/schemas/zod/coinsList/route';
+
 export interface CoinsProps {
   data: MarketType['data'];
-  currency: 'usd' | 'eur' | 'gbp';
+  currency: CurrencyType;
 }
 
 const ChatButton = styled.div<{ $isOpen: boolean }>`
