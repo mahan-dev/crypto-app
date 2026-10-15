@@ -87,7 +87,14 @@ describe('status helper test', () => {
     const setSortField = jest.fn();
 
     statusHelperHandler('price', 'price', setSortOrder, setSortField);
-    expect(setSortOrder).toHaveBeenCalled();
+
+    expect(setSortOrder).toHaveBeenCalledTimes(1);
     expect(setSortField).not.toHaveBeenCalled();
+
+    const clickSort = setSortOrder.mock.calls[0][0];
+
+    expect(clickSort('default')).toBe('down');
+    expect(clickSort('down')).toBe('up');
+    expect(clickSort('up')).toBe('default');
   });
 });
