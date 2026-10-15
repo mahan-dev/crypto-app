@@ -8,14 +8,12 @@ import { statusHelperHandler } from '@/helper/coinsList/statusHandlerHelper';
 import type { MarketType } from '@/types/marketTypes';
 
 describe(' test currency', () => {
-  it('should check currency', () => {
-    expect(currencyHandler(123.23, 'usd')).toBe(`${currencyList['usd']}123`);
-  });
-  it('should check currency', () => {
-    expect(currencyHandler(123.23, 'gbp')).toBe(`${currencyList['gbp']}123`);
-  });
-  it('should check currency', () => {
-    expect(currencyHandler(123.23, 'eur')).toBe(`${currencyList['eur']}123`);
+  it.each([
+    ['usd', currencyList.usd],
+    ['eur', currencyList.eur],
+    ['gbp', currencyList.gbp],
+  ] as const)('should check Currency', (currency, symbol) => {
+    expect(currencyHandler(123.23, currency)).toBe(`${symbol}123`);
   });
 });
 
