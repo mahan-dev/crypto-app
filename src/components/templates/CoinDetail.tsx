@@ -1,4 +1,4 @@
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 
 import { useParams } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ import { useErrorRedirect } from '@/hooks/useErrorRedirect';
 
 const CoinChart = lazy(() => import('@/components/modules/Chart'));
 
-export type Coin = MarketType['data'][number]['symbol'];
+export type Coin = CoinSchema['symbol'];
 const CoinDetail = () => {
   const [chart, setChart] = useState<DataProps['data'] | null>(null);
   const [type, setType] = useState<TypesCoin>('prices');
@@ -33,9 +33,7 @@ const CoinDetail = () => {
     queryFn: async () => await allMarketLists(),
   });
 
-  const filterData = allCoins?.data.find(
-    (item) => item.id === coinId,
-  ) as MarketType['data'][number];
+  const filterData = allCoins?.find((item) => item.id === coinId) as CoinSchema;
 
   const { isLoading } = useQuery({
     queryKey: ['coin-details', coinId],

@@ -5,9 +5,8 @@ import {
   symbolFormatter,
 } from '@/helper/coinsList/formattedData';
 import { statusHelperHandler } from '@/helper/coinsList/statusHandlerHelper';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import { describe, it, expect, vitest } from 'vitest';
-
 
 describe(' test currency', () => {
   it.each([
@@ -66,7 +65,7 @@ const mockedData = [
     ath: 0,
     atl: 0,
   },
-] satisfies MarketType['data'];
+] satisfies CoinSchema[];
 
 describe('coinPriceSorting', () => {
   it('should sort ascending', () => {

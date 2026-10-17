@@ -16,19 +16,21 @@ const coinSchema = z.object({
   max_supply: z.number(),
   ath: z.number(),
   atl: z.number(),
-  status: z.number().optional,
+  status: z.number().optional(),
 });
 
 export const marketErrorSchema = z.object({
-  status: z.object({
-    error_code: z.number(),
-    message: z.string(),
-  }),
+  status: z
+    .object({
+      error_code: z.number(),
+      message: z.string(),
+    })
+    .optional(),
 });
 
 export const marketSchema = z.object({
   status: z.union([z.string(), z.number()]),
-  message: z.string().optional(),
+  message: z.string(),
   data: z.union([z.array(coinSchema), marketErrorSchema]),
 });
 

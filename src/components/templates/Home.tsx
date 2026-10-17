@@ -32,7 +32,7 @@ const Home = () => {
   const errorStatus = isError && status !== 'Success';
 
   const dataType = Array.isArray(data?.data) && data.data.length > 0;
-
+  const coins = Array.isArray(data?.data) ? data.data : [];
   return (
     <section>
       <div className={stylesBanner.coin__status}>
@@ -56,7 +56,7 @@ const Home = () => {
         <div className="mt-6">
           <CurrencyDropDown currency={currency} setCurrency={setCurrency} />
 
-          <CoinsList data={data.data} currency={currency} />
+          <CoinsList data={coins} currency={currency} />
           <PaginationPage page={page} setPage={setPage} />
         </div>
       ) : (

@@ -1,6 +1,6 @@
 import type { Message } from '@/components/modules/ChatBot';
 import { aiChatBot } from '@/services/aiChatBot';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import type { Dispatch, SetStateAction } from 'react';
 
 interface ChatProps {
@@ -8,7 +8,7 @@ interface ChatProps {
   setLoading: Dispatch<SetStateAction<boolean>>;
   setMessages: Dispatch<SetStateAction<Message[]>>;
   setMessage: Dispatch<SetStateAction<string>>;
-  data: MarketType['data'];
+  data: CoinSchema[];
 }
 
 export const ChatMessageHandler = async ({

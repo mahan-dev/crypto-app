@@ -53,10 +53,10 @@ const getMarketList = async (currency: string = 'usd', page: number = 1): Promis
   };
 };
 
-const allMarketLists = async (currency: string = 'usd'): Promise<MarketType> => {
-  const response = await apiConfig(`${BASE_URL}/coins/markets?vs_currency=${currency}`);
+const allMarketLists = async (currency: string = 'usd'): Promise<CoinSchema[]> => {
+  const { data } = await apiConfig(`${BASE_URL}/coins/markets?vs_currency=${currency}`);
 
-  return response;
+  return data;
 };
 
 const coinChart = async (
