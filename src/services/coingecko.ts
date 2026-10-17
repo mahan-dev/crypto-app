@@ -2,7 +2,7 @@ import type { Days } from '@/components/modules/Chart';
 import { apiConfig } from '@/configs/apiConfigs';
 import { type DataProps } from '@/helper/coinsList/formattedData';
 import type { CoinSentiment } from '@/types/coinTypes';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema, MarketType } from '@/types/marketTypes';
 import axios, { isAxiosError } from 'axios';
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -23,6 +23,12 @@ const getMarketList = async (currency: string = 'usd', page: number = 1): Promis
       },
     });
 
+    const rateLimit = response.data?.data?.status;
+
+    if (!Array.isArray(response.data.data) && (rateLimit.error_code as number) === 429) {
+      toast.error('too many requests', positionToast);
+    }
+
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
@@ -36,7 +42,7 @@ const getMarketList = async (currency: string = 'usd', page: number = 1): Promis
       }
       toast.error(error.message, positionToast);
       return {
-        status,
+        status: 'Failed',
         data: [],
       };
     }
@@ -48,7 +54,7 @@ const getMarketList = async (currency: string = 'usd', page: number = 1): Promis
 };
 
 const allMarketLists = async (currency: string = 'usd'): Promise<MarketType> => {
-  const response: MarketType = await apiConfig(`${BASE_URL}/coins/markets?vs_currency=${currency}`);
+  const response = await apiConfig(`${BASE_URL}/coins/markets?vs_currency=${currency}`);
 
   return response;
 };
@@ -73,7 +79,7 @@ const coinChart = async (
   }
 };
 
-type CoinType = MarketType['data'][number]['id'];
+type CoinType = CoinSchema['id'];
 const coinSentiment = async (coin: CoinType): Promise<CoinSentiment> => {
   const { data } = await apiConfig<CoinSentiment>(`https://api.coingecko.com/api/v3/coins/${coin}`);
   return data;
@@ -109,7 +115,7 @@ const fearAndGreedApi = async () => {
   const { data } = await axios('https://api.alternative.me/fng/');
   return data;
 };
-const altcoinSeasonApi = async () => {
+const altCoinSeasonApi = async () => {
   const { data } = (await apiConfig('/altcoin-season')).data;
 
   const result = data.data.altcoin_index || null;
@@ -160,7 +166,7 @@ export {
   coinWebsocket,
   coinSentiment,
   fearAndGreedApi,
-  altcoinSeasonApi,
+  altCoinSeasonApi,
   cmc20TokenIndexApi,
   marketCapChartApi,
   searchCoinApi,

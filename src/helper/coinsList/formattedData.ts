@@ -1,8 +1,8 @@
 import type { SortOrder, SortField } from '@/types/coinsList/coinListTypes';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import { z } from 'zod';
 
-const DataPropsZod = z.object({
+export const DataPropsZod = z.object({
   data: z.object({
     market_caps: z.array(z.tuple([z.number(), z.number()])),
     prices: z.array(z.tuple([z.number(), z.number()])),
@@ -12,7 +12,7 @@ const DataPropsZod = z.object({
 
 export type DataProps = z.infer<typeof DataPropsZod>;
 
-const DataResponseZod = z.object({
+export const DataResponseZod = z.object({
   date: z.string(),
   prices: z.number(),
 });
@@ -46,15 +46,11 @@ const convertedData = (
   }));
 };
 
-const coinPairHandler = (coin: MarketType['data'][number]['id']) => {
+const coinPairHandler = (coin: CoinSchema['id']) => {
   return coin === 'usdt' ? `${coin}usd` : `${coin}usdt`;
 };
 
-const coinPriceSorting = (
-  data: MarketType['data'],
-  priceStatus: SortOrder,
-  sortField: SortField,
-) => {
+const coinPriceSorting = (data: CoinSchema[], priceStatus: SortOrder, sortField: SortField) => {
   const sorted = [...data];
 
   if (sortField === 'price') {

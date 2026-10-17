@@ -6,6 +6,8 @@ import {
 } from '@/helper/coinsList/formattedData';
 import { statusHelperHandler } from '@/helper/coinsList/statusHandlerHelper';
 import type { MarketType } from '@/types/marketTypes';
+import { describe, it, expect, vitest } from 'vitest';
+
 
 describe(' test currency', () => {
   it.each([
@@ -72,17 +74,28 @@ describe('coinPriceSorting', () => {
     expect(result[0].id).toBe('ethereum');
     expect(result[1].id).toBe('bitcoin');
   });
+
   it('should sort descending', () => {
     const result = coinPriceSorting(mockedData, 'down', 'price');
     expect(result[0].id).toBe('bitcoin');
     expect(result[1].id).toBe('ethereum');
   });
+
+  // it('returns the original order for an unsupported sort field', () => {
+  //   const result = coinPriceSorting(
+  //     mockedData,
+  //     'down',
+  //     'unknown' as SortField,
+  //   );
+
+  //   expect(result).toEqual(mockedData);
+  // });
 });
 
 describe('status helper test', () => {
   it('should test the status helper', () => {
-    const setSortOrder = jest.fn();
-    const setSortField = jest.fn();
+    const setSortOrder = vitest.fn();
+    const setSortField = vitest.fn();
 
     statusHelperHandler('price', 'price', setSortOrder, setSortField);
 

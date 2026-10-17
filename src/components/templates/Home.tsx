@@ -17,7 +17,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import HeaderSkeleton from '@/components/ui/reactSkeleton/skeleton';
 
 import TableSkeleton from '@/components/ui/reactSkeleton/tableSkeleton';
-import type { MarketType } from '@/types/marketTypes';
+import type { MarketError, MarketType } from '@/types/marketTypes';
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -31,6 +31,9 @@ const Home = () => {
   const { status } = (data as MarketType) ?? [];
   const errorStatus = isError && status !== 'Success';
 
+  const dataType = Array.isArray(data?.data) && data.data.length > 0;
+
+  console.log(data);
   return (
     <section>
       <div className={stylesBanner.coin__status}>
@@ -45,16 +48,20 @@ const Home = () => {
           <Cmc20Chart />
         </Suspense>
       </div>
+      {!dataType && (data?.data as MarketError)?.status?.error_code === 429 && (
+        <h2 className="w-full flex justify-center mt-6">Something wen&apos;t wrong</h2>
+      )}
 
-      {data?.status === 429 && <h1 className="w-fit mx-auto mt-12">Something went wrong</h1>}
       {isLoading && <TableSkeleton />}
-      {data && !!data.data.length && (
+      {dataType ? (
         <div className="mt-6">
           <CurrencyDropDown currency={currency} setCurrency={setCurrency} />
 
           <CoinsList data={data.data} currency={currency} />
           <PaginationPage page={page} setPage={setPage} />
         </div>
+      ) : (
+        ''
       )}
       {errorStatus && (
         <h2 className="w-full flex justify-center mt-6">Something wen&apos;t wrong</h2>

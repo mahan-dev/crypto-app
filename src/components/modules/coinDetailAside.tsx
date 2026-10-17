@@ -16,7 +16,6 @@ interface CoinAsideProps {
 const CoinDetailAside = ({ CachedTypeCoin, coinSymbol, coinName }: CoinAsideProps) => {
   const [show] = useState(() => document.body.offsetWidth > 1111);
 
-  console.log(CachedTypeCoin);
   return (
     <div className={styles.container__left}>
       <div className="max-[1110px]:hidden min-[1111px]:visible">

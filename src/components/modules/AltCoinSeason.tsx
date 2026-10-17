@@ -1,14 +1,14 @@
 import { GiPlainCircle } from 'react-icons/gi';
 
 import styles from '@/components/modules/css/AltCoinSeason/route.module.css';
-import { altcoinSeasonApi } from '@/services/coingecko';
+import { altCoinSeasonApi } from '@/services/coingecko';
 import { useQuery } from '@tanstack/react-query';
 import Loader from '@/components/loader/Loader';
 
 const AltCoinSeason = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['altcoinIndex'],
-    queryFn: altcoinSeasonApi,
+    queryFn: altCoinSeasonApi,
   });
 
   return (
