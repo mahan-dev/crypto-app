@@ -1,8 +1,8 @@
 import { ValueChecker } from '@/helper/coinDetails/coinValueChecker';
 
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 
-const coinItems = (CachedTypeCoin: MarketType['data'][number]) => [
+const coinItems = (CachedTypeCoin: CoinSchema) => [
   {
     label: 'Market cap',
     value: ValueChecker(CachedTypeCoin['market_cap']),
