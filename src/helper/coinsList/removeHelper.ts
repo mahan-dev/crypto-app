@@ -1,12 +1,12 @@
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import type { Dispatch, SetStateAction } from 'react';
 import type React from 'react';
 
 interface RemoveProps {
   e: React.MouseEvent<SVGElement | HTMLButtonElement>;
-  coin: MarketType['data'][number];
-  wishList: MarketType['data'];
-  setWishList: Dispatch<SetStateAction<MarketType['data']>>;
+  coin: CoinSchema;
+  wishList: CoinSchema[];
+  setWishList: Dispatch<SetStateAction<CoinSchema[]>>;
 }
 
 const removeHelper = ({ e, coin, wishList, setWishList }: RemoveProps) => {

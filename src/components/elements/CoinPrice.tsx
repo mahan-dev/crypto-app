@@ -1,10 +1,10 @@
 import { coinPairHandler } from '@/helper/coinsList/formattedData';
 
 import { coinWebsocket } from '@/services/coingecko';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 
 import { useEffect, useState } from 'react';
-type Coin = MarketType['data'][number]['symbol'];
+type Coin = CoinSchema['id'];
 
 interface CoinProps {
   coin: Coin;

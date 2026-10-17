@@ -33,7 +33,6 @@ const Home = () => {
 
   const dataType = Array.isArray(data?.data) && data.data.length > 0;
 
-  console.log(data);
   return (
     <section>
       <div className={stylesBanner.coin__status}>

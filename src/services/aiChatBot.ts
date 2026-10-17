@@ -1,4 +1,4 @@
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import { Groq } from 'groq-sdk';
 import type { Dispatch, SetStateAction } from 'react';
 const groq = new Groq({
@@ -26,7 +26,7 @@ Rules:
 `;
 
 export const aiChatBot = async (
-  data: MarketType['data'],
+  data: CoinSchema[],
   question: string,
   setLoading: Dispatch<SetStateAction<boolean>>,
 ): Promise<string | null> => {

@@ -1,4 +1,4 @@
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import {
   Table,
   TableBody,
@@ -45,7 +45,7 @@ import { IoClose } from 'react-icons/io5';
 import type { CurrencyType } from '@/schemas/zod/coinsList/route';
 
 export interface CoinsProps {
-  data: MarketType['data'];
+  data: CoinSchema[];
   currency: CurrencyType;
 }
 
@@ -78,7 +78,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   const navigate = useNavigate();
 
-  const coinClickHandler = (id: MarketType['data'][number]['id']) => {
+  const coinClickHandler = (id: CoinSchema['id']) => {
     coinHandler(data, id, navigate);
   };
 
@@ -89,12 +89,12 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
 
   const { wishList, setWishList } = useWishList();
 
-  const wishListHandler = (e: React.MouseEvent<SVGElement>, item: MarketType['data'][number]) => {
+  const wishListHandler = (e: React.MouseEvent<SVGElement>, item: CoinSchema) => {
     e.stopPropagation();
     setWishList((prev) => wishListHelper(prev, item));
   };
 
-  const removeHandler = (e: React.MouseEvent<SVGElement>, coin: MarketType['data'][number]) => {
+  const removeHandler = (e: React.MouseEvent<SVGElement>, coin: CoinSchema) => {
     removeHelper({ e, coin, wishList, setWishList });
   };
 
