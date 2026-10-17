@@ -5,10 +5,10 @@ import CoinStatus from './CoinStatus';
 import type { Coin } from './Chart';
 import { formatPrice, ValueChecker } from '@/helper/coinDetails/coinValueChecker';
 
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 
 interface CoinAsideProps {
-  CachedTypeCoin: MarketType['data'][number];
+  CachedTypeCoin: CoinSchema;
   coinSymbol: Coin;
   coinName: string;
 }

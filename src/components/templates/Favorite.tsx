@@ -1,14 +1,14 @@
 import { useWishList } from '@/hooks/useWishList';
 import styles from '@/components/templates/styles/favorite/route.module.css';
 import type { MouseEvent } from 'react';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import { removeHelper } from '@/helper/coinsList/removeHelper';
 import { symbolFormatter } from '@/helper/coinsList/formattedData';
 
 const Favorite = () => {
   const { wishList, setWishList } = useWishList();
 
-  const removeHandler = (e: MouseEvent<HTMLButtonElement>, coin: MarketType['data'][number]) => {
+  const removeHandler = (e: MouseEvent<HTMLButtonElement>, coin: CoinSchema) => {
     removeHelper({ e, coin, wishList, setWishList });
   };
 

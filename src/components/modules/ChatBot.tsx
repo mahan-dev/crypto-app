@@ -2,14 +2,14 @@ import { useState, type ChangeEvent, type KeyboardEvent } from 'react';
 import { IoSend } from 'react-icons/io5';
 import styles from '@/components/modules/css/chatBot/route.module.css';
 
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import Loader from '@/components/loader/Loader';
 import { ChatMessageHandler } from '@/helper/chatBot/ChatMessageHandler';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { ChatBotMessage } from '@/constants/ChatBot/ChatBotConstant';
 interface ChatBotProps {
-  data: MarketType['data'];
+  data: CoinSchema[];
 }
 
 export type Message = {

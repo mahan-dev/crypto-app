@@ -13,7 +13,7 @@ import { convertedData, type DataProps } from '@/helper/coinsList/formattedData'
 
 import { Button } from '@/components/ui/button';
 import styles from '@/components/modules/css/chart/route.module.css';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 
 import { coinChart } from '@/services/coingecko';
 
@@ -30,18 +30,18 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface CoinProps {
-  coinSymbol: MarketType['data'][number]['symbol'];
-  coinName: MarketType['data'][number]['name'];
+  coinSymbol: CoinSchema['symbol'];
+  coinName: CoinSchema['name'];
   chart: DataProps['data'] | null;
   setChart: Dispatch<SetStateAction<DataProps['data'] | null>>;
   type: TypesCoin;
   setType: Dispatch<SetStateAction<TypesCoin>>;
-  coin: MarketType['data'][number]['name'];
+  coin: CoinSchema['name'];
   coinId: string;
-  filteredData: MarketType['data'][number];
+  filteredData: CoinSchema;
 }
 
-export type Coin = MarketType['data'][number]['symbol'];
+export type Coin = CoinSchema['symbol'];
 export type Days = 1 | 7 | 30 | 90 | 365;
 
 const CoinChart = ({

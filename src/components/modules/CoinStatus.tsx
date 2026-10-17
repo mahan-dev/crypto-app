@@ -2,7 +2,7 @@ import styles from '@/components/modules/css/coinStatus/route.module.css';
 import { ValueChecker } from '@/helper/coinDetails/coinValueChecker';
 import type { Coin } from './Chart';
 
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 
 import CoinPrice from '@/components/elements/CoinPrice';
 import { coinTitleHandler } from '@/helper/coinStatus/coinStatusHelper';
@@ -11,7 +11,7 @@ interface CoinProps {
   coinSymbol: Coin;
   coinName: string;
   show: boolean;
-  data: MarketType['data'][number];
+  data: CoinSchema;
 }
 const CoinStatus = ({ coinSymbol, coinName, show, data }: CoinProps) => {
   if (!data) return <h2>Something wen&apos;t wrong `CoinStatus`</h2>;

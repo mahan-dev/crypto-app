@@ -1,11 +1,11 @@
 import { coinChart, coinSentiment } from '@/services/coingecko';
-import type { MarketType } from '@/types/marketTypes';
+import type { CoinSchema } from '@/types/marketTypes';
 import type { Dispatch, SetStateAction } from 'react';
 import type { DataProps } from '../coinsList/formattedData';
 import type { CoinSentiment } from '@/types/coinTypes';
 
 interface FetcherProps {
-  CachedTypeCoin: MarketType['data'][number];
+  CachedTypeCoin: CoinSchema;
   setChart: Dispatch<SetStateAction<DataProps['data'] | null>>;
   setSentiment: Dispatch<SetStateAction<CoinSentiment | ''>>;
 }

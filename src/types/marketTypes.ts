@@ -30,7 +30,7 @@ export const marketErrorSchema = z.object({
 
 export const marketSchema = z.object({
   status: z.union([z.string(), z.number()]),
-  message: z.string(),
+  message: z.string().optional(),
   data: z.union([z.array(coinSchema), marketErrorSchema]),
 });
 

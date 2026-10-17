@@ -23,11 +23,11 @@ const getMarketList = async (currency: string = 'usd', page: number = 1): Promis
       },
     });
 
-    const rateLimit = response.data?.data?.status;
+    // const rateLimit = response.data?.data?.status;
 
-    if (!Array.isArray(response.data.data) && (rateLimit.error_code as number) === 429) {
-      toast.error('too many requests', positionToast);
-    }
+    // if (!Array.isArray(response.data.data) && (rateLimit.error_code as number) === 429) {
+    //   toast.error('too many requests', positionToast);
+    // }
 
     return response.data;
   } catch (error) {
