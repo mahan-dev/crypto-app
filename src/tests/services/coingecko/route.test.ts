@@ -1,5 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
-import { allMarketLists, coinChart, getMarketList } from '@/services/coingecko';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { allMarketLists, coinChart, coinWebsocket, getMarketList } from '@/services/coingecko';
 import { marketSchema, coinSchema } from '@/types/marketTypes';
 import { z } from 'zod';
 import { CoinInfo } from '@/helper/coinsList/formattedData';
@@ -33,19 +33,51 @@ describe('testing api result', () => {
 
   // ? coinSentiment
 
-  const mockSentiment = {
-    sentiment_votes_up_percentage: 42,
-    sentiment_votes_down_percentage: 90,
-  };
-
-  const coinSentiment = vi.fn().mockResolvedValue(mockSentiment);
-
   it("test's coinSentiment api", async () => {
+    const mockSentiment = {
+      sentiment_votes_up_percentage: 42,
+      sentiment_votes_down_percentage: 90,
+    };
+
+    const coinSentiment = vi.fn().mockResolvedValue(mockSentiment);
+
     const res = await coinSentiment();
-    // expect(res).toHaveBeenCalled();
+
     expect(res).toEqual(mockSentiment);
     expect(coinSentiment).toHaveBeenCalledOnce();
     expect(coinSentiment).toHaveReturned();
-    // expect(coinSentiment).instanceof({});
   });
-});
+
+  describe('coinWebsocket', () => {
+    afterEach(() => {
+      vi.unstubAllGlobals();
+      vi.restoreAllMocks();
+    });
+      
+        it('should create a WebSocket with the correct URL', () => {
+          const mockSocket = {
+            onopen: null,
+            onmessage: null,
+            onerror: null,
+            onclose: null,
+          };
+
+          const mockWebSocket = vi.fn(function () {
+            return mockSocket;
+          });
+
+          vi.stubGlobal('WebSocket', mockWebSocket);
+
+          const setPrice = vi.fn();
+
+          coinWebsocket('btcusdt', setPrice);
+
+          expect(mockWebSocket).toHaveBeenCalledOnce();
+          expect(mockWebSocket).toHaveBeenCalledWith(
+            'wss://fstream.binance.com/market/ws/btcusdt@aggTrade',
+          );
+        });
+  }  );
+    
+  });
+
