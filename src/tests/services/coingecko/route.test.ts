@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { allMarketLists, coinChart, getMarketList } from '@/services/coingecko';
 import { marketSchema, coinSchema } from '@/types/marketTypes';
 import { z } from 'zod';
@@ -29,5 +29,23 @@ describe('testing api result', () => {
     expect(Array.isArray(res)).toBe(false);
 
     expect(() => CoinInfo.parse(res)).not.toThrow();
+  });
+
+  // ? coinSentiment
+
+  const mockSentiment = {
+    sentiment_votes_up_percentage: 42,
+    sentiment_votes_down_percentage: 90,
+  };
+
+  const coinSentiment = vi.fn().mockResolvedValue(mockSentiment);
+
+  it("test's coinSentiment api", async () => {
+    const res = await coinSentiment();
+    // expect(res).toHaveBeenCalled();
+    expect(res).toEqual(mockSentiment);
+    expect(coinSentiment).toHaveBeenCalledOnce();
+    expect(coinSentiment).toHaveReturned();
+    // expect(coinSentiment).instanceof({});
   });
 });
