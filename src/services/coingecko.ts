@@ -54,7 +54,9 @@ const getMarketList = async (currency: string = 'usd', page: number = 1): Promis
 };
 
 const allMarketLists = async (currency: string = 'usd'): Promise<CoinSchema[]> => {
-  const { data } = await apiConfig(`${BASE_URL}/coins/markets?vs_currency=${currency}`);
+  const { data } = await apiConfig<CoinSchema[]>(
+    `${BASE_URL}/coins/markets?vs_currency=${currency}`,
+  );
 
   return data;
 };

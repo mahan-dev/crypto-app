@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const coinSchema = z.object({
+export const coinSchema = z.object({
   id: z.string(),
   symbol: z.string(),
   name: z.string(),
@@ -13,7 +13,7 @@ const coinSchema = z.object({
   fully_diluted_valuation: z.number(),
   total_volume: z.number(),
   total_supply: z.number(),
-  max_supply: z.number(),
+  max_supply: z.number().nullable(),
   ath: z.number(),
   atl: z.number(),
   status: z.number().optional(),
