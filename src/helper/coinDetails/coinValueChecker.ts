@@ -3,11 +3,13 @@ const B = 1000000000;
 const M = 1000000;
 const K = 10000;
 
-const ValueChecker = (value: number) => {
-  return value ?? 'null';
+const ValueChecker = (value: number | null) => {
+  return value === null ? 'null' : value.toFixed(2);
 };
 
-const formatPrice = (value: number) => {
+const formatPrice = (value: number | null) => {
+  if (value === null) return 'N/A';
+
   const formattedPart = Math.trunc(value);
 
   if (formattedPart) {

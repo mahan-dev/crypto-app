@@ -36,7 +36,7 @@ const CoinDetailAside = ({ CachedTypeCoin, coinSymbol, coinName }: CoinAsideProp
 
           <div className={styles.grouped__item}>
             <span className={styles.item__title}>Vol/Mkt Cap (24h)</span>
-            {`${ValueChecker(CachedTypeCoin['market_cap_change_percentage_24h']).toFixed(2)} %`}
+            {`${ValueChecker(CachedTypeCoin['market_cap_change_percentage_24h'])} %`}
           </div>
         </div>
 
@@ -54,7 +54,7 @@ const CoinDetailAside = ({ CachedTypeCoin, coinSymbol, coinName }: CoinAsideProp
           <div className={styles.grouped__item}>
             <span className={styles.item__title}>Max supply</span>
 
-            {formatPrice(CachedTypeCoin['max_supply'])}
+            {formatPrice(CachedTypeCoin['max_supply'] )}
           </div>
         </div>
 
