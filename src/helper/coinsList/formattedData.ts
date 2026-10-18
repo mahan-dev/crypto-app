@@ -9,8 +9,15 @@ export const DataPropsZod = z.object({
     total_volumes: z.array(z.tuple([z.number(), z.number()])),
   }),
 });
-
 export type DataProps = z.infer<typeof DataPropsZod>;
+
+export const CoinInfo = z.object({
+  market_caps: z.array(z.tuple([z.number(), z.number()])),
+  prices: z.array(z.tuple([z.number(), z.number()])),
+  total_volumes: z.array(z.tuple([z.number(), z.number()])),
+});
+
+export type CoinInfoZod = z.infer<typeof CoinInfo>;
 
 export const DataResponseZod = z.object({
   date: z.string(),
