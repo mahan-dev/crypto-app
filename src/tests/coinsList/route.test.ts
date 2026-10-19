@@ -79,16 +79,6 @@ describe('coinPriceSorting', () => {
     expect(result[0].id).toBe('bitcoin');
     expect(result[1].id).toBe('ethereum');
   });
-
-  // it('returns the original order for an unsupported sort field', () => {
-  //   const result = coinPriceSorting(
-  //     mockedData,
-  //     'down',
-  //     'unknown' as SortField,
-  //   );
-
-  //   expect(result).toEqual(mockedData);
-  // });
 });
 
 describe('status helper test', () => {

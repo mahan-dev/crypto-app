@@ -4,7 +4,7 @@ const M = 1000000;
 const K = 10000;
 
 const ValueChecker = (value: number | null) => {
-  return value === null ? 'null' : value.toFixed(2);
+  return value === null ? 'null' : value;
 };
 
 const formatPrice = (value: number | null) => {
