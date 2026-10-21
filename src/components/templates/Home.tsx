@@ -53,7 +53,7 @@ const Home = () => {
 
       {isLoading && <TableSkeleton />}
       {dataType ? (
-        <div className="mt-6">
+        <div className="mt-6 relative z-1">
           <CurrencyDropDown currency={currency} setCurrency={setCurrency} />
 
           <CoinsList data={coins} currency={currency} />
