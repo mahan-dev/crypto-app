@@ -5,6 +5,7 @@ import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
+  base: '/crypto-app/',
   plugins: [
     react(),
     visualizer({
