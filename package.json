@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
+    "deploy": "gh-pages -d dist",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
