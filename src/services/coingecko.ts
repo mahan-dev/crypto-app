@@ -150,11 +150,12 @@ export interface SearchCoinProps {
   }[];
 }
 
-const searchCoinApi = async (coin: string): Promise<SearchCoinProps> => {
+const searchCoinApi = async (coin: string, signal?: AbortSignal): Promise<SearchCoinProps> => {
   const { data } = await apiConfig(`/search-query`, {
     params: {
       coin,
     },
+    signal
   });
 
   const dataType: SearchCoinProps = data.data;

@@ -37,7 +37,7 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ['searchCoin', debouncedSearch],
-    queryFn: async () => await searchCoinApi(debouncedSearch),
+    queryFn: async ({ signal }) => await searchCoinApi(debouncedSearch, signal),
     enabled: !!debouncedSearch,
   });
 
