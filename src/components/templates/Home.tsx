@@ -1,5 +1,5 @@
 import { getMarketList } from '@/services/coingecko';
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import type { CoinsProps } from '@/components/modules/CoinsList';
 
 import { useQuery } from '@tanstack/react-query';
@@ -18,6 +18,7 @@ import HeaderSkeleton from '@/components/ui/reactSkeleton/skeleton';
 
 import TableSkeleton from '@/components/ui/reactSkeleton/tableSkeleton';
 import type { MarketError, MarketType } from '@/types/marketTypes';
+import { toast, Toaster } from 'sonner';
 
 const Home = () => {
   const [page, setPage] = useState(1);
@@ -33,6 +34,10 @@ const Home = () => {
 
   const dataType = Array.isArray(data?.data) && data.data.length > 0;
   const coins = Array.isArray(data?.data) ? data.data : [];
+
+  useEffect(() => {
+    toast.warning('Ai chat may not accessible due to free api', { position: 'top-right' });
+  }, []);
   return (
     <section>
       <div className={stylesBanner.coin__status}>
@@ -65,6 +70,7 @@ const Home = () => {
       {errorStatus && (
         <h2 className="w-full flex justify-center mt-6">Something wen&apos;t wrong</h2>
       )}
+      <Toaster />
     </section>
   );
 };

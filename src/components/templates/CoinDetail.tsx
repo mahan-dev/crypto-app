@@ -35,21 +35,24 @@ const CoinDetail = () => {
 
   const filterData = allCoins?.find((item) => item.id === coinId) as CoinSchema;
 
-  const { isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['coin-details', coinId],
     queryFn: async () => {
       const [chartData, sentimentData] = await Promise.all([
-        coinChart(coinId ?? ''),
-        coinSentiment(coinId ?? ''),
+        coinChart(coinId!),
+        coinSentiment(coinId!),
       ]);
       setChart(chartData ?? null);
-      setSentiment(sentimentData ?? null);
+      setSentiment(sentimentData ?? '');
       return {
         chartData,
-        sentiment,
+        sentimentData,
       };
     },
   });
+  const currentChart = chart ?? data?.chartData ?? null;
+  // const chart = data?.chartData ?? null;
+  // const sentiment = data?.sentimentData ?? null;
 
   useErrorRedirect(isError);
 
@@ -71,9 +74,8 @@ const CoinDetail = () => {
         {!isLoading && !!filterData && (
           <CoinChart
             coinSymbol={filterData.symbol}
-            coinName={filterData.name}
             coin={filterData.name ?? ''}
-            chart={chart}
+            chart={currentChart}
             setChart={setChart}
             type={type}
             setType={setType}

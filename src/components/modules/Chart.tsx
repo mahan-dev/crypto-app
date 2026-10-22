@@ -31,7 +31,6 @@ const chartConfig = {
 
 interface CoinProps {
   coinSymbol: CoinSchema['symbol'];
-  coinName: CoinSchema['name'];
   chart: DataProps['data'] | null;
   setChart: Dispatch<SetStateAction<DataProps['data'] | null>>;
   type: TypesCoin;
@@ -50,7 +49,7 @@ const CoinChart = ({
   setType,
   setChart,
   coinSymbol,
-  coinName,
+  coin,
   coinId,
   filteredData,
 }: CoinProps) => {
@@ -82,7 +81,7 @@ const CoinChart = ({
           <div className="max-[1110px]:visible min-[1111px]:hidden">
             <CoinStatus
               coinSymbol={coinSymbol}
-              coinName={coinName}
+              coinName={coin}
               show={show}
               data={filteredData}
             />
