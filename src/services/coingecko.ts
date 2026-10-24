@@ -7,6 +7,7 @@ import axios, { isAxiosError } from 'axios';
 import type { Dispatch, SetStateAction } from 'react';
 
 import { toast } from 'sonner';
+import { z } from 'zod';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -113,8 +114,21 @@ const coinWebsocket = (coin: string, setPrice: Dispatch<SetStateAction<number>>)
   return ws;
 };
 
-const fearAndGreedApi = async () => {
-  const { data } = await axios('https://api.alternative.me/fng/');
+const FearAndGreedInterface = z.object({
+  data: z.array(
+    z.object({
+      value: z.string(),
+      value_classification: z.string(),
+    }),
+  ),
+  name: z.string(),
+});
+
+export type FearAndGreedZod = z.infer<typeof FearAndGreedInterface>;
+
+const fearAndGreedApi = async (): Promise<FearAndGreedZod> => {
+  const { data } = await axios<FearAndGreedZod>('https://api.alternative.me/fng/');
+
   return data;
 };
 const altCoinSeasonApi = async () => {
@@ -155,7 +169,7 @@ const searchCoinApi = async (coin: string, signal?: AbortSignal): Promise<Search
     params: {
       coin,
     },
-    signal
+    signal,
   });
 
   const dataType: SearchCoinProps = data.data;

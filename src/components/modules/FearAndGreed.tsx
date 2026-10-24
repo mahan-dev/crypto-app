@@ -3,13 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import styles from '@/components/modules/css/fearAndGreed/route.module.css';
 import Loader from '@/components/loader/Loader';
-import { lazy } from 'react';
 
-const GaugeComponent = lazy(() =>
-  import('react-gauge-component').then((module) => ({
-    default: module.GaugeComponent,
-  })),
-);
+// import FearAndGreedGauge from '@/components/modules/FearAndGreedGauge';
+import { lazy } from 'react';
+const FearAndGreedGauge = lazy(() => import('@/components/modules/FearAndGreedGauge'));
 
 const FearAndGreed = () => {
   const { data, isError, isLoading } = useQuery({
@@ -17,7 +14,7 @@ const FearAndGreed = () => {
     queryFn: async () => fearAndGreedApi(),
   });
 
-  const status = data?.data[0].value_classification;
+  const status = data?.data[0].value_classification ?? '';
 
   return (
     <section className={styles.gauge}>
@@ -31,53 +28,7 @@ const FearAndGreed = () => {
 
       {data && !isError && (
         <>
-          <div className={styles.gauge__content}>
-            <GaugeComponent
-              value={data?.data[0].value}
-              type="semicircle"
-              minValue={0}
-              maxValue={100}
-              arc={{
-                width: 0.1,
-                padding: 0.02,
-                cornerRadius: 60,
-                subArcs: [],
-                colorArray: ['#EA4228', '#f5981b', '#e6eb25', '#88db35', '#1af7e0'],
-                nbSubArcs: 5,
-              }}
-              pointer={{
-                type: 'blob',
-                color: '#e0e0e0',
-                strokeWidth: 3,
-                strokeColor: '#252525',
-                width: 25,
-                maxFps: 60,
-              }}
-              labels={{
-                valueLabel: {
-                  style: {
-                    fontSize: '50px',
-                    display: 'none',
-                    fill: '#e0e0e0',
-                    fontWeight: 'bold',
-                  },
-                },
-                tickLabels: {
-                  type: 'outer',
-                  hideMinMax: true,
-                  defaultTickValueConfig: {
-                    style: { fontSize: '9px', fill: '#aaa' },
-                  },
-                  defaultTickLineConfig: { color: '#666', length: 4, width: 1 },
-                },
-              }}
-            />
-
-            <p className={styles.content__display}>
-              <span className={styles.display__value}>{data?.data[0].value}</span>
-              <span className={styles.display__status}>{status}</span>
-            </p>
-          </div>
+          <FearAndGreedGauge data={data} status={status} />
         </>
       )}
     </section>
