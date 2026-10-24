@@ -12,11 +12,12 @@ import type { Dispatch, MouseEvent, SetStateAction } from 'react';
 
 interface PaginationProps {
   page: number;
+  totalPages?: number;
   setPage: Dispatch<SetStateAction<number>>;
 }
-const PaginationPage = ({ page, setPage }: PaginationProps) => {
+const PaginationPage = ({ page, totalPages = 10, setPage }: PaginationProps) => {
   const nextHandler = () => {
-    if (page === 10) return;
+    if (page === totalPages) return;
 
     UsePage(+1, setPage);
   };
@@ -72,7 +73,7 @@ const PaginationPage = ({ page, setPage }: PaginationProps) => {
           </PaginationLink>
         </PaginationItem>
         <PaginationItem onClick={clickHandler}>
-          <PaginationLink className={`${page === 10 && 'text-black'}`} isActive={page === 10}>
+          <PaginationLink className={`${page === totalPages && 'text-black'}`} isActive={page === totalPages}>
             10
           </PaginationLink>
         </PaginationItem>

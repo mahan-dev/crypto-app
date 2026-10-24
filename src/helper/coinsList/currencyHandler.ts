@@ -5,7 +5,7 @@ export const currencyList = {
   usd: '$',
   eur: '€',
   gbp: '£',
-};
+} as const;
 
 const currencyHandler = (current_price: number, currency: CoinsProps['currency']) => {
   const finalCurrency = currencyList[currency];
