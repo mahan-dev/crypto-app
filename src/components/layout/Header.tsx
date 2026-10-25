@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
-import Search from '../elements/Search';
+// import Search from '../elements/Search';
 import styles from '@/components/layout/styles/header/route.module.css';
+import { lazy } from 'react';
 
+const Search = lazy(() => import('@/components/elements/Search'));
 const Header = () => {
   return (
     <header className={styles.header}>

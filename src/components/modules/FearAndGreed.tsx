@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import styles from '@/components/modules/css/fearAndGreed/route.module.css';
 import Loader from '@/components/loader/Loader';
 
-// import FearAndGreedGauge from '@/components/modules/FearAndGreedGauge';
 import { lazy } from 'react';
 const FearAndGreedGauge = lazy(() => import('@/components/modules/FearAndGreedGauge'));
 

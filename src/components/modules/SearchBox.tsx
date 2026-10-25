@@ -4,6 +4,7 @@ import {
   useState,
   type ChangeEvent,
   type Dispatch,
+  type RefObject,
   type SetStateAction,
 } from 'react';
 import { FiSearch } from 'react-icons/fi';
@@ -19,6 +20,7 @@ import Loader from '../loader/Loader';
 interface SearchBoxProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  ref: RefObject<HTMLInputElement | null>;
 }
 const SearchDropDown = styled.div<{ $isOpen: boolean }>`
   opacity: ${(props) => (props.$isOpen ? 1 : 0)};
@@ -28,7 +30,7 @@ const SearchDropDown = styled.div<{ $isOpen: boolean }>`
     transform 0.4s ease;
   height: fit-content;
 `;
-const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
+const SearchBox = ({ setIsOpen, isOpen, ref }: SearchBoxProps) => {
   const searchRef = useRef<HTMLDivElement | null>(null);
 
   const [search, setSearch] = useState<string>('');
@@ -68,8 +70,10 @@ const SearchBox = ({ setIsOpen, isOpen }: SearchBoxProps) => {
             className={styles.searchBox___searchInput}
             onChange={changeHandler}
             value={!isOpen ? '' : search}
+            ref={ref}
             placeholder="Search coin, pair, contract address, exchange, or post"
           />
+          <span className={styles.searchInput__esc}>esc</span>
 
           <IoClose
             className="cursor-pointer ml-auto"

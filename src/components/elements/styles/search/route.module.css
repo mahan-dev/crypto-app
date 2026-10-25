@@ -3,3 +3,12 @@
 .searchButton {
   @apply bg-[#484848] w-50 justify-start  p-2 flex gap-2 items-center rounded-md cursor-pointer;
 }
+
+
+.searchButton:hover .shortcut {
+  @apply opacity-100
+}
+
+.shortcut {
+  @apply ml-auto opacity-0 bg-[#222222] rounded-md p-0.5
+}

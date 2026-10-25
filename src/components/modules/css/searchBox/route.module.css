@@ -9,5 +9,16 @@
 }
 
 .searchBox__container {
-  @apply w-full h-fit flex items-start gap-2;
+  @apply w-full h-fit flex items-center gap-2;
+}
+
+
+.searchBox__container:focus-within .searchInput__esc {
+  @apply opacity-100 visible;
+}
+
+.searchInput__esc {
+  @apply bg-[#333333cf] text-[0.9rem] p-0.5 px-1 opacity-0 rounded-md duration-200 ease-in-out;
+
+  visibility: hidden;
 }
