@@ -208,7 +208,7 @@ const CoinsList = ({ data, currency }: CoinsProps) => {
                     <div className="relative z-20 flex gap-3 items-center max-lg:w-27.5 max-lg:ml-auto">
                       <img
                         className="ml-auto max-lg:w-20"
-                        src={percentage_24 > 0 ? chartUp : chartDown}
+                        src={percentage_24! > 0 ? chartUp : chartDown}
                         alt={'chart svg'}
                         width={100}
                         height={100}
