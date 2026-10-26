@@ -59,6 +59,7 @@ const allMarketLists = async (currency: string = 'usd'): Promise<CoinSchema[]> =
     `${BASE_URL}/coins/markets?vs_currency=${currency}`,
   );
 
+  console.log(data);
   return data;
 };
 

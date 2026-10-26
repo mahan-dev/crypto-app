@@ -14,6 +14,26 @@ vi.mock('@/services/coingecko', async (importOriginal) => {
       market_caps: [[1720000000000, 1_200_000_000_000]],
       total_volumes: [[1720000000000, 25_000_000_000]],
     })),
+    allMarketLists: vi.fn(() => [
+      {
+        id: 'bitcoin',
+        symbol: 'btc',
+        name: 'Bitcoin',
+        image: '@example.com',
+        market_cap: 1612925878031,
+        market_cap_rank: 1,
+        current_price: 80224,
+        circulating_supply: 20103596,
+        market_cap_change_percentage_24h: -100.38835656430456,
+        fully_diluted_valuation: 1612942485789,
+        total_volume: 20103803,
+        total_supply: 20032517027,
+        max_supply: 21000000,
+        ath: 126080,
+        atl: 67.81,
+        status: 200,
+      },
+    ]),
   };
 });
 describe('testing api result', () => {
