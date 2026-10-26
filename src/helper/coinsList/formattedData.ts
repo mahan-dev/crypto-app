@@ -70,11 +70,11 @@ const coinPriceSorting = (data: CoinSchema[], priceStatus: SortOrder, sortField:
   if (sortField === '24h') {
     if (priceStatus === 'down') {
       return sorted.sort(
-        (a, b) => b.market_cap_change_percentage_24h - a.market_cap_change_percentage_24h,
+        (a, b) => b.market_cap_change_percentage_24h! - a.market_cap_change_percentage_24h!,
       );
     } else if (priceStatus === 'up') {
       return sorted.sort(
-        (a, b) => a.market_cap_change_percentage_24h - b.market_cap_change_percentage_24h,
+        (a, b) => a.market_cap_change_percentage_24h! - b.market_cap_change_percentage_24h!,
       );
     } else return sorted;
   }
