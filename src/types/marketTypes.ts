@@ -9,7 +9,7 @@ export const coinSchema = z.object({
   market_cap_rank: z.number(),
   current_price: z.number(),
   circulating_supply: z.number(),
-  market_cap_change_percentage_24h: z.number(),
+  market_cap_change_percentage_24h: z.number().nullable(),
   fully_diluted_valuation: z.number(),
   total_volume: z.number(),
   total_supply: z.number(),

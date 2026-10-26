@@ -4,6 +4,18 @@ import { marketSchema, coinSchema } from '@/types/marketTypes';
 import { z } from 'zod';
 import { CoinInfo } from '@/helper/coinsList/formattedData';
 
+vi.mock('@/services/coingecko', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/services/coingecko')>();
+
+  return {
+    ...actual,
+    coinChart: vi.fn(() => ({
+      prices: [[1720000000000, 65000]],
+      market_caps: [[1720000000000, 1_200_000_000_000]],
+      total_volumes: [[1720000000000, 25_000_000_000]],
+    })),
+  };
+});
 describe('testing api result', () => {
   // ! getMarketList api
   it('should test getMarketList api', async () => {
@@ -21,9 +33,9 @@ describe('testing api result', () => {
 
   //! CoinChart
 
-  it("test's a coin chart api", async () => {
-    const res = await coinChart('bitcoin', 7);
-
+  it("test's a coin chart api", () => {
+    const res = coinChart('bitcoin', 7);
+    expect(coinChart).toHaveBeenCalledWith('bitcoin', 7);
     expect(res).not.toBeNull();
     expect(res).not.toEqual({});
     expect(Array.isArray(res)).toBe(false);
