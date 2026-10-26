@@ -22,7 +22,7 @@ describe('testing api result', () => {
   //! CoinChart
 
   it("test's a coin chart api", async () => {
-    const res = await coinChart('bitcoin', 7);
+    const res = await coinChart('bitcoin1212', 7);
 
     expect(res).not.toBeNull();
     expect(res).not.toEqual({});
