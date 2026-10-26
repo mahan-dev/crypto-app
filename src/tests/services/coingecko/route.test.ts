@@ -22,7 +22,7 @@ describe('testing api result', () => {
   //! CoinChart
 
   it("test's a coin chart api", async () => {
-    const res = await coinChart('bitcoin1212', 7);
+    const res = await coinChart('bitcoin', 7);
 
     expect(res).not.toBeNull();
     expect(res).not.toEqual({});
@@ -53,31 +53,29 @@ describe('testing api result', () => {
       vi.unstubAllGlobals();
       vi.restoreAllMocks();
     });
-      
-        it('should create a WebSocket with the correct URL', () => {
-          const mockSocket = {
-            onopen: null,
-            onmessage: null,
-            onerror: null,
-            onclose: null,
-          };
 
-          const mockWebSocket = vi.fn(function () {
-            return mockSocket;
-          });
+    it('should create a WebSocket with the correct URL', () => {
+      const mockSocket = {
+        onopen: null,
+        onmessage: null,
+        onerror: null,
+        onclose: null,
+      };
 
-          vi.stubGlobal('WebSocket', mockWebSocket);
+      const mockWebSocket = vi.fn(function () {
+        return mockSocket;
+      });
 
-          const setPrice = vi.fn();
+      vi.stubGlobal('WebSocket', mockWebSocket);
 
-          coinWebsocket('btcusdt', setPrice);
+      const setPrice = vi.fn();
 
-          expect(mockWebSocket).toHaveBeenCalledOnce();
-          expect(mockWebSocket).toHaveBeenCalledWith(
-            'wss://fstream.binance.com/market/ws/btcusdt@aggTrade',
-          );
-        });
-  }  );
-    
+      coinWebsocket('btcusdt', setPrice);
+
+      expect(mockWebSocket).toHaveBeenCalledOnce();
+      expect(mockWebSocket).toHaveBeenCalledWith(
+        'wss://fstream.binance.com/market/ws/btcusdt@aggTrade',
+      );
+    });
   });
-
+});

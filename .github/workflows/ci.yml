@@ -16,8 +16,6 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-  # build-deploy:
-  #   runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
